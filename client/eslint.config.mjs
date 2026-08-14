@@ -16,10 +16,7 @@ const eslintConfig = defineConfig([
     rules: {
       // "סטנדרטים לפיתוח"
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        { fixStyle: 'inline-type-imports' },
-      ],
+      '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -43,10 +40,8 @@ const eslintConfig = defineConfig([
       'no-restricted-syntax': [
         'error',
         {
-          selector:
-            "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
-          message:
-            'אין לכתוב עיצוב על התגית — יש להגדיר אובייקט ב-ComponentName.style.ts.',
+          selector: "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
+          message: 'אין לכתוב עיצוב על התגית — יש להגדיר אובייקט ב-ComponentName.style.ts.',
         },
         {
           selector: "MemberExpression[property.name='watch']",
