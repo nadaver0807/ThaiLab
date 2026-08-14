@@ -2,15 +2,13 @@
   "name": "@thailab/server",
   "version": "0.1.0",
   "private": true,
-  "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
     "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
-    "lint": "eslint src"
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src ../shared"
   },
   "dependencies": {
-    "@thailab/shared": "*",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",

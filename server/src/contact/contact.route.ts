@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { type ContactForm, contactSchema } from '@thailab/shared';
+import { contactSchema, type ContactForm } from '@shared/validations/contact.validation';
 import { validateZodSchema } from '../middlewares/validateZodSchema.middleware';
 import { type ContactMessage } from './ContactMessage.entity';
 import { save } from './contact.service';

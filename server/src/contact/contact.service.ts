@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { type ContactForm } from '@thailab/shared';
+import { type ContactForm } from '@shared/validations/contact.validation';
 import { type ContactMessage } from './ContactMessage.entity';
 
 const messages: ContactMessage[] = [];

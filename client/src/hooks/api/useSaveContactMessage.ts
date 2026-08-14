@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { type ContactForm } from '@thailab/shared';
+import { type ContactForm } from '@shared/validations/contact.validation';
 import { request } from './api.util';
 
 export const USE_SAVE_CONTACT_MESSAGE_KEY = 'useSaveContactMessage';

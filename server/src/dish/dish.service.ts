@@ -1,4 +1,4 @@
-import { type DishCategory } from '@thailab/shared';
+import { type DishCategory } from '@shared/enums/index.enum';
 import { type Dish } from './Dish.entity';
 
 const dishes: Dish[] = [];

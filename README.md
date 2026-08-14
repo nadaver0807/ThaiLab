@@ -11,7 +11,8 @@
 | `shared` | סכמות Zod, טייפים, enums וקבועים משותפים | — |
 
 `client` ו-`server` רצים כשירותים נפרדים ומדברים ביניהם ב-HTTP בלבד.
-`shared` נצרך על ידי שניהם כחבילה `@thailab/shared`, ולעולם לא מייבא מהם.
+`shared` נצרך על ידי שניהם כחבילה `@thailab/shared` **ישירות מהמקור** (ללא שלב build),
+ולעולם לא מייבא מהם.
 
 ## התקנה
 
@@ -24,7 +25,7 @@ cp client/.env.example client/.env.local
 ## הרצה
 
 ```bash
-npm run dev          # shared build + server (4000) + client (3000)
+npm run dev          # server (4000) + client (3000)
 npm run dev:server   # שרת בלבד
 npm run dev:client   # לקוח בלבד
 ```
@@ -33,7 +34,8 @@ npm run dev:client   # לקוח בלבד
 
 | פקודה | פעולה |
 |---|---|
-| `npm run build` | בנייה לפי הסדר: shared → server → client |
+| `npm run build` | בניית production של הלקוח |
+| `npm run typecheck` | בדיקת טיפוסים בשלוש החבילות |
 | `npm run lint` | ESLint בכל שלוש החבילות |
 | `npm run format` | Prettier על כל הקוד |
 

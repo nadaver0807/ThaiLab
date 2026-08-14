@@ -1,4 +1,4 @@
-import { type ContactForm } from '@thailab/shared';
+import { type ContactForm } from '@shared/validations/contact.validation';
 
 export type ContactMessage = ContactForm & {
   id: string;

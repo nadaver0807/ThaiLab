@@ -8,11 +8,12 @@
     "client"
   ],
   "scripts": {
-    "build": "npm run build -w @thailab/shared && npm run build -w @thailab/server && npm run build -w @thailab/client",
-    "dev": "npm run build -w @thailab/shared && concurrently -n server,client -c blue,green \"npm run dev -w @thailab/server\" \"npm run dev -w @thailab/client\"",
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev -w @thailab/server\" \"npm run dev -w @thailab/client\"",
     "dev:client": "npm run dev -w @thailab/client",
     "dev:server": "npm run dev -w @thailab/server",
+    "build": "npm run build -w @thailab/client",
     "start": "concurrently -n server,client -c blue,green \"npm run start -w @thailab/server\" \"npm run start -w @thailab/client\"",
+    "typecheck": "npm run typecheck -w @thailab/shared && npm run typecheck -w @thailab/server && npm run typecheck -w @thailab/client",
     "lint": "npm run lint -w @thailab/shared && npm run lint -w @thailab/server && npm run lint -w @thailab/client",
     "format": "prettier --write \"{client,server,shared}/src/**/*.{ts,tsx}\""
   },

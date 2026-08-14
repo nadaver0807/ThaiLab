@@ -1,4 +1,4 @@
-import { type DishCategory, type SpiceLevel } from '@thailab/shared';
+import { type DishCategory, type SpiceLevel } from '@shared/enums/index.enum';
 
 export type Dish = {
   id: string;

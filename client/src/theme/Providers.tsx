@@ -6,7 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import RtlCacheProvider from '@theme/RtlCacheProvider';
 import theme from '@theme/theme';
-import { QUERY_STALE_TIME_MS } from '@thailab/shared';
+import { QUERY_STALE_TIME_MS } from '@shared/consts/site.const';
 
 type ProvidersProps = {
   children: ReactNode;

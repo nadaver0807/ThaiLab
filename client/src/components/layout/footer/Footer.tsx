@@ -5,7 +5,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import NavLink from '@components/shared/nav-link/NavLink';
 import Styles from '@components/layout/footer/Footer.style';
-import { NAV_LINKS, SITE } from '@thailab/shared';
+import { NAV_LINKS, SITE } from '@shared/consts/site.const';
 
 const Footer: FC = () => (
   <Box component="footer" sx={Styles.footer}>

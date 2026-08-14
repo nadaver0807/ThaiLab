@@ -5,7 +5,8 @@ import { Box, Stack, Typography } from '@mui/material';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import Styles from '@components/home/hero/Hero.style';
-import { Route, SITE } from '@thailab/shared';
+import { SITE } from '@shared/consts/site.const';
+import { Route } from '@shared/enums/index.enum';
 
 const Hero: FC = () => (
   <Box component="section" sx={Styles.section}>

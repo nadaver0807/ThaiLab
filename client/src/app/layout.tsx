@@ -6,7 +6,7 @@ import Providers from '@theme/Providers';
 import Header from '@components/layout/header/Header';
 import Footer from '@components/layout/footer/Footer';
 import Styles from '@/app/RootLayout.style';
-import { SITE } from '@thailab/shared';
+import { SITE } from '@shared/consts/site.const';
 
 const heebo = Heebo({
   variable: '--font-sans',

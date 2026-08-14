@@ -1,5 +1,5 @@
-import { Route } from '../enums/index.enum';
-import { type NavLink, type SiteConfig } from '../types/site.type';
+import { Route } from '@shared/enums/index.enum';
+import { type NavLink, type SiteConfig } from '@shared/types/site.type';
 
 export const SITE: SiteConfig = {
   name: 'ThaiLab',

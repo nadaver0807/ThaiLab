@@ -4,7 +4,7 @@ import {
   israeliPhone,
   limitedString,
   requiredString,
-} from './common.validation';
+} from '@shared/validations/common.validation';
 
 export const contactSchema = z.object({
   fullName: limitedString(2, 60),

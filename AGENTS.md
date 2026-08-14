@@ -24,7 +24,8 @@ Persistent memory for AI agents working on this project.
 - **Client**: Next.js 16 (App Router), React 19, TypeScript, MUI v7, Emotion (RTL cache),
   TanStack Query, react-hook-form — port **3000**
 - **Server**: Express 5, TypeScript, Zod, http-status-codes — port **4000**
-- **Shared**: Zod schemas, types, enums, consts — built with `tsc`, consumed as `@thailab/shared`
+- **Shared**: Zod schemas, types, enums, consts — consumed as `@thailab/shared` **from source**
+  (no `dist/`; the server runs it via `tsx`, the client via `transpilePackages`)
 - **Language**: Hebrew-first, RTL (`lang="he" dir="rtl"`)
 
 ---
@@ -45,7 +46,7 @@ ThaiLab/
 ├─ package.json                     # npm workspaces + orchestration scripts
 ├─ tsconfig.base.json
 │
-├─ shared/                          # @thailab/shared — built to dist/, imported by both
+├─ shared/                          # @thailab/shared — source-only, no build step
 │  ├─ src/
 │  │  ├─ consts/*.const.ts
 │  │  ├─ enums/*.enum.ts
@@ -97,9 +98,10 @@ ThaiLab/
 
 | Command | Effect |
 |---|---|
-| `npm run dev` | builds `shared`, then runs server (4000) + client (3000) in parallel |
+| `npm run dev` | runs server (4000) + client (3000) in parallel |
 | `npm run dev:server` / `npm run dev:client` | a single service |
-| `npm run build` | shared → server → client |
+| `npm run build` | production build of the client |
+| `npm run typecheck` | `tsc --noEmit` across all three packages |
 | `npm run lint` | lints all three packages |
 
 ### Server layer
