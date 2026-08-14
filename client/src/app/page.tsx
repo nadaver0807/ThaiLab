@@ -1,5 +1,5 @@
-import Hero from '@components/home/hero/Hero';
+import HomePage from '@components/home/home-page/HomePage';
 
-const HomePage = () => <Hero />;
+const Page = () => <HomePage />;
 
-export default HomePage;
+export default Page;

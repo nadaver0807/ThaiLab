@@ -9,7 +9,7 @@ and the thin route handlers under `src/app/api/`. Never deviate.
 
 ## File Structure
 
-This is a monorepo. **You own the `server/` package only** — an Express 5 service on port 4000.
+This is a monorepo. **You own the `server/` package only** — an Express 5 service on port 3000.
 
 ```
 server/src/

@@ -9,7 +9,7 @@ They come from the project's "סטנדרטים לפיתוח" document. Never dev
 
 ## File Structure & Naming
 
-This is a monorepo. **You own the `client/` package only** (Next.js, port 3000).
+This is a monorepo. **You own the `client/` package only** (Next.js, port 5173).
 
 - `client/src/app/` — routing layer only. A `page.tsx` renders a component from `@components`;
   no layout or business logic, and **no API routes** (all endpoints live in the Express server).

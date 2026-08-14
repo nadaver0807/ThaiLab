@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import Providers from '@theme/Providers';
 import Header from '@components/layout/header/Header';
 import Footer from '@components/layout/footer/Footer';
+import BottomOrderBar from '@components/layout/bottom-order-bar/BottomOrderBar';
 import Styles from '@/app/RootLayout.style';
 import { SITE } from '@shared/consts/site.const';
 
@@ -38,6 +39,8 @@ const RootLayout = ({ children }: RootLayoutProps) => (
 
           <Footer />
         </Box>
+
+        <BottomOrderBar />
       </Providers>
     </body>
   </html>

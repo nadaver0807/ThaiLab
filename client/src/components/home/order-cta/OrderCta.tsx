@@ -4,36 +4,31 @@ import { type FC } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
-import Styles from '@components/home/hero/Hero.style';
-import { SITE } from '@shared/consts/site.const';
+import Styles from '@components/home/order-cta/OrderCta.style';
 import { Route } from '@shared/enums/index.enum';
 
-const Hero: FC = () => (
+const OrderCta: FC = () => (
   <Box component="section" sx={Styles.section}>
     <PageContainer>
-      <Typography variant="body2" sx={Styles.tagline}>
-        {SITE.tagline}
-      </Typography>
-
-      <Typography variant="h1" component="h1" sx={Styles.title}>
-        {SITE.name}
+      <Typography variant="h2" component="h2" sx={Styles.title}>
+        מוכנים להזמין?
       </Typography>
 
       <Typography variant="subtitle1" sx={Styles.description}>
-        {SITE.description}
+        בוחרים מנות, מתאימים את רמת החריפות ומקבלים אוכל שיוצא מהמטבח שלי היישר אליכם.
       </Typography>
 
       <Stack sx={Styles.actions}>
         <LinkButton href={Route.Menu} size="large">
-          לתפריט
+          לתפריט המלא
         </LinkButton>
 
         <LinkButton href={Route.Contact} variant="outlined" size="large">
-          צור קשר
+          לתיאום אירוע פרטי
         </LinkButton>
       </Stack>
     </PageContainer>
   </Box>
 );
 
-export default Hero;
+export default OrderCta;
