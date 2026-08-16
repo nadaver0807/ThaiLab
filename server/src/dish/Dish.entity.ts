@@ -1,13 +1,32 @@
-import { type DishCategory, type SpiceLevel } from '@shared/enums/index.enum';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-export type Dish = {
-  id: string;
+@Entity()
+export class Dish extends BaseEntity {
+  @PrimaryGeneratedColumn("uuid")
+  uuid: string;
+
+  @Column({ type: "varchar" })
   name: string;
+
+  @Column({ type: "varchar" })
   description: string;
+
+  @Column({ type: "number" })
   price: number;
-  category: DishCategory;
-  spiceLevel: SpiceLevel;
-  imageUrl?: string;
-  isVegan: boolean;
-  isGlutenFree: boolean;
-};
+
+  @Column({ type: "varchar" })
+  imageUrl: string;
+
+  @CreateDateColumn()
+  createDate: Date;
+
+  @DeleteDateColumn()
+  deleteDate: Date;
+}
