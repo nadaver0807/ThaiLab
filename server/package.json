@@ -6,7 +6,12 @@
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "lint": "eslint src ../shared"
+    "lint": "eslint src ../shared",
+    "typeorm": "tsx ../node_modules/typeorm/cli.js -d src/config/db/db.config.ts",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "migration:generate": "npm run typeorm -- migration:generate src/migrations/$npm_config_name",
+    "migration:create": "tsx ../node_modules/typeorm/cli.js migration:create src/migrations/$npm_config_name"
   },
   "dependencies": {
     "cors": "^2.8.5",

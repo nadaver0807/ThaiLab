@@ -1,4 +1,10 @@
+import { Category } from "@/category/Category.entity";
+import { Costumer } from "@/costumer/Costumer.entity";
 import { Dish } from "@/dish/Dish.entity";
+import { Hospitality } from "@/hospitality/Hospitality.entity";
+import { Order } from "@/order/Order.entity";
+import { OrderItem } from "@/order-item/OrderItem.entity";
+import { Reservation } from "@/reservation/Reservation.entity";
 import dotEnv from "dotenv";
 import { DataSource, type DataSourceOptions } from "typeorm";
 dotEnv.config();
@@ -17,12 +23,22 @@ const {
 
 const options: DataSourceOptions = {
   database: DATABASE,
-  entities: [Dish],
+  entities: [
+    Category,
+    Costumer,
+    Dish,
+    Hospitality,
+    Order,
+    OrderItem,
+    Reservation,
+  ],
   host: DB_HOST,
   logging: WORKSPACE === "local",
-  migrations: [`${MIGRATIONS_PATH ?? ""}migrations/*`],
+  migrations: [`${MIGRATIONS_PATH || "src/"}migrations/*{.ts,.js}`],
+  migrationsTableName: "migrations",
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),
+  synchronize: false,
   password: DB_PASSWORD,
   port: Number(DB_PORT),
   schema: DB_SCHEMA,
@@ -32,4 +48,4 @@ const options: DataSourceOptions = {
 
 export const AppDataSource = new DataSource(options);
 
-export const connectToDb = AppDataSource.initialize();
+export const connectToDb = () => AppDataSource.initialize();

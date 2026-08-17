@@ -6,7 +6,7 @@ import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import Styles from '@components/home/chef-story/ChefStory.style';
 import { CHEF_STORY_PARAGRAPHS } from '@components/home/chef-story/ChefStory.const';
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 
 const ChefStory: FC = () => (
   <Box component="section" sx={Styles.section}>

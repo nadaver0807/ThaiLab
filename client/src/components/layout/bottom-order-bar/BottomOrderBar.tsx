@@ -4,7 +4,7 @@ import { type FC } from 'react';
 import { Stack, Typography } from '@mui/material';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import Styles from '@components/layout/bottom-order-bar/BottomOrderBar.style';
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 
 const BottomOrderBar: FC = () => (
   <Stack component="aside" aria-label="פעולת הזמנה מהירה" sx={Styles.bar}>

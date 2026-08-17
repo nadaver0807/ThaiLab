@@ -5,7 +5,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import Styles from '@components/home/order-cta/OrderCta.style';
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 
 const OrderCta: FC = () => (
   <Box component="section" sx={Styles.section}>

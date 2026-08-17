@@ -9,7 +9,7 @@ const createServer = async () => {
   const app = express();
   const port = process.env.APP_PORT;
   await createApp(app);
-  await connectToDb;
+  await connectToDb();
 
   app.listen(port, () =>
     logger.info(`app listening on port ${port}`, { port: port ?? 0 }),

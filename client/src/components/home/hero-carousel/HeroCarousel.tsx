@@ -8,7 +8,7 @@ import Styles from '@components/home/hero-carousel/HeroCarousel.style';
 import { HERO_SLIDES } from '@components/home/hero-carousel/HeroCarousel.const';
 import useHeroCarousel from '@components/home/hero-carousel/useHeroCarousel';
 import { SITE } from '@shared/consts/site.const';
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 
 const HeroCarousel: FC = () => {
   const { activeIndex, goToSlide } = useHeroCarousel();

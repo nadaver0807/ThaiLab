@@ -1,4 +1,4 @@
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 import { type OrderCategory } from './OrderCategories.type';
 
 export const ORDER_CATEGORIES: OrderCategory[] = [
