@@ -8,6 +8,7 @@ const layout: SxProps<Theme> = {
 
 const main: SxProps<Theme> = {
   flex: 1,
+  paddingBottom: { xs: 11, md: 0 },
 };
 
 const Styles = { layout, main };

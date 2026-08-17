@@ -1,20 +1,21 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true,
-    "baseUrl": ".",
-    "rootDir": "..",
+    "rootDir": "../",
+    "outDir": "./build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strictPropertyInitialization": false,
+    "types": ["node"],
     "paths": {
-      "@server/*": [
-        "./src/*"
-      ],
-      "@shared/*": [
-        "../shared/*"
-      ]
+      "@/*": ["./src/*"],
+      "@config/*": ["./src/config/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@shared/*": ["../shared/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "../shared/**/*.ts"
-  ]
+  "include": ["src/**/*", "../shared/**/*"],
+  "exclude": ["node_modules", "build"]
 }
