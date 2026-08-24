@@ -1,4 +1,5 @@
-import { type DishCategory, type SpiceLevel } from '@shared/enums/index.enum';
+import { DishCategory } from "@shared/enums/dish-category.enum";
+import { SpiceLevel } from "@shared/enums/spice-level.enum";
 
 export type Dish = {
   id: string;

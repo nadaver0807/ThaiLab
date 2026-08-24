@@ -22,8 +22,8 @@ Persistent memory for AI agents working on this project.
 - **Architecture**: npm-workspaces monorepo — `client`, `server` and `shared` are three
   independent packages. `client` and `server` run as **separate services**.
 - **Client**: Next.js 16 (App Router), React 19, TypeScript, MUI v7, Emotion (RTL cache),
-  TanStack Query, react-hook-form — port **3000**
-- **Server**: Express 5, TypeScript, Zod, http-status-codes — port **4000**
+  TanStack Query, react-hook-form — port **5173**
+- **Server**: Express 5, TypeScript, Zod, http-status-codes — port **3000**
 - **Shared**: Zod schemas, types, enums, consts — consumed as `@thailab/shared` **from source**
   (no `dist/`; the server runs it via `tsx`, the client via `transpilePackages`)
 - **Language**: Hebrew-first, RTL (`lang="he" dir="rtl"`)
@@ -57,7 +57,7 @@ ThaiLab/
 │  ├─ tsconfig.json
 │  └─ package.json
 │
-├─ server/                          # @thailab/server — Express, port 4000
+├─ server/                          # @thailab/server — Express, port 3000
 │  ├─ src/
 │  │  ├─ <entity>/                  # one folder per standalone entity
 │  │  │  ├─ Entity.entity.ts        # the entity model
@@ -71,7 +71,7 @@ ThaiLab/
 │  ├─ tsconfig.json
 │  └─ package.json
 │
-└─ client/                          # @thailab/client — Next.js, port 3000
+└─ client/                          # @thailab/client — Next.js, port 5173
    ├─ src/
    │  ├─ app/                       # routing layer only — no logic, no API routes
    │  ├─ components/
@@ -96,13 +96,13 @@ ThaiLab/
 
 ### Scripts
 
-| Command | Effect |
-|---|---|
-| `npm run dev` | runs server (4000) + client (3000) in parallel |
-| `npm run dev:server` / `npm run dev:client` | a single service |
-| `npm run build` | production build of the client |
-| `npm run typecheck` | `tsc --noEmit` across all three packages |
-| `npm run lint` | lints all three packages |
+| Command                                     | Effect                                         |
+| ------------------------------------------- | ---------------------------------------------- |
+| `npm run dev`                               | runs server (3000) + client (5173) in parallel |
+| `npm run dev:server` / `npm run dev:client` | a single service                               |
+| `npm run build`                             | production build of the client                 |
+| `npm run typecheck`                         | `tsc --noEmit` across all three packages       |
+| `npm run lint`                              | lints all three packages                       |
 
 ### Server layer
 
@@ -179,7 +179,7 @@ ThaiLab/
 
 - Every client→server request lives in a dedicated hook in `client/src/hooks/api/` using TanStack Query.
 - All requests go through the `request()` helper in `api.util.ts`, which prefixes `API_BASE_URL`
-  (`NEXT_PUBLIC_API_BASE_URL`, default `http://localhost:4000/api`).
+  (`NEXT_PUBLIC_API_BASE_URL`, default `http://localhost:3000/api`).
 - **Read** — file `useGetEntityBySomething.ts`:
   - `export const USE_GET_ENTITY_BY_SOMETHING_KEY = 'useGetEntityBySomething';`
   - a `getEntityBySomething` function performing the request
@@ -193,7 +193,7 @@ ThaiLab/
 
 ## Code Style (enforced by ESLint + Prettier)
 
-- Blank line before and after every block (type, component, condition...) and before every `return`. Never two consecutive blank lines.
+- Blank line before and after every block (type, component, condition...) and before every `return`. Never two consecutive blank lines. Do not add blank lines between JSX tags.
 - Max line length: **100 characters**.
 - No unused files and no exports without an import elsewhere.
 - Single quotes, semicolons, trailing commas.

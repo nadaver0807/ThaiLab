@@ -1,9 +1,9 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { type DishCategory } from '@shared/enums/index.enum';
 import { type Dish } from '@shared/types/site.type';
 import { request } from './api.util';
+import { type DishCategory } from '@shared/enums/dish-category.enum';
 
 export const USE_GET_DISHES_KEY = 'useGetDishes';
 

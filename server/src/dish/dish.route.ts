@@ -2,7 +2,7 @@ import { Router, type Request, type Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { type Dish } from "./Dish.entity";
 import { findAll, findByCategory, findById } from "./dish.service";
-import { type DishCategory } from "@shared/enums/index.enum";
+import { type DishCategory } from "@shared/enums/dish-category.enum";
 
 type GetDishesQuery = { category?: DishCategory };
 

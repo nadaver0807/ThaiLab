@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 import PageSection from '@components/shared/page-section/PageSection';
 import LinkButton from '@components/shared/link-button/LinkButton';
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 
 export const metadata: Metadata = {
   title: 'הדף לא נמצא',

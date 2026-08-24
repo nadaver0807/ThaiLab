@@ -4,11 +4,11 @@
 
 ## מבנה
 
-| חבילה | תיאור | פורט |
-|---|---|---|
-| `client` | Next.js 16 (App Router) + MUI v7, עברית RTL | 3000 |
-| `server` | Express 5 + Zod | 4000 |
-| `shared` | סכמות Zod, טייפים, enums וקבועים משותפים | — |
+| חבילה    | תיאור                                       | פורט |
+| -------- | ------------------------------------------- | ---- |
+| `client` | Next.js 16 (App Router) + MUI v7, עברית RTL | 5173 |
+| `server` | Express 5 + Zod                             | 3000 |
+| `shared` | סכמות Zod, טייפים, enums וקבועים משותפים    | —    |
 
 `client` ו-`server` רצים כשירותים נפרדים ומדברים ביניהם ב-HTTP בלבד.
 `shared` נצרך על ידי שניהם כחבילה `@thailab/shared` **ישירות מהמקור** (ללא שלב build),
@@ -25,19 +25,19 @@ cp client/.env.example client/.env.local
 ## הרצה
 
 ```bash
-npm run dev          # server (4000) + client (3000)
+npm run dev          # server (3000) + client (5173)
 npm run dev:server   # שרת בלבד
 npm run dev:client   # לקוח בלבד
 ```
 
 ## סקריפטים
 
-| פקודה | פעולה |
-|---|---|
-| `npm run build` | בניית production של הלקוח |
+| פקודה               | פעולה                       |
+| ------------------- | --------------------------- |
+| `npm run build`     | בניית production של הלקוח   |
 | `npm run typecheck` | בדיקת טיפוסים בשלוש החבילות |
-| `npm run lint` | ESLint בכל שלוש החבילות |
-| `npm run format` | Prettier על כל הקוד |
+| `npm run lint`      | ESLint בכל שלוש החבילות     |
+| `npm run format`    | Prettier על כל הקוד         |
 
 ## סטנדרטים
 

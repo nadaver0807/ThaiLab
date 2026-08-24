@@ -1,4 +1,4 @@
-import { Route } from '@shared/enums/index.enum';
+import { Route } from '@shared/enums/route.enum';
 import { type NavLink, type SiteConfig } from '@shared/types/site.type';
 
 export const SITE: SiteConfig = {

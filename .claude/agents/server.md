@@ -9,7 +9,7 @@ and the thin route handlers under `src/app/api/`. Never deviate.
 
 ## File Structure
 
-This is a monorepo. **You own the `server/` package only** — an Express 5 service on port 4000.
+This is a monorepo. **You own the `server/` package only** — an Express 5 service on port 3000.
 
 ```
 server/src/
@@ -56,7 +56,7 @@ server/src/
 ## Code Style
 
 - Arrow functions only. `type` over `interface`. Inline type imports. `unknown` + narrowing over `any`.
-- Blank line before/after every block and before every `return`; never two blank lines in a row.
+- Blank line before/after every block and before every `return`; never two blank lines in a row. Do not add blank lines between JSX tags.
 - Max 100 characters per line. No unused files or exports.
 
 ## Pre-Flight Checklist
