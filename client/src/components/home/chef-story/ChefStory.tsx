@@ -13,22 +13,18 @@ const ChefStory: FC = () => (
     <PageContainer>
       <Stack sx={Styles.layout}>
         <Box sx={Styles.image} />
-
         <Stack sx={Styles.text}>
           <Typography variant="body2" sx={Styles.tagline}>
             הסיפור של השף
           </Typography>
-
           <Typography variant="h2" component="h2">
             מטבח אחד, זוג ידיים, בלי פשרות
           </Typography>
-
           {CHEF_STORY_PARAGRAPHS.map((paragraph) => (
             <Typography key={paragraph} variant="body1" sx={Styles.paragraph}>
               {paragraph}
             </Typography>
           ))}
-
           <Box sx={Styles.action}>
             <LinkButton href={Route.About}>קראו עוד עלינו</LinkButton>
           </Box>

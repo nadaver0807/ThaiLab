@@ -193,7 +193,7 @@ ThaiLab/
 
 ## Code Style (enforced by ESLint + Prettier)
 
-- Blank line before and after every block (type, component, condition...) and before every `return`. Never two consecutive blank lines.
+- Blank line before and after every block (type, component, condition...) and before every `return`. Never two consecutive blank lines. Do not add blank lines between JSX tags.
 - Max line length: **100 characters**.
 - No unused files and no exports without an import elsewhere.
 - Single quotes, semicolons, trailing commas.

@@ -56,7 +56,7 @@ server/src/
 ## Code Style
 
 - Arrow functions only. `type` over `interface`. Inline type imports. `unknown` + narrowing over `any`.
-- Blank line before/after every block and before every `return`; never two blank lines in a row.
+- Blank line before/after every block and before every `return`; never two blank lines in a row. Do not add blank lines between JSX tags.
 - Max 100 characters per line. No unused files or exports.
 
 ## Pre-Flight Checklist

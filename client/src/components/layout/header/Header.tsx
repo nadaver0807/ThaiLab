@@ -16,7 +16,6 @@ const Header: FC = () => (
         <NavLink href={Route.Home} variant="h3">
           {SITE.name}
         </NavLink>
-
         <Stack component="nav" aria-label="ניווט ראשי" sx={Styles.nav}>
           {NAV_LINKS.map((link) => (
             <NavLink key={link.href} href={link.href}>
@@ -24,7 +23,6 @@ const Header: FC = () => (
             </NavLink>
           ))}
         </Stack>
-
         <LinkButton href={Route.Contact}>הזמנת מקום</LinkButton>
       </Toolbar>
     </PageContainer>

@@ -19,31 +19,25 @@ const HeroCarousel: FC = () => {
       {HERO_SLIDES.map((slide, index) => (
         <Box key={slide.id} sx={Styles.slide(slide.image, index === activeIndex)} />
       ))}
-
       <PageContainer>
         <Box sx={Styles.content}>
           <Typography variant="body2" sx={Styles.tagline}>
             {SITE.tagline}
           </Typography>
-
           <Typography variant="h1" component="h1" sx={Styles.title}>
             {activeSlide.title}
           </Typography>
-
           <Typography variant="subtitle1" sx={Styles.subtitle}>
             {activeSlide.subtitle}
           </Typography>
-
           <Stack sx={Styles.actions}>
             <LinkButton href={Route.Menu} size="large">
               להזמנת אוכל
             </LinkButton>
-
             <LinkButton href="#categories" variant="outlined" size="large">
               מה אפשר להזמין
             </LinkButton>
           </Stack>
-
           <Stack sx={Styles.dots}>
             {HERO_SLIDES.map((slide, index) => (
               <Button

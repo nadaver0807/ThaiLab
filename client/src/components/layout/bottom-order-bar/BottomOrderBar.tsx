@@ -12,12 +12,10 @@ const BottomOrderBar: FC = () => (
       <Typography variant="body1" sx={Styles.label}>
         רוצים להזמין?
       </Typography>
-
       <Typography variant="body2" sx={Styles.hint}>
         משלוח, איסוף עצמי או ארוחת שף
       </Typography>
     </Stack>
-
     <LinkButton href={Route.Menu} size="large">
       לתפריט
     </LinkButton>

@@ -12,16 +12,13 @@ const ReviewsSection: FC = () => (
       <Typography variant="h2" component="h2" sx={Styles.title}>
         מה הלקוחות מספרים
       </Typography>
-
       <Stack sx={Styles.cards}>
         {REVIEWS.map((review) => (
           <Box key={review.id} sx={Styles.card}>
             <Rating value={review.rating} readOnly size="small" />
-
             <Typography variant="body1" sx={Styles.content}>
               {review.content}
             </Typography>
-
             <Typography variant="body2" sx={Styles.author}>
               {review.author}
             </Typography>

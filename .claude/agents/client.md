@@ -93,7 +93,7 @@ Every route-level page handles **Loading / Error / Empty / Data** explicitly, an
 ## Code Style
 
 - Arrow functions only. `type` over `interface`. Inline type imports. `??` over `||`. No `any`.
-- Blank line before/after every block and before every `return`; never two blank lines in a row.
+- Blank line before/after every block and before every `return`; never two blank lines in a row. Do not add blank lines between JSX tags.
 - Max 100 characters per line. No unused files or exports.
 - All user-facing text in Hebrew; Hebrew `aria-label` on icon-only buttons.
 

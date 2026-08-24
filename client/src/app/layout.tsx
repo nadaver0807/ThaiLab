@@ -32,14 +32,11 @@ const RootLayout = ({ children }: RootLayoutProps) => (
       <Providers>
         <Box sx={Styles.layout}>
           <Header />
-
           <Box component="main" sx={Styles.main}>
             {children}
           </Box>
-
           <Footer />
         </Box>
-
         <BottomOrderBar />
       </Providers>
     </body>

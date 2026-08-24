@@ -15,12 +15,10 @@ const Footer: FC = () => (
           <Typography variant="h3" component="p">
             {SITE.name}
           </Typography>
-
           <Typography variant="body2" sx={Styles.tagline}>
             {SITE.tagline}
           </Typography>
         </Box>
-
         <Stack component="nav" aria-label="ניווט תחתון" sx={Styles.nav}>
           {NAV_LINKS.map((link) => (
             <NavLink key={link.href} href={link.href}>
@@ -28,7 +26,6 @@ const Footer: FC = () => (
             </NavLink>
           ))}
         </Stack>
-
         <Stack component="address" sx={Styles.address}>
           {SITE.address && <Typography variant="body2">{SITE.address}</Typography>}
           {SITE.phone && <Typography variant="body2">{SITE.phone}</Typography>}
@@ -36,7 +33,6 @@ const Footer: FC = () => (
         </Stack>
       </Box>
     </PageContainer>
-
     <Typography variant="body2" sx={Styles.copyright}>
       © {new Date().getFullYear()} {SITE.name}. כל הזכויות שמורות.
     </Typography>
