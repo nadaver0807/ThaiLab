@@ -30,6 +30,9 @@ export class OrderItem extends BaseEntity {
   @Column({ type: "int" })
   unitPrice: number;
 
+  @Column({ type: "varchar" })
+  specialRequest: string;
+
   @CreateDateColumn()
   createDate: Date;
 

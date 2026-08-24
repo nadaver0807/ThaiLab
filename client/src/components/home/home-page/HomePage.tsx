@@ -10,13 +10,9 @@ import Styles from '@components/home/home-page/HomePage.style';
 const HomePage: FC = () => (
   <Box sx={Styles.page}>
     <HeroCarousel />
-
     <OrderCategories />
-
     <ChefStory />
-
     <ReviewsSection />
-
     <OrderCta />
   </Box>
 );

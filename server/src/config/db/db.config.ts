@@ -34,7 +34,7 @@ const options: DataSourceOptions = {
   ],
   host: DB_HOST,
   logging: WORKSPACE === "local",
-  migrations: [`${MIGRATIONS_PATH || "src/"}migrations/*{.ts,.js}`],
+  migrations: [`${MIGRATIONS_PATH || ""}migrations/*{.ts,.js}`],
   migrationsTableName: "migrations",
   migrationsTransactionMode: "each",
   namingStrategy: new SnakeNamingStrategy(),

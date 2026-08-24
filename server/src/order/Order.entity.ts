@@ -13,6 +13,7 @@ import {
 import { Costumer } from "@/costumer/Costumer.entity";
 import { OrderItem } from "@/order-item/OrderItem.entity";
 import { OrderStatus } from "@shared/enums/order-status.enum";
+import { OrderType } from "@shared/enums/order-type.enum";
 
 @Entity()
 export class Order extends BaseEntity {
@@ -34,6 +35,9 @@ export class Order extends BaseEntity {
 
   @Column({ type: "varchar", nullable: true })
   notes: string;
+
+  @Column({type: 'enum', enum: OrderType})
+  type:OrderType
 
   @CreateDateColumn()
   createDate: Date;

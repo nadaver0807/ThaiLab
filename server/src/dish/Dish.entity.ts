@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   BaseEntity,
   Column,
   CreateDateColumn,
@@ -39,9 +40,19 @@ export class Dish extends BaseEntity {
   @JoinColumn({ name: "category_uuid" })
   category: Category;
 
+  @Column({ type: "int" })
+  stock: number;
+
   @CreateDateColumn()
   createDate: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;
+
+  isInStock: boolean;
+
+  @AfterLoad()
+  checkIsInStock() {
+    this.isInStock = Boolean(this.stock > 0);
+  }
 }
