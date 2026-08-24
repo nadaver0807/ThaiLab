@@ -7,22 +7,33 @@ const theme = createTheme(
   {
     direction: 'rtl',
     palette: {
-      primary: { main: '#A32A1E', light: '#C8503F', dark: '#7A1B12', contrastText: '#FFFFFF' },
-      secondary: { main: '#5C7A29', light: '#8CAD4F', dark: '#3F5619', contrastText: '#FFFFFF' },
-      background: { default: '#FBF7F1', paper: '#FFFFFF' },
-      text: { primary: '#2B1D14', secondary: '#7A6A5C' },
-      divider: '#E6DCCE',
+      primary: { main: '#8BC34A', light: '#AED581', dark: '#558B2F', contrastText: '#0A0A0A' },
+      secondary: { main: '#556B2F', light: '#7A8B3F', dark: '#3E4E22', contrastText: '#FFFFFF' },
+      background: { default: '#E0F7FA', paper: '#FFFFFF' },
+      text: { primary: '#0A0A0A', secondary: '#2E3B1E' },
+      divider: '#C5E1A5',
     },
     shape: { borderRadius: 12 },
     typography: {
       fontFamily: 'var(--font-sans)',
-      h1: { fontSize: '3rem', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em' },
-      h2: { fontSize: '2.25rem', fontWeight: 700, letterSpacing: '-0.01em' },
-      h3: { fontSize: '1.5rem', fontWeight: 600 },
+      h1: {
+        fontFamily: 'var(--font-display)',
+        fontSize: '3rem',
+        fontWeight: 700,
+        lineHeight: 1.15,
+        letterSpacing: '-0.01em',
+      },
+      h2: {
+        fontFamily: 'var(--font-display)',
+        fontSize: '2.25rem',
+        fontWeight: 700,
+        letterSpacing: '0em',
+      },
+      h3: { fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 700 },
       subtitle1: { fontSize: '1.125rem', fontWeight: 400, lineHeight: 1.7 },
       body1: { fontSize: '1rem', lineHeight: 1.75 },
       body2: { fontSize: '0.875rem' },
-      button: { fontWeight: 600, textTransform: 'none' },
+      button: { fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'none' },
     },
     components: {
       MuiButton: {

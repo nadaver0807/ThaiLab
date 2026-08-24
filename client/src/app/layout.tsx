@@ -1,17 +1,30 @@
-import { type Metadata } from 'next';
-import { type ReactNode } from 'react';
-import { Heebo } from 'next/font/google';
-import { Box } from '@mui/material';
-import Providers from '@theme/Providers';
-import Header from '@components/layout/header/Header';
-import Footer from '@components/layout/footer/Footer';
-import BottomOrderBar from '@components/layout/bottom-order-bar/BottomOrderBar';
 import Styles from '@/app/RootLayout.style';
+import BottomOrderBar from '@components/layout/bottom-order-bar/BottomOrderBar';
+import Footer from '@components/layout/footer/Footer';
+import Header from '@components/layout/header/Header';
+import { Box } from '@mui/material';
 import { SITE } from '@shared/consts/site.const';
+import Providers from '@theme/Providers';
+import { type Metadata } from 'next';
+import { Heebo } from 'next/font/google';
+import localFont from 'next/font/local';
+import { type ReactNode } from 'react';
 
 const heebo = Heebo({
   variable: '--font-sans',
   subsets: ['hebrew', 'latin'],
+});
+
+const ozrad = localFont({
+  variable: '--font-display',
+  src: [{ path: './fonts/OzradCLM-Bold.woff', weight: '700', style: 'normal' }],
+  display: 'swap',
+});
+
+const chaipot = localFont({
+  variable: '--font-brand',
+  src: [{ path: './fonts/CRU-Chaipot.woff', weight: '700', style: 'normal' }],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -27,7 +40,7 @@ type RootLayoutProps = {
 };
 
 const RootLayout = ({ children }: RootLayoutProps) => (
-  <html lang="he" dir="rtl" className={heebo.variable}>
+  <html lang="he" dir="rtl" className={`${heebo.variable} ${ozrad.variable} ${chaipot.variable}`}>
     <body>
       <Providers>
         <Box sx={Styles.layout}>

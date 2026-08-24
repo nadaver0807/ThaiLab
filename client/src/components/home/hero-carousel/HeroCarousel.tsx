@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC } from 'react';
+import { useMemo, type FC } from 'react';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
@@ -12,7 +12,7 @@ import { Route } from '@shared/enums/route.enum';
 
 const HeroCarousel: FC = () => {
   const { activeIndex, goToSlide } = useHeroCarousel();
-  const activeSlide = HERO_SLIDES[activeIndex];
+  const activeSlide = useMemo(() => HERO_SLIDES[activeIndex], [activeIndex]);
 
   return (
     <Box component="section" sx={Styles.section}>
@@ -21,6 +21,9 @@ const HeroCarousel: FC = () => {
       ))}
       <PageContainer>
         <Box sx={Styles.content}>
+          <Typography variant="h2" component="p" sx={Styles.brand}>
+            {SITE.name}
+          </Typography>
           <Typography variant="body2" sx={Styles.tagline}>
             {SITE.tagline}
           </Typography>
@@ -32,10 +35,10 @@ const HeroCarousel: FC = () => {
           </Typography>
           <Stack sx={Styles.actions}>
             <LinkButton href={Route.Menu} size="large">
-              להזמנת אוכל
+              הזמנת משלוח
             </LinkButton>
-            <LinkButton href="#categories" variant="outlined" size="large">
-              מה אפשר להזמין
+            <LinkButton href={Route.Contact} variant="outlined" size="large">
+              הזמנת שולחן
             </LinkButton>
           </Stack>
           <Stack sx={Styles.dots}>

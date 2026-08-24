@@ -9,6 +9,7 @@ type LinkButtonProps = {
   href: string;
   variant?: 'text' | 'outlined' | 'contained';
   size?: 'small' | 'medium' | 'large';
+  color?: 'primary' | 'secondary';
   children: ReactNode;
 };
 
@@ -16,6 +17,7 @@ const LinkButton: FC<LinkButtonProps> = ({
   href,
   variant = 'contained',
   size = 'medium',
+  color = 'secondary',
   children,
 }) => (
   <Button
@@ -23,6 +25,7 @@ const LinkButton: FC<LinkButtonProps> = ({
     href={href}
     variant={variant}
     size={size}
+    color={color}
     sx={Styles.button}
   >
     {children}

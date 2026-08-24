@@ -2,19 +2,19 @@ import { type SxProps, type Theme } from '@mui/material';
 
 const section: SxProps<Theme> = {
   position: 'relative',
-  minHeight: { xs: 520, md: 640 },
+  minHeight: '100vh',
   display: 'flex',
   alignItems: 'center',
   overflow: 'hidden',
-  color: 'common.white',
+  color: 'text.primary',
 };
 
 const slide = (image: string, isActive: boolean): SxProps<Theme> => ({
   position: 'absolute',
   inset: 0,
-  backgroundImage: `linear-gradient(180deg, rgba(26,17,12,0.35) 0%, rgba(26,17,12,0.8) 100%),
+  backgroundImage: `linear-gradient(180deg, rgba(224,247,250,0.35) 0%, rgba(139,195,74,0.35) 100%),
     url(${image})`,
-  backgroundColor: 'text.primary',
+  backgroundColor: 'primary.light',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   opacity: isActive ? 1 : 0,
@@ -27,23 +27,37 @@ const content: SxProps<Theme> = {
   textAlign: 'center',
 };
 
+const brand: SxProps<Theme> = {
+  fontFamily: 'var(--font-brand)',
+  fontWeight: 700,
+  color: 'text.primary',
+  fontSize: { xs: '3.2rem', md: '5rem' },
+  lineHeight: 1,
+  marginBlockEnd: 2,
+  textShadow: '0 3px 16px rgba(255,255,255,0.5)',
+};
+
 const tagline: SxProps<Theme> = {
-  fontWeight: 600,
+  fontWeight: 700,
   letterSpacing: '0.28em',
   textTransform: 'uppercase',
-  color: 'secondary.light',
+  color: 'text.primary',
 };
 
 const title: SxProps<Theme> = {
   marginBlockStart: 2,
-  color: 'common.white',
+  color: 'text.primary',
+  fontWeight: 800,
+  WebkitTextStroke: '1px rgba(10,10,10,0.85)',
+  textShadow: '0 2px 12px rgba(255,255,255,0.45)',
 };
 
 const subtitle: SxProps<Theme> = {
   marginBlockStart: 3,
   marginInline: 'auto',
   maxWidth: 620,
-  color: 'grey.200',
+  color: 'text.primary',
+  fontWeight: 500,
 };
 
 const actions: SxProps<Theme> = {
@@ -70,6 +84,6 @@ const dot = (isActive: boolean): SxProps<Theme> => ({
   transition: 'width 0.4s ease, background-color 0.4s ease',
 });
 
-const Styles = { section, slide, content, tagline, title, subtitle, actions, dots, dot };
+const Styles = { section, slide, content, brand, tagline, title, subtitle, actions, dots, dot };
 
 export default Styles;

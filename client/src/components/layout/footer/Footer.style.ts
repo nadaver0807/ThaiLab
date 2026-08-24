@@ -1,22 +1,35 @@
 import { type SxProps, type Theme } from '@mui/material';
 
 const footer: SxProps<Theme> = {
-  backgroundColor: 'background.paper',
+  backgroundColor: '#FFFDF5',
   borderTop: 1,
   borderColor: 'divider',
   marginBlockStart: 'auto',
+  color: 'text.primary',
 };
 
 const grid: SxProps<Theme> = {
   display: 'grid',
   gap: 4,
-  gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
   paddingBlock: 6,
+};
+
+const brand: SxProps<Theme> = {
+  fontWeight: 800,
+  letterSpacing: '0.1em',
+  color: 'text.primary',
 };
 
 const tagline: SxProps<Theme> = {
   marginBlockStart: 1,
-  color: 'text.secondary',
+  color: 'text.primary',
+};
+
+const columnTitle: SxProps<Theme> = {
+  fontWeight: 700,
+  marginBlockEnd: 1,
+  color: 'text.primary',
 };
 
 const nav: SxProps<Theme> = {
@@ -24,14 +37,19 @@ const nav: SxProps<Theme> = {
 };
 
 const navLink: SxProps<Theme> = {
-  color: 'text.secondary',
+  color: 'text.primary',
   textDecoration: 'none',
-  '&:hover': { color: 'text.primary' },
+  '&:hover': { color: 'secondary.main' },
 };
 
-const address: SxProps<Theme> = {
-  fontStyle: 'normal',
-  color: 'text.secondary',
+const hours: SxProps<Theme> = {
+  gap: 0.5,
+  color: 'text.primary',
+};
+
+const contact: SxProps<Theme> = {
+  gap: 0.5,
+  color: 'text.primary',
 };
 
 const copyright: SxProps<Theme> = {
@@ -39,9 +57,20 @@ const copyright: SxProps<Theme> = {
   borderColor: 'divider',
   paddingBlock: 2,
   textAlign: 'center',
-  color: 'text.secondary',
+  color: 'text.primary',
 };
 
-const Styles = { footer, grid, tagline, nav, navLink, address, copyright };
+const Styles = {
+  footer,
+  grid,
+  brand,
+  tagline,
+  columnTitle,
+  nav,
+  navLink,
+  hours,
+  contact,
+  copyright,
+};
 
 export default Styles;

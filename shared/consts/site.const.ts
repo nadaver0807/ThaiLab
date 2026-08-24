@@ -3,15 +3,15 @@ import { type NavLink, type SiteConfig } from '@shared/types/site.type';
 
 export const SITE: SiteConfig = {
   name: 'ThaiLab',
-  tagline: 'אוכל תאילנדי אותנטי',
-  description: 'מסעדת אוכל תאילנדי אותנטי — מנות טריות, חומרי גלם איכותיים וטעמים אמיתיים מתאילנד.',
-  phone: '',
-  email: '',
-  address: '',
+  tagline: 'מטבח תאילנדי אותנטי',
+  description: 'ThaiLab — מטבח תאילנדי אותנטי, חומרי גלם טריים וטעמים אמיתיים מתאילנד.',
+  phone: '03-123-4567',
+  email: 'hello@thailab.co.il',
+  address: 'רחוב הבשמים 12, תל אביב',
   social: {
-    instagram: '',
-    facebook: '',
-    whatsapp: '',
+    instagram: 'https://www.instagram.com/thai__lab',
+    facebook: 'https://facebook.com/thailab',
+    whatsapp: 'https://wa.me/972501234567',
   },
 };
 

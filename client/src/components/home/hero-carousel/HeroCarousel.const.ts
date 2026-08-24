@@ -4,21 +4,21 @@ export const HERO_SLIDE_INTERVAL_MS = 6000;
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    id: 'curry',
+    id: 'interior',
     image: '/images/hero-curry.jpg',
-    title: 'מטבח תאילנדי אישי',
-    subtitle: 'כל מנה נבנית ביד אחת, מחומרי גלם טריים ומתבלינים שנטחנים במקום.',
+    title: 'ברוכים הבאים ל-ThaiLab',
+    subtitle: 'מטבח אישי ואותנטי, שבו כל ארוחה מרגישה כמו חופשה קטנה בתאילנד.',
   },
   {
-    id: 'chef',
+    id: 'food',
     image: '/images/hero-chef.jpg',
-    title: 'השף על האש',
-    subtitle: 'ווק לוהט, אש גבוהה וטעמים שמגיעים ישר מהשווקים של בנגקוק.',
+    title: 'ברוכים הבאים ל-ThaiLab',
+    subtitle: 'מנות תוססות וצבעוניות, מחומרי גלם טריים ותבלינים שנטחנים במקום.',
   },
   {
     id: 'table',
     image: '/images/hero-table.jpg',
-    title: 'שולחן שמחכה לכם',
-    subtitle: 'משלוח, איסוף עצמי או ארוחת שף פרטית — אתם בוחרים את החוויה.',
+    title: 'ברוכים הבאים ל-ThaiLab',
+    subtitle: 'משלוח, איסוף עצמי או שולחן שמור — אתם בוחרים את החוויה.',
   },
 ];
