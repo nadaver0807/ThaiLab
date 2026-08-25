@@ -2,23 +2,23 @@ import { type SxProps, type Theme } from '@mui/material';
 import { type MenuLinkTone } from '@components/home/menu-links/MenuLinks.type';
 
 const section: SxProps<Theme> = {
-  backgroundColor: 'primary.main',
-  paddingBlock: { xs: 8, md: 12 },
+  backgroundColor: 'background.default',
+  paddingBlock: { xs: 8, md: 14 },
   textAlign: 'center',
 };
 
 const tagline: SxProps<Theme> = {
-  fontWeight: 700,
-  letterSpacing: '0.24em',
+  fontWeight: 600,
+  letterSpacing: '0.32em',
   textTransform: 'uppercase',
-  color: 'text.primary',
+  color: 'secondary.main',
 };
 
 const title: SxProps<Theme> = {
   marginBlockStart: 1,
   marginBlockEnd: 5,
   color: 'text.primary',
-  fontWeight: 800,
+  fontWeight: 700,
 };
 
 const cards: SxProps<Theme> = {
@@ -34,32 +34,33 @@ const card = (tone: MenuLinkTone): SxProps<Theme> => ({
   gap: 1,
   textAlign: 'start',
   textDecoration: 'none',
-  padding: { xs: 3, md: 4 },
-  borderRadius: 3,
-  backgroundColor: tone === 'green' ? 'secondary.dark' : '#FFFDF5',
-  color: tone === 'green' ? 'common.white' : 'text.primary',
+  padding: { xs: 3.5, md: 4.5 },
+  borderRadius: 2,
+  backgroundColor: tone === 'dark' ? 'primary.dark' : 'background.paper',
+  color: tone === 'dark' ? 'common.white' : 'text.primary',
   border: '1px solid',
-  borderColor: tone === 'green' ? 'secondary.dark' : 'divider',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  borderColor: tone === 'dark' ? 'rgba(176,141,87,0.4)' : 'divider',
+  transition: 'transform 0.35s ease, box-shadow 0.35s ease',
   '&:hover': {
-    transform: 'translateY(-6px)',
-    boxShadow: '0 22px 44px -24px rgba(0,0,0,0.45)',
+    transform: 'translateY(-8px)',
+    boxShadow: '0 30px 60px -30px rgba(0,0,0,0.55)',
   },
 });
 
 const cardSubtitle: SxProps<Theme> = {
   fontWeight: 700,
-  letterSpacing: '0.14em',
+  letterSpacing: '0.18em',
   textTransform: 'uppercase',
-  opacity: 0.85,
+  opacity: 0.7,
 };
 
 const cardTitle: SxProps<Theme> = {
-  fontWeight: 800,
+  fontWeight: 700,
 };
 
 const cardDescription: SxProps<Theme> = {
   flex: 1,
+  opacity: 0.85,
 };
 
 const cardAction: SxProps<Theme> = {
@@ -67,6 +68,7 @@ const cardAction: SxProps<Theme> = {
   alignItems: 'center',
   gap: 0.5,
   marginBlockStart: 2,
+  color: 'secondary.main',
 };
 
 const Styles = {

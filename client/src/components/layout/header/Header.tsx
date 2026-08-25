@@ -34,11 +34,11 @@ const Header: FC = () => (
           {SITE.name}
         </Typography>
         <Stack sx={Styles.actions}>
-          <LinkButton href={Route.Menu} variant="contained">
-            הזמנת משלוח
-          </LinkButton>
           <LinkButton href={Route.Contact} variant="contained">
-            הזמנת שולחן
+            הזמנת אירוע פרטי
+          </LinkButton>
+          <LinkButton href={Route.Menu} variant="outlined">
+            סיור בסטודיו
           </LinkButton>
         </Stack>
       </Toolbar>

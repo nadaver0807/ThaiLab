@@ -1,4 +1,4 @@
-export type MenuLinkTone = 'green' | 'cream';
+export type MenuLinkTone = 'dark' | 'cream';
 
 export type MenuLink = {
   id: string;

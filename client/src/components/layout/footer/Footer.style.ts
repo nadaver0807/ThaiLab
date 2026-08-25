@@ -1,35 +1,37 @@
 import { type SxProps, type Theme } from '@mui/material';
 
 const footer: SxProps<Theme> = {
-  backgroundColor: '#FFFDF5',
-  borderTop: 1,
-  borderColor: 'divider',
+  backgroundColor: 'primary.dark',
+  borderTop: '1px solid rgba(176,141,87,0.3)',
   marginBlockStart: 'auto',
-  color: 'text.primary',
+  color: 'common.white',
 };
 
 const grid: SxProps<Theme> = {
   display: 'grid',
   gap: 4,
   gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
-  paddingBlock: 6,
+  paddingBlock: 8,
 };
 
 const brand: SxProps<Theme> = {
-  fontWeight: 800,
+  fontFamily: 'var(--font-brand)',
+  fontWeight: 700,
   letterSpacing: '0.1em',
-  color: 'text.primary',
+  color: 'common.white',
 };
 
 const tagline: SxProps<Theme> = {
   marginBlockStart: 1,
-  color: 'text.primary',
+  color: '#C9A567',
+  letterSpacing: '0.12em',
+  textTransform: 'uppercase',
 };
 
 const columnTitle: SxProps<Theme> = {
   fontWeight: 700,
   marginBlockEnd: 1,
-  color: 'text.primary',
+  color: 'common.white',
 };
 
 const nav: SxProps<Theme> = {
@@ -37,27 +39,26 @@ const nav: SxProps<Theme> = {
 };
 
 const navLink: SxProps<Theme> = {
-  color: 'text.primary',
+  color: 'rgba(255,255,255,0.82)',
   textDecoration: 'none',
   '&:hover': { color: 'secondary.main' },
 };
 
 const hours: SxProps<Theme> = {
   gap: 0.5,
-  color: 'text.primary',
+  color: 'rgba(255,255,255,0.82)',
 };
 
 const contact: SxProps<Theme> = {
   gap: 0.5,
-  color: 'text.primary',
+  color: 'rgba(255,255,255,0.82)',
 };
 
 const copyright: SxProps<Theme> = {
-  borderTop: 1,
-  borderColor: 'divider',
+  borderTop: '1px solid rgba(255,255,255,0.12)',
   paddingBlock: 2,
   textAlign: 'center',
-  color: 'text.primary',
+  color: 'rgba(255,255,255,0.7)',
 };
 
 const Styles = {

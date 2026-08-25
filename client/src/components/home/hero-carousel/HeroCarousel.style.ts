@@ -6,58 +6,61 @@ const section: SxProps<Theme> = {
   display: 'flex',
   alignItems: 'center',
   overflow: 'hidden',
-  color: 'text.primary',
+  color: 'common.white',
 };
 
 const slide = (image: string, isActive: boolean): SxProps<Theme> => ({
   position: 'absolute',
   inset: 0,
-  backgroundImage: `linear-gradient(180deg, rgba(224,247,250,0.35) 0%, rgba(139,195,74,0.35) 100%),
+  backgroundImage: `linear-gradient(180deg, rgba(26,26,26,0.35) 0%, rgba(26,26,26,0.55) 55%, rgba(26,26,26,0.85) 100%),
     url(${image})`,
-  backgroundColor: 'primary.light',
+  backgroundColor: 'primary.dark',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   opacity: isActive ? 1 : 0,
-  transition: 'opacity 1.6s ease-in-out',
+  transform: isActive ? 'scale(1.05)' : 'scale(1)',
+  transition: 'opacity 1.6s ease-in-out, transform 7s ease-out',
 });
 
 const content: SxProps<Theme> = {
   position: 'relative',
-  paddingBlock: { xs: 10, md: 14 },
+  paddingBlock: { xs: 12, md: 16 },
   textAlign: 'center',
 };
 
 const brand: SxProps<Theme> = {
   fontFamily: 'var(--font-brand)',
   fontWeight: 700,
-  color: 'text.primary',
+  color: 'common.white',
   fontSize: { xs: '3.2rem', md: '5rem' },
   lineHeight: 1,
   marginBlockEnd: 2,
-  textShadow: '0 3px 16px rgba(255,255,255,0.5)',
+  textShadow: '0 4px 30px rgba(0,0,0,0.5)',
 };
 
 const tagline: SxProps<Theme> = {
-  fontWeight: 700,
-  letterSpacing: '0.28em',
+  fontWeight: 600,
+  letterSpacing: '0.34em',
   textTransform: 'uppercase',
-  color: 'text.primary',
+  color: 'secondary.light',
 };
 
 const title: SxProps<Theme> = {
   marginBlockStart: 2,
-  color: 'text.primary',
-  fontWeight: 800,
-  WebkitTextStroke: '1px rgba(10,10,10,0.85)',
-  textShadow: '0 2px 12px rgba(255,255,255,0.45)',
+  marginInline: 'auto',
+  maxWidth: 900,
+  color: 'common.white',
+  fontWeight: 700,
+  letterSpacing: '0.01em',
+  textShadow: '0 6px 30px rgba(0,0,0,0.55)',
 };
 
 const subtitle: SxProps<Theme> = {
   marginBlockStart: 3,
   marginInline: 'auto',
-  maxWidth: 620,
-  color: 'text.primary',
-  fontWeight: 500,
+  maxWidth: 640,
+  color: 'rgba(255,255,255,0.88)',
+  fontWeight: 400,
 };
 
 const actions: SxProps<Theme> = {
@@ -80,7 +83,7 @@ const dot = (isActive: boolean): SxProps<Theme> => ({
   minWidth: 0,
   padding: 0,
   borderRadius: 999,
-  backgroundColor: isActive ? 'primary.main' : 'rgba(255,255,255,0.5)',
+  backgroundColor: isActive ? 'secondary.main' : 'rgba(255,255,255,0.45)',
   transition: 'width 0.4s ease, background-color 0.4s ease',
 });
 

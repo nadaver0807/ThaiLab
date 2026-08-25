@@ -1,7 +1,8 @@
 import { type SxProps, type Theme } from '@mui/material';
 
 const appBar: SxProps<Theme> = {
-  backgroundColor: '#FFFDF5',
+  backgroundColor: 'rgba(247, 241, 230, 0.9)',
+  backdropFilter: 'blur(8px)',
   borderBottom: 1,
   borderColor: 'divider',
 };
@@ -21,20 +22,20 @@ const side: SxProps<Theme> = {
 };
 
 const menuIcon: SxProps<Theme> = {
-  color: 'secondary.dark',
+  color: 'text.primary',
 };
 
 const socialIcon: SxProps<Theme> = {
-  color: 'text.primary',
+  color: 'secondary.main',
 };
 
 const brand: SxProps<Theme> = {
-  color: 'text.primary',
+  color: 'primary.main',
   textDecoration: 'none',
   fontFamily: 'var(--font-brand)',
   fontWeight: 700,
   fontSize: { xs: '1.7rem', md: '2.2rem' },
-  letterSpacing: '0.04em',
+  letterSpacing: '0.06em',
   whiteSpace: 'nowrap',
   textAlign: 'center',
 };

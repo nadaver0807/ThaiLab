@@ -14,10 +14,10 @@ const AboutAtmosphere: FC = () => (
       <Box sx={Styles.card}>
         <Stack sx={Styles.text}>
           <Typography variant="body2" sx={Styles.tagline}>
-            הסיפור והאווירה
+            About &amp; Atmosphere
           </Typography>
           <Typography variant="h2" component="h2" sx={Styles.title}>
-            מתכונים תאילנדיים, אווירה אותנטית
+            מטבח. מעבדה. חוויה.
           </Typography>
           {ABOUT_ATMOSPHERE_PARAGRAPHS.map((paragraph) => (
             <Typography key={paragraph} variant="body1" sx={Styles.paragraph}>

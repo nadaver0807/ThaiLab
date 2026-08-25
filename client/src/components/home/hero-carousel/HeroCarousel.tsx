@@ -25,7 +25,7 @@ const HeroCarousel: FC = () => {
             {SITE.name}
           </Typography>
           <Typography variant="body2" sx={Styles.tagline}>
-            {SITE.tagline}
+            Private Thai Chef
           </Typography>
           <Typography variant="h1" component="h1" sx={Styles.title}>
             {activeSlide.title}
@@ -34,11 +34,11 @@ const HeroCarousel: FC = () => {
             {activeSlide.subtitle}
           </Typography>
           <Stack sx={Styles.actions}>
-            <LinkButton href={Route.Menu} size="large">
-              הזמנת משלוח
+            <LinkButton href={Route.Contact} size="large">
+              הזמנת אירוע פרטי
             </LinkButton>
-            <LinkButton href={Route.Contact} variant="outlined" size="large">
-              הזמנת שולחן
+            <LinkButton href={Route.Menu} variant="outlined" size="large">
+              לתפריטי האירועים
             </LinkButton>
           </Stack>
           <Stack sx={Styles.dots}>

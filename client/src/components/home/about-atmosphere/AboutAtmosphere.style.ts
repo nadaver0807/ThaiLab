@@ -2,40 +2,50 @@ import { type SxProps, type Theme } from '@mui/material';
 
 const section: SxProps<Theme> = {
   backgroundColor: 'background.default',
-  paddingBlock: { xs: 8, md: 12 },
+  paddingBlock: { xs: 8, md: 14 },
 };
 
 const card: SxProps<Theme> = {
   position: 'relative',
-  backgroundColor: 'primary.light',
-  borderRadius: 4,
-  padding: { xs: 3, md: 8 },
-  border: '10px solid',
-  borderColor: '#B08D57',
-  boxShadow: '0 24px 60px -30px rgba(85,107,47,0.5)',
+  backgroundColor: 'primary.dark',
+  borderRadius: 2,
+  padding: { xs: 4, md: 9 },
+  border: '1px solid',
+  borderColor: 'rgba(176, 141, 87, 0.5)',
+  boxShadow: '0 40px 80px -40px rgba(0,0,0,0.7)',
+  overflow: 'hidden',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    inset: 12,
+    border: '1px solid rgba(176, 141, 87, 0.35)',
+    borderRadius: 1,
+    pointerEvents: 'none',
+  },
 };
 
 const text: SxProps<Theme> = {
-  gap: 2,
+  position: 'relative',
+  gap: 2.5,
   maxWidth: 760,
   marginInline: 'auto',
   textAlign: 'center',
 };
 
 const tagline: SxProps<Theme> = {
-  fontWeight: 700,
-  letterSpacing: '0.24em',
+  fontWeight: 600,
+  letterSpacing: '0.32em',
   textTransform: 'uppercase',
-  color: 'text.primary',
+  color: '#C9A567',
 };
 
 const title: SxProps<Theme> = {
-  color: 'text.primary',
-  fontWeight: 800,
+  color: 'common.white',
+  fontWeight: 700,
 };
 
 const paragraph: SxProps<Theme> = {
-  color: 'text.primary',
+  color: 'rgba(255,255,255,0.82)',
 };
 
 const action: SxProps<Theme> = {

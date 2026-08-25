@@ -12,10 +12,10 @@ const MenuLinks: FC = () => (
   <Box component="section" id="menus" sx={Styles.section}>
     <PageContainer>
       <Typography variant="body2" sx={Styles.tagline}>
-        התפריטים שלנו
+        Event Menus
       </Typography>
       <Typography variant="h2" component="h2" sx={Styles.title}>
-        מתכונים תאילנדיים
+        תפריטים לאירועים פרטיים
       </Typography>
       <Stack sx={Styles.cards}>
         {MENU_LINKS.map((link) => (
