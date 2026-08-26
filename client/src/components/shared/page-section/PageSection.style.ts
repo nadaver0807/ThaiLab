@@ -1,7 +1,8 @@
 import { type SxProps, type Theme } from '@mui/material';
 
 const section: SxProps<Theme> = {
-  paddingBlock: 8,
+  paddingBlockStart: { xs: 12, md: 16 },
+  paddingBlockEnd: { xs: 8, md: 10 },
 };
 
 const description: SxProps<Theme> = {

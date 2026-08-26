@@ -1,9 +1,10 @@
-export type OrderCategory = {
+export type MenuLinkTone = 'dark' | 'cream';
+
+export type MenuLink = {
   id: string;
   title: string;
   subtitle: string;
   description: string;
-  image: string;
   href: string;
-  actionLabel: string;
+  tone: MenuLinkTone;
 };
