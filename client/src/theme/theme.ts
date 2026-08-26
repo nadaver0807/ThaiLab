@@ -13,6 +13,7 @@ const theme = createTheme(
       secondary: { main: '#E31C24', light: '#F04A50', dark: '#B01218', contrastText: '#FFFFFF' },
       background: { default: '#F5F1E9', paper: '#FBF8F1' },
       text: { primary: '#212121', secondary: '#6A5B3E' },
+      warning: { main: '#C9A567' },
       divider: 'rgba(33, 33, 33, 0.12)',
     },
     shape: { borderRadius: 6 },

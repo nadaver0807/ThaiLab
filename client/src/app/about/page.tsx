@@ -1,11 +1,11 @@
 import { type Metadata } from 'next';
-import PageSection from '@components/shared/page-section/PageSection';
+import AboutMe from '@/app/about/AboutMe';
 
 export const metadata: Metadata = {
   title: 'אודות',
-  description: 'הסיפור שמאחורי המסעדה.',
+  description: 'הסיפור שמאחורי Thai Lab — שף פרטי, מטבח תאילנדי אותנטי וחוויה קולינרית אישית.',
 };
 
-const AboutPage = () => <PageSection title="אודות" description="התוכן יתווסף לפי האפיון." />;
+const Page = () => <AboutMe />;
 
-export default AboutPage;
+export default Page;

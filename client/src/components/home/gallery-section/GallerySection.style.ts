@@ -22,7 +22,7 @@ const title: SxProps<Theme> = {
 
 const grid: SxProps<Theme> = {
   display: 'grid',
-  gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+  gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
   gridAutoRows: { xs: 130, md: 180 },
   gap: 2,
   '& > *:nth-of-type(1)': { gridRow: 'span 2' },

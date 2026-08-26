@@ -23,7 +23,7 @@ const brand: SxProps<Theme> = {
 
 const tagline: SxProps<Theme> = {
   marginBlockStart: 1,
-  color: '#C9A567',
+  color: 'warning.main',
   letterSpacing: '0.12em',
   textTransform: 'uppercase',
 };

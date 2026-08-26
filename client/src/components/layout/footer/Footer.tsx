@@ -1,11 +1,11 @@
 'use client';
 
-import { type FC } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
-import PageContainer from '@components/shared/page-container/PageContainer';
-import NavLink from '@components/shared/nav-link/NavLink';
 import Styles from '@components/layout/footer/Footer.style';
+import NavLink from '@components/shared/nav-link/NavLink';
+import PageContainer from '@components/shared/page-container/PageContainer';
+import { Box, Stack, Typography } from '@mui/material';
 import { NAV_LINKS, SITE } from '@shared/consts/site.const';
+import { type FC } from 'react';
 import { OPENING_HOURS } from './Footer.const';
 
 const Footer: FC = () => (

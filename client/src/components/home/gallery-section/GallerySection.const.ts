@@ -1,10 +1,11 @@
 import { type GalleryImage } from './GallerySection.type';
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: 'dish-1', image: '/images/hero-curry.jpg', alt: 'קארי תאילנדי צבעוני' },
-  { id: 'interior-1', image: '/images/hero-table.jpg', alt: 'חלל אכילה מלא צמחייה' },
-  { id: 'chef-1', image: '/images/hero-chef.jpg', alt: 'השף מכין מנה על הווק' },
-  { id: 'dish-2', image: '/images/hero-table.jpg', alt: 'שולחן ערוך למנות שיתוף' },
-  { id: 'interior-2', image: '/images/hero-curry.jpg', alt: 'פינת ישיבה מוארת' },
-  { id: 'chef-2', image: '/images/hero-chef.jpg', alt: 'מנה מוגשת חמה' },
+  { id: 'ofer-serving', image: '/images/ofer-serving.jpeg', alt: '' },
+  { id: 'banana-leaf', image: '/images/banana-leaf.jpeg', alt: '' },
+  { id: 'raw-fish', image: '/images/raw-fish.jpeg', alt: '' },
+  { id: 'chopsticks', image: '/images/chopsticks.jpeg', alt: '' },
+  { id: 'shrimp', image: '/images/shrimp.jpeg', alt: '' },
+  { id: 'scallop', image: '/images/scallop.jpeg', alt: '' },
+  { id: 'coconut-balls', image: '/images/coconut-balls.jpeg', alt: '' },
 ];

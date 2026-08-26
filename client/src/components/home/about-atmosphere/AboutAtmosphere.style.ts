@@ -27,16 +27,35 @@ const card: SxProps<Theme> = {
 const text: SxProps<Theme> = {
   position: 'relative',
   gap: 2.5,
-  maxWidth: 760,
-  marginInline: 'auto',
-  textAlign: 'center',
+  flex: 1,
+  textAlign: { xs: 'center', md: 'start' },
 };
+
+const layout: SxProps<Theme> = {
+  position: 'relative',
+  display: 'flex',
+  flexDirection: { xs: 'column', md: 'row' },
+  gap: { xs: 4, md: 6 },
+  alignItems: 'center',
+};
+
+const image = (src: string): SxProps<Theme> => ({
+  flexShrink: 0,
+  width: { xs: '100%', md: 300 },
+  height: { xs: 260, md: 360 },
+  borderRadius: 1,
+  backgroundImage: `url(${src})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  border: '1px solid rgba(176, 141, 87, 0.5)',
+  boxShadow: '0 24px 50px -30px rgba(0,0,0,0.8)',
+});
 
 const tagline: SxProps<Theme> = {
   fontWeight: 600,
   letterSpacing: '0.32em',
   textTransform: 'uppercase',
-  color: '#C9A567',
+  color: 'warning.main',
 };
 
 const title: SxProps<Theme> = {
@@ -51,9 +70,9 @@ const paragraph: SxProps<Theme> = {
 const action: SxProps<Theme> = {
   marginBlockStart: 2,
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: { xs: 'center', md: 'flex-start' },
 };
 
-const Styles = { section, card, text, tagline, title, paragraph, action };
+const Styles = { section, card, layout, image, text, tagline, title, paragraph, action };
 
 export default Styles;

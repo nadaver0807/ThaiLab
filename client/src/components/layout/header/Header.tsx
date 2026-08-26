@@ -1,10 +1,11 @@
 'use client';
 
 import { type FC } from 'react';
-import { AppBar, IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Stack, Toolbar } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import NextLink from 'next/link';
+import Image from 'next/image';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import Styles from '@components/layout/header/Header.style';
@@ -30,15 +31,22 @@ const Header: FC = () => (
             <InstagramIcon />
           </IconButton>
         </Stack>
-        <Typography component={NextLink} href={Route.Home} variant="h3" sx={Styles.brand}>
-          {SITE.name}
-        </Typography>
+        <NextLink href={Route.Home} aria-label={SITE.name} style={Styles.brandLink}>
+          <Image
+            src="/images/thailab-label.jpeg"
+            alt={SITE.name}
+            width={200}
+            height={64}
+            priority
+            style={Styles.brandImage}
+          />
+        </NextLink>
         <Stack sx={Styles.actions}>
           <LinkButton href={Route.Contact} variant="contained">
             הזמנת אירוע פרטי
           </LinkButton>
           <LinkButton href={Route.Menu} variant="outlined">
-            סיור בסטודיו
+            תפריט
           </LinkButton>
         </Stack>
       </Toolbar>

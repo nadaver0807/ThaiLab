@@ -1,7 +1,7 @@
 import { type SxProps, type Theme } from '@mui/material';
 
 const link: SxProps<Theme> = {
-  color: 'text.secondary',
+  color: 'warning.main',
   textDecoration: 'none',
   '&:hover': { color: 'text.primary' },
 };

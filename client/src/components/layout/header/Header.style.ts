@@ -1,10 +1,10 @@
+import { type CSSProperties } from 'react';
 import { type SxProps, type Theme } from '@mui/material';
 
 const appBar: SxProps<Theme> = {
-  backgroundColor: 'rgba(247, 241, 230, 0.9)',
-  backdropFilter: 'blur(8px)',
+  backgroundColor: '#E5DBC9',
   borderBottom: 1,
-  borderColor: 'divider',
+  borderColor: 'rgba(58, 63, 39, 0.14)',
 };
 
 const toolbar: SxProps<Theme> = {
@@ -29,15 +29,15 @@ const socialIcon: SxProps<Theme> = {
   color: 'secondary.main',
 };
 
-const brand: SxProps<Theme> = {
-  color: 'primary.main',
+const brandLink: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
   textDecoration: 'none',
-  fontFamily: 'var(--font-brand)',
-  fontWeight: 700,
-  fontSize: { xs: '1.7rem', md: '2.2rem' },
-  letterSpacing: '0.06em',
-  whiteSpace: 'nowrap',
-  textAlign: 'center',
+};
+
+const brandImage: CSSProperties = {
+  height: 'clamp(36px, 6vw, 52px)',
+  width: 'auto',
 };
 
 const actions: SxProps<Theme> = {
@@ -49,6 +49,6 @@ const actions: SxProps<Theme> = {
   display: { xs: 'none', md: 'flex' },
 };
 
-const Styles = { appBar, toolbar, side, menuIcon, socialIcon, brand, actions };
+const Styles = { appBar, toolbar, side, menuIcon, socialIcon, brandLink, brandImage, actions };
 
 export default Styles;
