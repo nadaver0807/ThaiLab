@@ -19,7 +19,7 @@ const heroImage = (src: string): SxProps<Theme> => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   border: '1px solid rgba(176, 141, 87, 0.5)',
-  boxShadow: '0 40px 80px -40px rgba(0,0,0,0.6)',
+  boxShadow: '0 40px 80px -40px rgba(74, 81, 56, 0.45)',
 });
 
 const heroText: SxProps<Theme> = {
@@ -56,7 +56,7 @@ const blockDark: SxProps<Theme> = {
   padding: { xs: 4, md: 8 },
   border: '1px solid',
   borderColor: 'rgba(176, 141, 87, 0.5)',
-  boxShadow: '0 40px 80px -40px rgba(0,0,0,0.7)',
+  boxShadow: '0 40px 80px -40px rgba(74, 81, 56, 0.45)',
 };
 
 const sectionHeading: SxProps<Theme> = {

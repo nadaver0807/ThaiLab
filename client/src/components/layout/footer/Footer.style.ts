@@ -1,8 +1,8 @@
 import { type SxProps, type Theme } from '@mui/material';
 
 const footer: SxProps<Theme> = {
-  backgroundColor: 'primary.dark',
-  borderTop: '1px solid rgba(176,141,87,0.3)',
+  backgroundColor: 'primary.main',
+  borderTop: '1px solid rgba(201, 169, 120, 0.35)',
   marginBlockStart: 'auto',
   color: 'common.white',
 };
@@ -41,7 +41,7 @@ const nav: SxProps<Theme> = {
 const navLink: SxProps<Theme> = {
   color: 'rgba(255,255,255,0.82)',
   textDecoration: 'none',
-  '&:hover': { color: 'secondary.main' },
+  '&:hover': { color: 'warning.main' },
 };
 
 const hours: SxProps<Theme> = {
@@ -52,6 +52,10 @@ const hours: SxProps<Theme> = {
 const contact: SxProps<Theme> = {
   gap: 0.5,
   color: 'rgba(255,255,255,0.82)',
+};
+
+const orderCta: SxProps<Theme> = {
+  marginBlockStart: 2,
 };
 
 const copyright: SxProps<Theme> = {
@@ -71,6 +75,7 @@ const Styles = {
   navLink,
   hours,
   contact,
+  orderCta,
   copyright,
 };
 

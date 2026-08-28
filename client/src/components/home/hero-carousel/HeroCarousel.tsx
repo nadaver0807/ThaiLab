@@ -4,6 +4,7 @@ import { useMemo, type FC } from 'react';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
+import OrderButton from '@components/shared/order-button/OrderButton';
 import Styles from '@components/home/hero-carousel/HeroCarousel.style';
 import { HERO_SLIDES } from '@components/home/hero-carousel/HeroCarousel.const';
 import useHeroCarousel from '@components/home/hero-carousel/useHeroCarousel';
@@ -34,11 +35,9 @@ const HeroCarousel: FC = () => {
             {activeSlide.subtitle}
           </Typography>
           <Stack sx={Styles.actions}>
-            <LinkButton href={Route.Contact} size="large">
+            <OrderButton size="large" />
+            <LinkButton href={Route.Contact} variant="outlined" size="large">
               הזמנת אירוע פרטי
-            </LinkButton>
-            <LinkButton href={Route.Menu} variant="outlined" size="large">
-              לתפריטי האירועים
             </LinkButton>
           </Stack>
           <Stack sx={Styles.dots}>

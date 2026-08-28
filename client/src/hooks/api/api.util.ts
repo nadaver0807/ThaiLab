@@ -1,19 +1,30 @@
+import axios from 'axios';
 import { API_BASE_URL } from './api.const';
 
-export const request = async <TResponse>(
-  path: string,
-  options?: RequestInit,
-): Promise<TResponse> => {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options,
-  });
+/** Shape of the error body returned by the Express server. */
+type ApiErrorBody = { message?: string };
 
-  if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as { message?: string } | null;
+const Api = axios.create({
+  baseURL: API_BASE_URL,
+  responseType: 'json',
+  headers: { 'Content-Type': 'application/json' },
+});
 
-    throw new Error(body?.message ?? 'הבקשה נכשלה');
-  }
+/**
+ * Normalises axios errors into a plain `Error` carrying the server's Hebrew
+ * message, so components can render `error.message` directly.
+ */
+Api.interceptors.response.use(
+  (response) => response,
+  (error: unknown) => {
+    if (axios.isAxiosError<ApiErrorBody>(error)) {
+      const message = error.response?.data?.message ?? 'הבקשה נכשלה';
 
-  return response.json() as Promise<TResponse>;
-};
+      return Promise.reject(new Error(message));
+    }
+
+    return Promise.reject(error instanceof Error ? error : new Error('הבקשה נכשלה'));
+  },
+);
+
+export default Api;

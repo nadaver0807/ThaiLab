@@ -1,10 +1,11 @@
 import { type CSSProperties } from 'react';
 import { type SxProps, type Theme } from '@mui/material';
 
+/** קרם רך מהלוגו — הלוגו שקוף ולכן משתלב ישירות ברקע. */
 const appBar: SxProps<Theme> = {
-  backgroundColor: '#E5DBC9',
+  backgroundColor: '#F2ECDF',
   borderBottom: 1,
-  borderColor: 'rgba(58, 63, 39, 0.14)',
+  borderColor: 'divider',
 };
 
 const toolbar: SxProps<Theme> = {
@@ -22,11 +23,13 @@ const side: SxProps<Theme> = {
 };
 
 const menuIcon: SxProps<Theme> = {
-  color: 'text.primary',
+  color: 'primary.main',
+  '&:hover': { backgroundColor: 'rgba(74, 81, 56, 0.08)' },
 };
 
 const socialIcon: SxProps<Theme> = {
-  color: 'secondary.main',
+  color: 'primary.main',
+  '&:hover': { color: 'secondary.dark', backgroundColor: 'rgba(74, 81, 56, 0.08)' },
 };
 
 const brandLink: CSSProperties = {
@@ -36,8 +39,9 @@ const brandLink: CSSProperties = {
 };
 
 const brandImage: CSSProperties = {
-  height: 'clamp(36px, 6vw, 52px)',
+  height: 'clamp(34px, 5.5vw, 48px)',
   width: 'auto',
+  objectFit: 'contain',
 };
 
 const actions: SxProps<Theme> = {

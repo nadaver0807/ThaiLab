@@ -8,6 +8,7 @@ import NextLink from 'next/link';
 import Image from 'next/image';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
+import OrderButton from '@components/shared/order-button/OrderButton';
 import Styles from '@components/layout/header/Header.style';
 import { SITE } from '@shared/consts/site.const';
 import { Route } from '@shared/enums/route.enum';
@@ -35,18 +36,16 @@ const Header: FC = () => (
           <Image
             src="/images/thailab-label.jpeg"
             alt={SITE.name}
-            width={200}
-            height={64}
+            width={1024}
+            height={297}
             priority
             style={Styles.brandImage}
           />
         </NextLink>
         <Stack sx={Styles.actions}>
-          <LinkButton href={Route.Contact} variant="contained">
-            הזמנת אירוע פרטי
-          </LinkButton>
-          <LinkButton href={Route.Menu} variant="outlined">
-            תפריט
+          <OrderButton />
+          <LinkButton href={Route.Contact} variant="outlined" color="primary">
+            אירוע פרטי
           </LinkButton>
         </Stack>
       </Toolbar>

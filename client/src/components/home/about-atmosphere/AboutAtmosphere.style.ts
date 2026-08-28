@@ -12,7 +12,7 @@ const card: SxProps<Theme> = {
   padding: { xs: 4, md: 9 },
   border: '1px solid',
   borderColor: 'rgba(176, 141, 87, 0.5)',
-  boxShadow: '0 40px 80px -40px rgba(0,0,0,0.7)',
+  boxShadow: '0 40px 80px -40px rgba(74, 81, 56, 0.45)',
   overflow: 'hidden',
   '&::before': {
     content: '""',
@@ -48,7 +48,7 @@ const image = (src: string): SxProps<Theme> => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   border: '1px solid rgba(176, 141, 87, 0.5)',
-  boxShadow: '0 24px 50px -30px rgba(0,0,0,0.8)',
+  boxShadow: '0 24px 50px -30px rgba(74, 81, 56, 0.45)',
 });
 
 const tagline: SxProps<Theme> = {

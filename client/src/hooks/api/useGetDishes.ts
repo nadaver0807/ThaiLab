@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { type Dish } from '@shared/types/site.type';
-import { request } from './api.util';
+import Api from './api.util';
 import { type DishCategory } from '@shared/enums/dish-category.enum';
 
 export const USE_GET_DISHES_KEY = 'useGetDishes';
@@ -12,9 +12,11 @@ type GetDishesParams = {
 };
 
 export const getDishes = async ({ category }: GetDishesParams): Promise<Dish[]> => {
-  const query = category ? `?category=${category}` : '';
+  const { data } = await Api.get<Dish[]>('/dishes', {
+    params: category ? { category } : undefined,
+  });
 
-  return request<Dish[]>(`/dishes${query}`);
+  return data;
 };
 
 const useGetDishes = (params: GetDishesParams = {}) =>
