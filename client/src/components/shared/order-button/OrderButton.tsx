@@ -17,7 +17,11 @@ type OrderButtonProps = {
   short?: boolean;
 };
 
-const OrderButton: FC<OrderButtonProps> = ({ size = 'medium', fullWidth = false, short = false }) => (
+const OrderButton: FC<OrderButtonProps> = ({
+  size = 'medium',
+  fullWidth = false,
+  short = false,
+}) => (
   <Button
     component={NextLink}
     href={ORDER_HREF}

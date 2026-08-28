@@ -1,7 +1,6 @@
 import { type CSSProperties } from 'react';
 import { type SxProps, type Theme } from '@mui/material';
 
-/** קרם רך מהלוגו — הלוגו שקוף ולכן משתלב ישירות ברקע. */
 const appBar: SxProps<Theme> = {
   backgroundColor: '#F2ECDF',
   borderBottom: 1,

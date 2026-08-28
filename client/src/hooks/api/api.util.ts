@@ -10,10 +10,6 @@ const Api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-/**
- * Normalises axios errors into a plain `Error` carrying the server's Hebrew
- * message, so components can render `error.message` directly.
- */
 Api.interceptors.response.use(
   (response) => response,
   (error: unknown) => {
