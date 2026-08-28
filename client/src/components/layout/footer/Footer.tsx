@@ -2,6 +2,7 @@
 
 import Styles from '@components/layout/footer/Footer.style';
 import NavLink from '@components/shared/nav-link/NavLink';
+import OrderButton from '@components/shared/order-button/OrderButton';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import { Box, Stack, Typography } from '@mui/material';
 import { NAV_LINKS, SITE } from '@shared/consts/site.const';
@@ -29,13 +30,16 @@ const Footer: FC = () => (
         </Stack>
         <Stack sx={Styles.hours}>
           <Typography variant="h3" component="p" sx={Styles.columnTitle}>
-            שעות פתיחה
+            משלוחים ואיסוף עצמי
           </Typography>
           {OPENING_HOURS.map((row) => (
             <Typography key={row.days} variant="body2">
               {row.days}: {row.hours}
             </Typography>
           ))}
+          <Box sx={Styles.orderCta}>
+            <OrderButton />
+          </Box>
         </Stack>
         <Stack sx={Styles.contact}>
           <Typography variant="h3" component="p" sx={Styles.columnTitle}>

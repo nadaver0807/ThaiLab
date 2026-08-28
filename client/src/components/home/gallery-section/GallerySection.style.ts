@@ -36,7 +36,7 @@ const tile = (image: string): SxProps<Theme> => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   border: '1px solid rgba(176,141,87,0.35)',
-  boxShadow: '0 20px 40px -28px rgba(0,0,0,0.8)',
+  boxShadow: '0 20px 40px -28px rgba(74, 81, 56, 0.45)',
   transition: 'transform 0.4s ease, filter 0.4s ease',
   filter: 'saturate(1.05)',
   '&:hover': { transform: 'scale(1.03)', filter: 'saturate(1.15) brightness(1.05)' },

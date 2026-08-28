@@ -2,23 +2,21 @@
 
 import { type FC } from 'react';
 import { Stack, Typography } from '@mui/material';
-import LinkButton from '@components/shared/link-button/LinkButton';
+import OrderButton from '@components/shared/order-button/OrderButton';
 import Styles from '@components/layout/bottom-order-bar/BottomOrderBar.style';
-import { Route } from '@shared/enums/route.enum';
+import { ORDER_LABEL } from '@/components/shared/order-button/OrderButton.const';
 
 const BottomOrderBar: FC = () => (
-  <Stack component="aside" aria-label="פעולת הזמנה מהירה" sx={Styles.bar}>
+  <Stack component="aside" aria-label={ORDER_LABEL} sx={Styles.bar}>
     <Stack>
       <Typography variant="body1" sx={Styles.label}>
-        רוצים להזמין?
+        טייק אווי ומשלוחים
       </Typography>
       <Typography variant="body2" sx={Styles.hint}>
-        משלוח, איסוף עצמי או ארוחת שף
+        הזמנה מהירה עד הבית
       </Typography>
     </Stack>
-    <LinkButton href={Route.Menu} size="large">
-      לתפריט
-    </LinkButton>
+    <OrderButton size="large" short />
   </Stack>
 );
 

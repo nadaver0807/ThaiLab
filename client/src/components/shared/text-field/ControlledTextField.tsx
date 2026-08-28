@@ -4,21 +4,27 @@ import { TextField } from '@mui/material';
 import { Controller, type FieldValues, type Path, useFormContext } from 'react-hook-form';
 import Styles from '@components/shared/text-field/ControlledTextField.style';
 
-type ControlledTextFieldProps<TFieldValues extends FieldValues> = {
+type ThailabTextFieldProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   label: string;
   type?: 'text' | 'tel' | 'email' | 'number' | 'date';
   multiline?: boolean;
   rows?: number;
+  minRows?: number;
+  required?: boolean;
+  fullWidth?: boolean;
 };
 
-const ControlledTextField = <TFieldValues extends FieldValues>({
+const ThailabTextField = <TFieldValues extends FieldValues>({
   name,
   label,
   type = 'text',
   multiline = false,
   rows,
-}: ControlledTextFieldProps<TFieldValues>) => {
+  minRows,
+  required = false,
+  fullWidth = true,
+}: ThailabTextFieldProps<TFieldValues>) => {
   const { control } = useFormContext<TFieldValues>();
 
   return (
@@ -32,6 +38,9 @@ const ControlledTextField = <TFieldValues extends FieldValues>({
           type={type}
           multiline={multiline}
           rows={rows}
+          minRows={minRows}
+          required={required}
+          fullWidth={fullWidth}
           error={!!fieldState.error}
           helperText={fieldState.error?.message ?? ' '}
           sx={Styles.field}
@@ -41,4 +50,4 @@ const ControlledTextField = <TFieldValues extends FieldValues>({
   );
 };
 
-export default ControlledTextField;
+export default ThailabTextField;

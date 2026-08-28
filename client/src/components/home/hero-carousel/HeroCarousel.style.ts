@@ -12,7 +12,7 @@ const section: SxProps<Theme> = {
 const slide = (image: string, isActive: boolean): SxProps<Theme> => ({
   position: 'absolute',
   inset: 0,
-  backgroundImage: `linear-gradient(180deg, rgba(26,26,26,0.35) 0%, rgba(26,26,26,0.55) 55%, rgba(26,26,26,0.85) 100%),
+  backgroundImage: `linear-gradient(180deg, rgba(51,58,38,0.30) 0%, rgba(51,58,38,0.52) 55%, rgba(51,58,38,0.86) 100%),
     url(${image})`,
   backgroundColor: 'primary.dark',
   backgroundSize: 'cover',
@@ -42,7 +42,7 @@ const tagline: SxProps<Theme> = {
   fontWeight: 600,
   letterSpacing: '0.34em',
   textTransform: 'uppercase',
-  color: 'secondary.light',
+  color: 'warning.main',
 };
 
 const title: SxProps<Theme> = {

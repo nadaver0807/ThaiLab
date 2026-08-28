@@ -13,6 +13,12 @@ export const contactSchema = z.object({
   message: limitedString(5, 1000),
 });
 
+export const contactMessageSchema = z.object({
+  fullName: limitedString(2, 60),
+  email: email(),
+  message: limitedString(5, 1000),
+});
+
 export const reservationSchema = z.object({
   fullName: limitedString(2, 60),
   phone: israeliPhone(),
@@ -22,5 +28,7 @@ export const reservationSchema = z.object({
 });
 
 export type ContactForm = z.infer<typeof contactSchema>;
+
+export type ContactMessageForm = z.infer<typeof contactMessageSchema>;
 
 export type ReservationForm = z.infer<typeof reservationSchema>;

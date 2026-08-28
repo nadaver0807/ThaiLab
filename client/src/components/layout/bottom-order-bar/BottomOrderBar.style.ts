@@ -16,7 +16,7 @@ const bar: SxProps<Theme> = {
   borderTop: '1px solid',
   borderColor: 'divider',
   backgroundColor: 'background.paper',
-  boxShadow: '0 -8px 24px rgba(43, 29, 20, 0.1)',
+  boxShadow: '0 -8px 24px rgba(74, 81, 56, 0.14)',
 };
 
 const label: SxProps<Theme> = {

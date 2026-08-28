@@ -1,17 +1,12 @@
-/* eslint-disable no-constant-binary-expression */
+import { CLIENT_ORIGIN } from '../../server.const';
+
+/**
+ * CORS policy — the browser only allows the client origin declared in
+ * `CLIENT_ORIGIN` (see server/.env).
+ */
 export const CorsConfig = {
-  allowedHeaders: [
-    'Authorization',
-    'content-type',
-    'Access-Control-Expose-Headers',
-    'api-subscription-key',
-  ],
+  allowedHeaders: ['Authorization', 'Content-Type'],
   credentials: true,
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'],
-  origin: [
-    process.env.LOCAL_CLIENT_URL ||
-      'https://apim-gateway.digital.idf.il/internal/preprod/nifgaimportal' ||
-      'https://api.digital.idf.il/external/preprod/nifgaimportal' ||
-      '',
-  ],
+  origin: CLIENT_ORIGIN,
 };

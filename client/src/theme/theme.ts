@@ -7,14 +7,14 @@ const theme = createTheme(
   {
     direction: 'rtl',
     palette: {
-      // ירוק זית כהה מהסמל — נוכחות שקטה ויוקרתית
-      primary: { main: '#2E3320', light: '#4A5133', dark: '#1A1A1A', contrastText: '#FAF6EE' },
-      // אדום הצ'ילי מהסמל — צבע הפעולה לכל ה-CTA והקישורים
-      secondary: { main: '#E31C24', light: '#F04A50', dark: '#B01218', contrastText: '#FFFFFF' },
-      background: { default: '#F5F1E9', paper: '#FBF8F1' },
-      text: { primary: '#212121', secondary: '#6A5B3E' },
-      warning: { main: '#C9A567' },
-      divider: 'rgba(33, 33, 33, 0.12)',
+      // ירוק־זית מרוכך מהלוגו — נוכחות אלגנטית ורגועה
+      primary: { main: '#4A5138', light: '#6B7354', dark: '#333A26', contrastText: '#F7F3E9' },
+      // פליז/זהב עתיק מהלוגו — צבע הפעולה לכל ה-CTA
+      secondary: { main: '#B08D57', light: '#C9A978', dark: '#8C6E3F', contrastText: '#2E2A22' },
+      background: { default: '#F7F3E9', paper: '#FFFCF5' },
+      text: { primary: '#2E2A22', secondary: '#6E6552' },
+      warning: { main: '#C9A978' },
+      divider: 'rgba(74, 81, 56, 0.16)',
     },
     shape: { borderRadius: 6 },
     typography: {
@@ -53,14 +53,18 @@ const theme = createTheme(
       MuiButton: {
         defaultProps: { disableElevation: true },
         styleOverrides: {
-          root: { borderRadius: 2, paddingInline: 30, paddingBlock: 12, letterSpacing: '0.08em' },
+          root: { borderRadius: 999, paddingInline: 30, paddingBlock: 12, letterSpacing: '0.06em' },
+          outlined: {
+            borderWidth: 1.5,
+            '&:hover': { borderWidth: 1.5, backgroundColor: 'rgba(74, 81, 56, 0.08)' },
+          },
         },
       },
       MuiPaper: {
         styleOverrides: {
           root: {
             backgroundImage: 'none',
-            border: '1px solid rgba(58, 63, 39, 0.1)',
+            border: '1px solid rgba(74, 81, 56, 0.12)',
           },
         },
       },

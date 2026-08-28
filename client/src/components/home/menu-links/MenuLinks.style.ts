@@ -36,14 +36,14 @@ const card = (tone: MenuLinkTone): SxProps<Theme> => ({
   textDecoration: 'none',
   padding: { xs: 3.5, md: 4.5 },
   borderRadius: 2,
-  backgroundColor: tone === 'dark' ? 'primary.dark' : 'background.paper',
+  backgroundColor: tone === 'dark' ? 'primary.main' : 'background.paper',
   color: tone === 'dark' ? 'common.white' : 'text.primary',
   border: '1px solid',
-  borderColor: tone === 'dark' ? 'rgba(176,141,87,0.4)' : 'divider',
+  borderColor: tone === 'dark' ? 'rgba(201,169,120,0.45)' : 'divider',
   transition: 'transform 0.35s ease, box-shadow 0.35s ease',
   '&:hover': {
     transform: 'translateY(-8px)',
-    boxShadow: '0 30px 60px -30px rgba(0,0,0,0.55)',
+    boxShadow: '0 30px 60px -30px rgba(74, 81, 56, 0.45)',
   },
 });
 
