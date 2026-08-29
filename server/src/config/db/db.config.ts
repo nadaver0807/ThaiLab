@@ -31,11 +31,20 @@ const {
  */
 const ssl = DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined;
 
+/**
+ * המיגרציות נשארות כקובצי `.ts` ומורצות דרך ה-CLI (`npm run migration:run`),
+ * ולכן אין לטעון אותן בשרת המהודר — Node אינו יודע לפרש `.ts` והטעינה תקרוס.
+ * בייצור אין צורך בהן כלל, שכן הן מורצות מראש מול מסד הנתונים.
+ */
+const IS_COMPILED = __filename.endsWith('.js');
+
+const migrations = IS_COMPILED ? [] : [`${MIGRATIONS_PATH || ''}migrations/*.ts`];
+
 /** נתונים משותפים לשני אופני החיבור (מחרוזת יחידה או שדות נפרדים). */
 const sharedOptions = {
   entities: [Category, Costumer, Dish, Hospitality, Order, OrderItem, Reservation, AdminUser],
   logging: WORKSPACE === 'local',
-  migrations: [`${MIGRATIONS_PATH || ''}migrations/*{.ts,.js}`],
+  migrations,
   migrationsTableName: 'migrations',
   migrationsTransactionMode: 'each' as const,
   namingStrategy: new SnakeNamingStrategy(),
