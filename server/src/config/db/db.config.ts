@@ -25,28 +25,14 @@ const {
   WORKSPACE,
 } = process.env;
 
-/**
- * ספקי Postgres מנוהלים (Neon / Railway / Supabase / Render) דורשים SSL,
- * ולרוב עם תעודה שאינה ניתנת לאימות מלא — ולכן `rejectUnauthorized: false`.
- * מופעל דרך `DB_SSL=true` כדי שסביבת פיתוח מקומית תמשיך לעבוד ללא SSL.
- */
 const ssl = DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined;
 
-/**
- * המיגרציות נשארות כקובצי `.ts` ומורצות דרך ה-CLI (`npm run migration:run`).
- * אין לטעון אותן בשרת המהודר — Node אינו יודע לפרש `.ts` והטעינה תקרוס.
- * בייצור אין בהן צורך כלל, שכן הן מורצות מראש מול מסד הנתונים.
- *
- * הבדיקה נשענת על סיומת הקובץ הנוכחי: תחת `tsx` היא `.ts`, ובבנייה `.js`.
- */
 const IS_COMPILED = __filename.endsWith('.js');
 
-/** נתיב מוחלט — כדי שהאיתור לא יישבר כשספריית העבודה שונה (למשל ב-Railway). */
 const migrations = IS_COMPILED
-  ? []
+  ? [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.js')]
   : [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.ts')];
 
-/** נתונים משותפים לשני אופני החיבור (מחרוזת יחידה או שדות נפרדים). */
 const sharedOptions = {
   entities: [Category, Costumer, Dish, Hospitality, Order, OrderItem, Reservation, AdminUser],
   logging: WORKSPACE === 'local',
@@ -60,9 +46,6 @@ const sharedOptions = {
   ssl,
 };
 
-/**
- * רוב ספקי הענן מספקים `DATABASE_URL` יחיד; בפיתוח מקומי משתמשים בשדות נפרדים.
- */
 const options: DataSourceOptions = DATABASE_URL
   ? { ...sharedOptions, url: DATABASE_URL }
   : {

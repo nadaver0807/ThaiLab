@@ -68,17 +68,17 @@ npm run db:setup:prod
    - Start Command: `npm run start -w @thailab/server`
 3. **Variables** — הוסף:
 
-   | משתנה | ערך |
-   |---|---|
-   | `NODE_ENV` | `production` |
-   | `DATABASE_URL` | המחרוזת מ-Neon |
-   | `DB_SSL` | `true` |
-   | `DB_SCHEMA` | `thailab` |
-   | `ADMIN_SESSION_SECRET` | הסוד משלב 0 |
-   | `CLIENT_ORIGIN` | זמנית `http://localhost:5173` — יעודכן בשלב 5 |
-   | `RESEND_API_KEY` | מפתח Resend |
-   | `EMAIL_FROM` | `ThaiLab <onboarding@resend.dev>` |
-   | `ADMIN_EMAIL` | כתובת לקבלת פניות |
+   | משתנה                  | ערך                                           |
+   | ---------------------- | --------------------------------------------- |
+   | `NODE_ENV`             | `production`                                  |
+   | `DATABASE_URL`         | המחרוזת מ-Neon                                |
+   | `DB_SSL`               | `true`                                        |
+   | `DB_SCHEMA`            | `thailab`                                     |
+   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                                   |
+   | `CLIENT_ORIGIN`        | זמנית `http://localhost:5173` — יעודכן בשלב 5 |
+   | `RESEND_API_KEY`       | מפתח Resend                                   |
+   | `EMAIL_FROM`           | `ThaiLab <onboarding@resend.dev>`             |
+   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                             |
 
    **אל תגדיר `PORT`** — Railway מזריק אותו אוטומטית.
 
@@ -93,8 +93,8 @@ npm run db:setup:prod
 2. **Root Directory**: `client`
 3. **Environment Variables**:
 
-   | משתנה | ערך |
-   |---|---|
+   | משתנה                      | ערך                              |
+   | -------------------------- | -------------------------------- |
    | `NEXT_PUBLIC_API_BASE_URL` | `https://xxx.up.railway.app/api` |
 
    שים לב לסיומת `/api`.
@@ -117,13 +117,13 @@ CLIENT_ORIGIN=https://your-app.vercel.app
 
 ## 6. בדיקות קבלה
 
-| בדיקה | ציפייה |
-|---|---|
-| `https://your-app.vercel.app/menu` | התפריט נטען |
-| `https://your-app.vercel.app/admin` | טופס כניסה |
-| כניסה עם פרטי `SEED_ADMIN_USERS` | "מצב ניהול פעיל" |
-| עריכת מנה | נשמר ומופיע לאחר רענון |
-| גלישה פרטית → `/menu` | **ללא** כפתורי ניהול |
+| בדיקה                               | ציפייה                 |
+| ----------------------------------- | ---------------------- |
+| `https://your-app.vercel.app/menu`  | התפריט נטען            |
+| `https://your-app.vercel.app/admin` | טופס כניסה             |
+| כניסה עם פרטי `SEED_ADMIN_USERS`    | "מצב ניהול פעיל"       |
+| עריכת מנה                           | נשמר ומופיע לאחר רענון |
+| גלישה פרטית → `/menu`               | **ללא** כפתורי ניהול   |
 
 ---
 
@@ -135,11 +135,11 @@ CLIENT_ORIGIN=https://your-app.vercel.app
 
 ## תקלות נפוצות
 
-| תסמין | סיבה |
-|---|---|
-| `CORS policy` בקונסול | `CLIENT_ORIGIN` שגוי או עם `/` בסוף |
-| `ADMIN_SESSION_SECRET is required` | לא הוגדר ב-Railway |
-| `no pg_hba.conf entry` | חסר `DB_SSL=true` |
-| `relation does not exist` | שלב 2 לא רץ |
-| קריאות API נכשלות ב-404 | חסר `/api` ב-`NEXT_PUBLIC_API_BASE_URL` |
-| כל המשתמשים מנהלים | `SEED_ADMIN_USERS` מכיל כתובת לא נכונה |
+| תסמין                              | סיבה                                    |
+| ---------------------------------- | --------------------------------------- |
+| `CORS policy` בקונסול              | `CLIENT_ORIGIN` שגוי או עם `/` בסוף     |
+| `ADMIN_SESSION_SECRET is required` | לא הוגדר ב-Railway                      |
+| `no pg_hba.conf entry`             | חסר `DB_SSL=true`                       |
+| `relation does not exist`          | שלב 2 לא רץ                             |
+| קריאות API נכשלות ב-404            | חסר `/api` ב-`NEXT_PUBLIC_API_BASE_URL` |
+| כל המשתמשים מנהלים                 | `SEED_ADMIN_USERS` מכיל כתובת לא נכונה  |
