@@ -6,7 +6,7 @@ import { Order } from '@/order/Order.entity';
 import { OrderItem } from '@/order-item/OrderItem.entity';
 import { Reservation } from '@/reservation/Reservation.entity';
 import dotEnv from 'dotenv';
-// import { resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { DataSource, type DataSourceOptions } from 'typeorm';
 dotEnv.config();
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
@@ -21,22 +21,22 @@ const {
   DB_SCHEMA,
   DB_SSL,
   DB_USER,
-  // MIGRATIONS_PATH = '',
+  MIGRATIONS_PATH = '',
   WORKSPACE,
 } = process.env;
 
 const ssl = DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined;
 
-// const IS_COMPILED = __filename.endsWith('.js');
+const IS_COMPILED = __filename.endsWith('.js');
 
-// const migrations = IS_COMPILED
-//   ? [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.js')]
-//   : [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.ts')];
+const migrations = IS_COMPILED
+  ? [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.js')]
+  : [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.ts')];
 
 const sharedOptions = {
   entities: [Category, Costumer, Dish, Hospitality, Order, OrderItem, Reservation, AdminUser],
   logging: WORKSPACE === 'local',
-  migrations: [],
+  migrations,
   migrationsTableName: 'migrations',
   migrationsTransactionMode: 'each' as const,
   namingStrategy: new SnakeNamingStrategy(),
