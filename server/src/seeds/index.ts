@@ -11,6 +11,9 @@ import { hashPassword } from '@/util/password.util';
 
 const MIN_PASSWORD_LENGTH = 8;
 
+/** אורך מומלץ לייצור — קצר מכך מפיק אזהרה אך אינו חוסם. */
+const RECOMMENDED_PASSWORD_LENGTH = 12;
+
 /**
  * מזריע את מנות התפריט. הפעולה אידמפוטנטית — מנה קיימת (לפי שם) מתעדכנת
  * במקום להיווצר מחדש, כך שאפשר להריץ את הסקריפט שוב ושוב בבטחה.
@@ -67,6 +70,14 @@ const seedAdminUsers = async (): Promise<void> => {
   for (const { email, password } of entries) {
     if (password.length < MIN_PASSWORD_LENGTH) {
       throw new Error(`הסיסמה עבור ${email} קצרה מ-${MIN_PASSWORD_LENGTH} תווים.`);
+    }
+
+    // סיסמה קצרה עוברת, אך פאנל הניהול חשוף לאינטרנט — לכן אזהרה מפורשת.
+    if (password.length < RECOMMENDED_PASSWORD_LENGTH) {
+      console.warn(
+        `⚠️  הסיסמה עבור ${email} באורך ${password.length} תווים בלבד. ` +
+          `מומלץ לפחות ${RECOMMENDED_PASSWORD_LENGTH} תווים בייצור.`,
+      );
     }
 
     const passwordHash = await hashPassword(password);

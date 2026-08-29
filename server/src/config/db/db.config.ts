@@ -13,31 +13,51 @@ import { AdminUser } from '@/admin-user/AdminUser.entity';
 
 const {
   DATABASE,
+  DATABASE_URL,
   DB_HOST,
   DB_PASSWORD,
   DB_PORT,
   DB_SCHEMA,
+  DB_SSL,
   DB_USER,
   MIGRATIONS_PATH = '',
   WORKSPACE,
 } = process.env;
 
-const options: DataSourceOptions = {
-  database: DATABASE,
+/**
+ * ספקי Postgres מנוהלים (Neon / Railway / Supabase / Render) דורשים SSL,
+ * ולרוב עם תעודה שאינה ניתנת לאימות מלא — ולכן `rejectUnauthorized: false`.
+ * מופעל דרך `DB_SSL=true` כדי שסביבת פיתוח מקומית תמשיך לעבוד ללא SSL.
+ */
+const ssl = DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined;
+
+/** נתונים משותפים לשני אופני החיבור (מחרוזת יחידה או שדות נפרדים). */
+const sharedOptions = {
   entities: [Category, Costumer, Dish, Hospitality, Order, OrderItem, Reservation, AdminUser],
-  host: DB_HOST,
   logging: WORKSPACE === 'local',
   migrations: [`${MIGRATIONS_PATH || ''}migrations/*{.ts,.js}`],
   migrationsTableName: 'migrations',
-  migrationsTransactionMode: 'each',
+  migrationsTransactionMode: 'each' as const,
   namingStrategy: new SnakeNamingStrategy(),
-  synchronize: false,
-  password: DB_PASSWORD,
-  port: Number(DB_PORT),
   schema: DB_SCHEMA,
-  type: 'postgres',
-  username: DB_USER,
+  synchronize: false,
+  type: 'postgres' as const,
+  ssl,
 };
+
+/**
+ * רוב ספקי הענן מספקים `DATABASE_URL` יחיד; בפיתוח מקומי משתמשים בשדות נפרדים.
+ */
+const options: DataSourceOptions = DATABASE_URL
+  ? { ...sharedOptions, url: DATABASE_URL }
+  : {
+      ...sharedOptions,
+      database: DATABASE,
+      host: DB_HOST,
+      password: DB_PASSWORD,
+      port: Number(DB_PORT),
+      username: DB_USER,
+    };
 
 export const AppDataSource = new DataSource(options);
 
