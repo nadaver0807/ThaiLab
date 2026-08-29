@@ -16,8 +16,8 @@ export const DishCategoryLabel: Record<DishCategory, string> = {
 
 /** סדר הצגת הקטגוריות בתפריט. */
 export const DISH_CATEGORY_ORDER: DishCategory[] = [
-  DishCategory.Salads,
   DishCategory.Starters,
+  DishCategory.Salads,
   DishCategory.Mains,
   DishCategory.Sides,
   DishCategory.Desserts,
