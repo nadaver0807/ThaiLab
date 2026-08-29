@@ -9,7 +9,7 @@ import {
   type ContactMessageForm,
 } from '@shared/validations/contact.validation';
 import useSendEmail from '@/hooks/api/useSendEmail';
-import ThailabTextField from '@components/shared/text-field/ControlledTextField';
+import ThailabTextField from '@/components/shared/text-field/ThailabTextField';
 import Styles from '@components/contact/contact-form/ContactForm.style';
 
 const DEFAULT_VALUES: ContactMessageForm = { fullName: '', email: '', message: '' };

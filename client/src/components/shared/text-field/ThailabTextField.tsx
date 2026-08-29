@@ -2,7 +2,7 @@
 
 import { TextField } from '@mui/material';
 import { Controller, type FieldValues, type Path, useFormContext } from 'react-hook-form';
-import Styles from '@components/shared/text-field/ControlledTextField.style';
+import Styles from '@/components/shared/text-field/ThailabTextField.style';
 
 type ThailabTextFieldProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;

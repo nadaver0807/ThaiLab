@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 import PageSection from '@components/shared/page-section/PageSection';
-import EmptyState from '@components/shared/empty-state/EmptyState';
+import MenuList from '@components/menu/menu-list/MenuList';
 
 export const metadata: Metadata = {
   title: 'תפריט',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const MenuPage = () => (
   <PageSection title="תפריט">
-    <EmptyState title="התפריט בהכנה" description="המנות יעלו לאתר בקרוב." />
+    <MenuList />
   </PageSection>
 );
 

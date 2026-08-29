@@ -1,16 +1,22 @@
-import { DishCategory } from "@shared/enums/dish-category.enum";
-import { SpiceLevel } from "@shared/enums/spice-level.enum";
+import { DishCategory } from '@shared/enums/dish-category.enum';
+import { SpiceLevel } from '@shared/enums/spice-level.enum';
+import { PriceOptions } from './general.type';
 
 export type Dish = {
-  id: string;
+  uuid: string;
   name: string;
   description: string;
-  price: number;
-  category: DishCategory;
+  menuCategory: DishCategory;
+  priceOptions: PriceOptions;
   spiceLevel: SpiceLevel;
-  imageUrl?: string;
+  imageUrl?: string | null;
+  isVegetarian: boolean;
   isVegan: boolean;
   isGlutenFree: boolean;
+  notes?: string | null;
+  displayOrder: number;
+  isAvailable: boolean;
+  basePrice: number;
 };
 
 export type NavLink = {

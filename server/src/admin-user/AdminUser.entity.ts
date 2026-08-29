@@ -1,10 +1,13 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class AdminUser extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: 'varchar' })
   email: string;
+
+  @Column({ type: 'varchar', select: false })
+  passwordHash: string;
 }

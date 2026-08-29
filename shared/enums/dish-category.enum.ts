@@ -1,17 +1,24 @@
 export enum DishCategory {
+  Salads = 'SALADS',
   Starters = 'STARTERS',
-  Soups = 'SOUPS',
-  Noodles = 'NOODLES',
-  Curries = 'CURRIES',
+  Mains = 'MAINS',
+  Sides = 'SIDES',
   Desserts = 'DESSERTS',
-  Drinks = 'DRINKS',
 }
 
 export const DishCategoryLabel: Record<DishCategory, string> = {
-  [DishCategory.Starters]: 'מנות ראשונות',
-  [DishCategory.Soups]: 'מרקים',
-  [DishCategory.Noodles]: 'אטריות',
-  [DishCategory.Curries]: 'קארי',
+  [DishCategory.Salads]: 'סלטים',
+  [DishCategory.Starters]: 'ראשונות',
+  [DishCategory.Mains]: 'עיקריות',
+  [DishCategory.Sides]: 'תוספות',
   [DishCategory.Desserts]: 'קינוחים',
-  [DishCategory.Drinks]: 'משקאות',
 };
+
+/** סדר הצגת הקטגוריות בתפריט. */
+export const DISH_CATEGORY_ORDER: DishCategory[] = [
+  DishCategory.Salads,
+  DishCategory.Starters,
+  DishCategory.Mains,
+  DishCategory.Sides,
+  DishCategory.Desserts,
+];

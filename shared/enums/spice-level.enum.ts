@@ -6,8 +6,8 @@ export enum SpiceLevel {
 }
 
 export const SpiceLevelLabel: Record<SpiceLevel, string> = {
-  [SpiceLevel.None]: 'ללא חריפות',
-  [SpiceLevel.Mild]: 'חריף מעט',
-  [SpiceLevel.Medium]: 'חריף בינוני',
-  [SpiceLevel.Hot]: 'חריף מאוד',
+  [SpiceLevel.None]: '',
+  [SpiceLevel.Mild]: '🌶️',
+  [SpiceLevel.Medium]: '🌶️🌶️',
+  [SpiceLevel.Hot]: '🌶️🌶️🌶️',
 };

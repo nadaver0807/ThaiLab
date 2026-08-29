@@ -11,3 +11,24 @@ export const EMAIL_FROM = process.env.EMAIL_FROM ?? 'ThaiLab <onboarding@resend.
 
 /** Inbox that receives contact messages (and, later, orders). */
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'hello@thailab.co.il';
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+const resolveSessionSecret = (): string => {
+  const secret = process.env.ADMIN_SESSION_SECRET;
+
+  if (secret) {
+    return secret;
+  }
+
+  if (IS_PRODUCTION) {
+    throw new Error('ADMIN_SESSION_SECRET is required in production');
+  }
+
+  return 'dev-only-insecure-session-secret';
+};
+
+export const ADMIN_SESSION_SECRET = resolveSessionSecret();
+
+/** תוקף אסימון ההתחברות בשעות. */
+export const ADMIN_SESSION_TTL_HOURS = Number(process.env.ADMIN_SESSION_TTL_HOURS ?? 12);

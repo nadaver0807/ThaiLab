@@ -7,6 +7,7 @@
     "start": "tsx src/index.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint src ../shared",
+    "seed": "tsx src/seeds/index.ts",
     "typeorm": "tsx ../node_modules/typeorm/cli.js -d src/config/db/db.config.ts",
     "migration:create": "tsx ../node_modules/typeorm/cli.js migration:create ./migrations/migration",
     "migration:generate": "tsx ../node_modules/typeorm/cli.js migration:generate -d src/config/db/migrations.config.ts ./migrations/generated",
