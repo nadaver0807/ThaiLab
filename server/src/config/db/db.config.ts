@@ -6,6 +6,7 @@ import { Order } from '@/order/Order.entity';
 import { OrderItem } from '@/order-item/OrderItem.entity';
 import { Reservation } from '@/reservation/Reservation.entity';
 import dotEnv from 'dotenv';
+import { resolve } from 'node:path';
 import { DataSource, type DataSourceOptions } from 'typeorm';
 dotEnv.config();
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
@@ -32,13 +33,18 @@ const {
 const ssl = DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined;
 
 /**
- * המיגרציות נשארות כקובצי `.ts` ומורצות דרך ה-CLI (`npm run migration:run`),
- * ולכן אין לטעון אותן בשרת המהודר — Node אינו יודע לפרש `.ts` והטעינה תקרוס.
- * בייצור אין צורך בהן כלל, שכן הן מורצות מראש מול מסד הנתונים.
+ * המיגרציות נשארות כקובצי `.ts` ומורצות דרך ה-CLI (`npm run migration:run`).
+ * אין לטעון אותן בשרת המהודר — Node אינו יודע לפרש `.ts` והטעינה תקרוס.
+ * בייצור אין בהן צורך כלל, שכן הן מורצות מראש מול מסד הנתונים.
+ *
+ * הבדיקה נשענת על סיומת הקובץ הנוכחי: תחת `tsx` היא `.ts`, ובבנייה `.js`.
  */
 const IS_COMPILED = __filename.endsWith('.js');
 
-const migrations = IS_COMPILED ? [] : [`${MIGRATIONS_PATH || ''}migrations/*.ts`];
+/** נתיב מוחלט — כדי שהאיתור לא יישבר כשספריית העבודה שונה (למשל ב-Railway). */
+const migrations = IS_COMPILED
+  ? []
+  : [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.ts')];
 
 /** נתונים משותפים לשני אופני החיבור (מחרוזת יחידה או שדות נפרדים). */
 const sharedOptions = {
