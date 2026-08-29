@@ -1,0 +1,4 @@
+# מקבע את גרסת Node לבנייה ב-Railway.
+# ללא זה Nixpacks בוחר Node 18, שאינו נתמך על ידי Next 16 / Resend 6.
+[phases.setup]
+nixPkgs = ["nodejs_22"]
