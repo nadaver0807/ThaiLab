@@ -1,6 +1,7 @@
 import Styles from '@/app/RootLayout.style';
 import BottomOrderBar from '@components/layout/bottom-order-bar/BottomOrderBar';
 import CartDrawer from '@components/cart/cart-drawer/CartDrawer';
+import NavDrawer from '@components/layout/nav-drawer/NavDrawer';
 import Footer from '@components/layout/footer/Footer';
 import Header from '@components/layout/header/Header';
 import { Box } from '@mui/material';
@@ -53,6 +54,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         </Box>
         <BottomOrderBar />
         <CartDrawer />
+        <NavDrawer />
       </Providers>
     </body>
   </html>

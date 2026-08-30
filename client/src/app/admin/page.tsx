@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 import PageSection from '@components/shared/page-section/PageSection';
-import AdminLogin from '@components/admin/admin-login/AdminLogin';
+import AdminLogin from '@/components/admin/admin-login/page';
 
 export const metadata: Metadata = {
   title: 'ניהול',

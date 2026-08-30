@@ -46,7 +46,16 @@ const Footer: FC = () => (
             צור קשר
           </Typography>
           {SITE.address && <Typography variant="body2">{SITE.address}</Typography>}
-          {SITE.phone && <Typography variant="body2">{SITE.phone}</Typography>}
+          {SITE.phone && (
+            <Typography
+              component="a"
+              href={`tel:${SITE.phone}`}
+              variant="body1"
+              sx={Styles.phoneNumber}
+            >
+              {SITE.phone}
+            </Typography>
+          )}
           {SITE.email && <Typography variant="body2">{SITE.email}</Typography>}
         </Stack>
       </Box>

@@ -65,18 +65,21 @@ const copyright: SxProps<Theme> = {
   color: 'rgba(255,255,255,0.7)',
 };
 
+const phoneNumber: SxProps = { textDecoration: 'none', color: 'inherit' };
+
 const Styles = {
   footer,
   grid,
-  brand,
   tagline,
   columnTitle,
   nav,
   navLink,
   hours,
   contact,
+  brand,
   orderCta,
   copyright,
+  phoneNumber,
 };
 
 export default Styles;
