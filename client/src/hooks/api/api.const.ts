@@ -4,4 +4,6 @@ export enum API_ROUTES {
   Dishes = '/dishes',
   SendEmail = '/send-email',
   Auth = '/auth',
+  Orders = '/orders',
+  CustomerLookup = '/customers/lookup',
 }

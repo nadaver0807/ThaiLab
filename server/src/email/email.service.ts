@@ -72,4 +72,32 @@ export const sendEmail = async ({
   }
 };
 
-export default { sendEmail };
+type SendHtmlEmailParams = {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+};
+
+/** שליחת מייל בגוף HTML מוכן — משמש להודעות ההזמנות. */
+export const sendHtmlEmail = async ({
+  to,
+  subject,
+  html,
+  replyTo,
+}: SendHtmlEmailParams): Promise<void> => {
+  const client = getClient();
+  const { error } = await client.emails.send({
+    from: EMAIL_FROM,
+    to,
+    subject,
+    html,
+    replyTo: replyTo ?? ADMIN_EMAIL,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+};
+
+export default { sendEmail, sendHtmlEmail };

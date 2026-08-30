@@ -1,32 +1,41 @@
-import { Hospitality } from "@/hospitality/Hospitality.entity";
-import { Order } from "@/order/Order.entity";
-import { Reservation } from "@/reservation/Reservation.entity";
+import { Hospitality } from '@/hospitality/Hospitality.entity';
+import { Order } from '@/order/Order.entity';
+import { Reservation } from '@/reservation/Reservation.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Costumer extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: 'varchar' })
   firstName: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: 'varchar', default: '' })
   lastName: string;
 
-  @Column({ type: "varchar", unique: true })
+  /** נדרש — משמש לשליחת אישור או דחייה של ההזמנה. */
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column({ type: "varchar" })
+  /** מפתח הזיהוי של לקוח חוזר — נשמר מנורמל (ספרות בלבד). */
+  @Index({ unique: true })
+  @Column({ type: 'varchar' })
   phone: string;
+
+  /** כתובת המשלוח האחרונה — משמשת למילוי מראש בהזמנה הבאה. */
+  @Column({ type: 'varchar', nullable: true })
+  address: string | null;
 
   @OneToMany(() => Order, (order) => order.costumer)
   orders: Order[];
@@ -39,6 +48,9 @@ export class Costumer extends BaseEntity {
 
   @CreateDateColumn()
   createDate: Date;
+
+  @UpdateDateColumn()
+  updateDate: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;

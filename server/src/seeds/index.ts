@@ -37,10 +37,6 @@ const seedDishes = async (): Promise<void> => {
   }
 };
 
-/**
- * מזריע מנהלים מתוך `SEED_ADMIN_USERS` בפורמט `email:password`, מופרדים בפסיקים.
- * הסיסמאות מגובבות לפני השמירה — לעולם לא נשמר טקסט גלוי.
- */
 const seedAdminUsers = async (): Promise<void> => {
   const entries = (process.env.SEED_ADMIN_USERS ?? '')
     .split(',')

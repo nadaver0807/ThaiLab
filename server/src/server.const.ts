@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const PORT = Number(process.env.APP_PORT ?? process.env.PORT ?? 3000);
 
 /** Origin allowed to call the API — set `CLIENT_ORIGIN` in server/.env. */
@@ -9,8 +13,13 @@ export const RESEND_API_KEY = process.env.RESEND_API_KEY ?? '';
 /** Verified sender address configured in Resend. */
 export const EMAIL_FROM = process.env.EMAIL_FROM ?? 'ThaiLab <onboarding@resend.dev>';
 
-/** Inbox that receives contact messages (and, later, orders). */
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'hello@thailab.co.il';
+/** Inbox that receives contact messages and new orders. */
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'ofershazar22@gmail.com';
+
+/** Public base URL of this API — used to build the order approval links sent by email. */
+export const SERVER_PUBLIC_URL = (
+  process.env.SERVER_PUBLIC_URL ?? `http://localhost:${PORT}`
+).replace(/\/$/, '');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 

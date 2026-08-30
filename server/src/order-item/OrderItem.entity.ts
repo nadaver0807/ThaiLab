@@ -1,5 +1,5 @@
-import { Dish } from "@/dish/Dish.entity";
-import { Order } from "@/order/Order.entity";
+import { Dish } from '@/dish/Dish.entity';
+import { Order } from '@/order/Order.entity';
 import {
   BaseEntity,
   Column,
@@ -9,29 +9,35 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
 @Entity()
 export class OrderItem extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
-  @ManyToOne(() => Order, (order) => order.items, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "order_uuid" })
+  @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'order_uuid' })
   order: Order;
 
-  @ManyToOne(() => Dish)
-  @JoinColumn({ name: "dish_uuid" })
-  dish: Dish;
+  @ManyToOne(() => Dish, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'dish_uuid' })
+  dish: Dish | null;
 
-  @Column({ type: "int" })
+  @Column({ type: 'varchar' })
+  dishName: string;
+
+  @Column({ type: 'varchar', default: 'default' })
+  priceKey: string;
+
+  @Column({ type: 'int' })
   quantity: number;
 
-  @Column({ type: "int" })
+  @Column({ type: 'int' })
   unitPrice: number;
 
-  @Column({ type: "varchar" })
-  specialRequest: string;
+  @Column({ type: 'varchar', nullable: true })
+  specialRequest: string | null;
 
   @CreateDateColumn()
   createDate: Date;

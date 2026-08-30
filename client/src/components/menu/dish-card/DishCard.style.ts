@@ -21,20 +21,8 @@ const name: SxProps<Theme> = {
 };
 
 const prices: SxProps<Theme> = {
-  flexDirection: 'row',
-  alignItems: 'baseline',
-  gap: 1.5,
-  flexShrink: 0,
-};
-
-const price: SxProps<Theme> = {
-  fontWeight: 700,
-  color: 'secondary.dark',
-  whiteSpace: 'nowrap',
-};
-
-const priceLabel: SxProps<Theme> = {
-  color: 'text.secondary',
+  gap: 1,
+  marginBlockStart: 0.5,
 };
 
 const description: SxProps<Theme> = {
@@ -64,8 +52,6 @@ const Styles = {
   header,
   name,
   prices,
-  price,
-  priceLabel,
   description,
   notes,
   tags,

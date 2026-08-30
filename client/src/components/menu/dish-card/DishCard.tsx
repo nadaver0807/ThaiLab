@@ -6,9 +6,8 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import { type Dish } from '@shared/types/site.type';
 import { SpiceLevel, SpiceLevelLabel } from '@shared/enums/spice-level.enum';
+import AddToCartRow from '@components/cart/add-to-cart-row/AddToCartRow';
 import Styles from '@components/menu/dish-card/DishCard.style';
-
-const DEFAULT_PRICE_KEY = 'default';
 
 type DishCardProps = {
   dish: Dish;
@@ -26,18 +25,6 @@ const DishCard: FC<DishCardProps> = ({ dish, isAdmin, onEdit, onDelete }) => {
         <Typography variant="h3" component="h3" sx={Styles.name}>
           {dish.name}
         </Typography>
-        <Stack sx={Styles.prices}>
-          {priceEntries.map(([label, amount]) => (
-            <Typography key={label} variant="body1" sx={Styles.price}>
-              {label !== DEFAULT_PRICE_KEY && (
-                <Typography component="span" variant="body2" sx={Styles.priceLabel}>
-                  {label}{' '}
-                </Typography>
-              )}
-              ₪{amount}
-            </Typography>
-          ))}
-        </Stack>
       </Stack>
 
       {dish.description && (
@@ -62,6 +49,20 @@ const DishCard: FC<DishCardProps> = ({ dish, isAdmin, onEdit, onDelete }) => {
           <Chip label={SpiceLevelLabel[dish.spiceLevel]} size="small" variant="outlined" />
         )}
       </Stack>
+
+      {dish.isAvailable && (
+        <Stack sx={Styles.prices}>
+          {priceEntries.map(([priceKey, amount]) => (
+            <AddToCartRow
+              key={priceKey}
+              dishUuid={dish.uuid}
+              dishName={dish.name}
+              priceKey={priceKey}
+              unitPrice={amount}
+            />
+          ))}
+        </Stack>
+      )}
 
       {isAdmin && (
         <Stack sx={Styles.adminActions}>
