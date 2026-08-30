@@ -3,6 +3,7 @@ export enum Route {
   Menu = '/menu',
   About = '/about',
   Contact = '/contact',
-  /** נתיב ניהול נסתר — לא מופיע בתפריטי הניווט ולא מקושר משום מקום. */
+  Checkout = '/checkout',
   AdminLogin = '/admin',
+  AdminOrders = '/admin/orders',
 }

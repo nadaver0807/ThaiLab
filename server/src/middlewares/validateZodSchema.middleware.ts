@@ -16,7 +16,12 @@ export const validateZodSchema =
       return;
     }
 
-    request[bodyKey] = result.data as never;
+    Object.defineProperty(request, bodyKey, {
+      value: result.data,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
 
     next();
   };

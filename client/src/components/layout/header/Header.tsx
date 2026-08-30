@@ -9,6 +9,7 @@ import Image from 'next/image';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import OrderButton from '@components/shared/order-button/OrderButton';
+import CartButton from '@components/cart/cart-button/CartButton';
 import Styles from '@components/layout/header/Header.style';
 import { SITE } from '@shared/consts/site.const';
 import { Route } from '@shared/enums/route.enum';
@@ -43,6 +44,7 @@ const Header: FC = () => (
           />
         </NextLink>
         <Stack sx={Styles.actions}>
+          <CartButton />
           <OrderButton />
           <LinkButton href={Route.Contact} variant="outlined" color="primary">
             אירוע פרטי

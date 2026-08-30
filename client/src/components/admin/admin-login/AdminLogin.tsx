@@ -5,6 +5,7 @@ import { Alert, Button, Stack, TextField, Typography } from '@mui/material';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import RestaurantMenuRoundedIcon from '@mui/icons-material/RestaurantMenuRounded';
+import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
 import { Route } from '@shared/enums/route.enum';
 import useAuth from '@/hooks/auth/useAuth';
 import useGetDishes from '@/hooks/api/useGetDishes';
@@ -90,6 +91,15 @@ const AdminLogin: FC = () => {
         {isAdmin && (
           <Button variant="contained" href={Route.Menu} startIcon={<RestaurantMenuRoundedIcon />}>
             לניהול התפריט
+          </Button>
+        )}
+        {isAdmin && (
+          <Button
+            variant="contained"
+            href={Route.AdminOrders}
+            startIcon={<ReceiptLongRoundedIcon />}
+          >
+            להזמנות
           </Button>
         )}
         <Button variant="outlined" startIcon={<LogoutRoundedIcon />} onClick={signOut}>

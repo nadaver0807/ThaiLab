@@ -4,6 +4,8 @@ export enum API_ROUTES {
   Dishes = '/dishes',
   SendEmail = '/send-email',
   Auth = '/auth',
+  Orders = '/orders',
+  Customers = '/customers',
 }
 
 export const HEALTH_ROUTE = '/health';
