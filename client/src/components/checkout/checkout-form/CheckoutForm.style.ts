@@ -32,9 +32,12 @@ const phoneRow: SxProps<Theme> = {
   gap: 1,
 };
 
-const lookupButton: SxProps<Theme> = {
+const lookupStatus: SxProps<Theme> = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 1,
   whiteSpace: 'nowrap',
-  marginBlockStart: { xs: 0, sm: 1 },
+  marginBlockStart: { xs: 0, sm: 1.75 },
 };
 
 const nameRow: SxProps<Theme> = {
@@ -63,7 +66,7 @@ const Styles = {
   blockTitle,
   hint,
   phoneRow,
-  lookupButton,
+  lookupStatus,
   nameRow,
   actions,
   paymentNote,

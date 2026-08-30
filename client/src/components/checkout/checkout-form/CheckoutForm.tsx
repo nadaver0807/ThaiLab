@@ -40,10 +40,8 @@ const CheckoutForm: FC = () => {
 
           <CustomerFields
             orderType={checkout.orderType}
-            canLookup={checkout.canLookup}
             isLookingUp={checkout.isLookingUp}
             isReturningCustomer={checkout.isReturningCustomer}
-            onLookup={checkout.lookup}
           />
 
           <Stack sx={Styles.block}>

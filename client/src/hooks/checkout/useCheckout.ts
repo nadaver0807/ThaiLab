@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, useWatch, type UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,9 +8,11 @@ import { OrderType } from '@shared/enums/order-type.enum';
 import { PaymentMethod } from '@shared/enums/payment-method.enum';
 import { Route } from '@shared/enums/route.enum';
 import { type CartItem } from '@shared/types/cart.type';
+import { israeliPhone } from '@shared/validations/common.validation';
 import { checkoutFormSchema, type CheckoutForm } from '@shared/validations/order.validation';
 import useCreateOrder from '@/hooks/api/useCreateOrder';
 import useLookupCustomer from '@/hooks/api/useLookupCustomer';
+import useDebouncedValue from '@/hooks/shared/useDebouncedValue';
 
 const DEFAULT_VALUES: CheckoutForm = {
   type: OrderType.Pickup,
@@ -22,7 +24,9 @@ const DEFAULT_VALUES: CheckoutForm = {
   notes: '',
 };
 
-const MIN_LOOKUP_DIGITS = 9;
+const LOOKUP_DEBOUNCE_MS = 500;
+
+const phoneSchema = israeliPhone();
 
 type UseCheckoutParams = {
   items: CartItem[];
@@ -32,19 +36,18 @@ type UseCheckoutParams = {
 type UseCheckoutResult = {
   form: UseFormReturn<CheckoutForm>;
   orderType: OrderType;
-  canLookup: boolean;
   isLookingUp: boolean;
   isReturningCustomer: boolean;
   isPending: boolean;
   errorMessage?: string;
-  lookup: () => Promise<void>;
   submit: () => Promise<void>;
 };
 
-/** לוגיקת עמוד התשלום — טופס, זיהוי לקוח חוזר ושליחת ההזמנה. */
 const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult => {
   const router = useRouter();
   const [isReturningCustomer, setIsReturningCustomer] = useState(false);
+
+  const filledPhoneRef = useRef<string | null>(null);
 
   const form = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
@@ -54,27 +57,38 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   const orderType = useWatch({ control: form.control, name: 'type' });
   const phone = useWatch({ control: form.control, name: 'phone' });
 
+  const debouncedPhone = useDebouncedValue(phone, LOOKUP_DEBOUNCE_MS);
+  const isPhoneValid = phoneSchema.safeParse(debouncedPhone).success;
+
+  const { data: lookupResult, isFetching: isLookingUp } = useLookupCustomer(
+    debouncedPhone,
+    isPhoneValid,
+  );
+
   const { mutateAsync: submitOrder, isPending, isError, error } = useCreateOrder();
-  const { mutateAsync: lookupCustomer, isPending: isLookingUp } = useLookupCustomer();
 
-  /** מילוי מראש של פרטי לקוח חוזר — לפי בקשת המשתמש ולא אוטומטית. */
-  const lookup = useCallback(async () => {
-    const result = await lookupCustomer(phone);
-
-    setIsReturningCustomer(result.isReturning);
-
-    if (!result.customer) {
+  useEffect(() => {
+    if (!lookupResult || filledPhoneRef.current === debouncedPhone) {
       return;
     }
 
-    form.setValue('firstName', result.customer.firstName, { shouldValidate: true });
-    form.setValue('lastName', result.customer.lastName ?? '');
-    form.setValue('email', result.customer.email);
+    filledPhoneRef.current = debouncedPhone;
+    setIsReturningCustomer(lookupResult.isReturning);
 
-    if (result.customer.address) {
-      form.setValue('address', result.customer.address);
+    const { customer } = lookupResult;
+
+    if (!customer) {
+      return;
     }
-  }, [form, lookupCustomer, phone]);
+
+    form.setValue('firstName', customer.firstName, { shouldValidate: true });
+    form.setValue('lastName', customer.lastName ?? '');
+    form.setValue('email', customer.email, { shouldValidate: true });
+
+    if (customer.address) {
+      form.setValue('address', customer.address);
+    }
+  }, [lookupResult, debouncedPhone, form]);
 
   const submit = form.handleSubmit(async (values) => {
     const order = await submitOrder({
@@ -103,12 +117,10 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   return {
     form,
     orderType,
-    canLookup: phone.replace(/\D/g, '').length >= MIN_LOOKUP_DIGITS,
     isLookingUp,
     isReturningCustomer,
     isPending,
     errorMessage: isError ? (error as Error).message : undefined,
-    lookup,
     submit,
   };
 };
