@@ -63,17 +63,7 @@ const NavDrawer: FC = () => {
       aria-label={NAV_DRAWER_LABEL}
     >
       <Stack sx={Styles.header}>
-        {/* <Typography variant="h3" component="h2" sx={Styles.title}>
-          {SITE.name}
-        </Typography> */}
-        <Image
-          src="/images/thailab-label.jpeg"
-          alt={SITE.name}
-          width={150}
-          height={40}
-          
-          //   style={Styles.brandImage}
-        />
+        <Image src="/images/thailab-label.jpeg" alt={SITE.name} width={150} height={40} />
         <IconButton aria-label="סגירת התפריט" onClick={close}>
           <CloseRoundedIcon />
         </IconButton>
