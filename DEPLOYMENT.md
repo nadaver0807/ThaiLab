@@ -68,22 +68,27 @@ npm run db:setup:prod
    - Start Command: `npm run start -w @thailab/server`
 3. **Variables** — הוסף:
 
-   | משתנה                  | ערך                                           |
-   | ---------------------- | --------------------------------------------- |
-   | `NODE_ENV`             | `production`                                  |
-   | `DATABASE_URL`         | המחרוזת מ-Neon                                |
-   | `DB_SSL`               | `true`                                        |
-   | `DB_SCHEMA`            | `thailab`                                     |
-   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                                   |
-   | `CLIENT_ORIGIN`        | זמנית `http://localhost:5173` — יעודכן בשלב 5 |
-   | `RESEND_API_KEY`       | מפתח Resend                                   |
-   | `EMAIL_FROM`           | `ThaiLab <onboarding@resend.dev>`             |
-   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                             |
+   | משתנה                  | ערך                                     |
+   | ---------------------- | --------------------------------------- |
+   | `NODE_ENV`             | `production`                            |
+   | `DATABASE_URL`         | המחרוזת מ-Neon                          |
+   | `DB_SSL`               | `true`                                  |
+   | `DB_SCHEMA`            | `thailab`                               |
+   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                             |
+   | `CLIENT_ORIGIN`        | `https://thailab.co.il` — ללא `/` בסוף  |
+   | `SERVER_PUBLIC_URL`    | `https://api.thailab.co.il`             |
+   | `RESEND_API_KEY`       | מפתח Resend                             |
+   | `EMAIL_FROM`           | `ThaiLab <hello@thailab.co.il>`         |
+   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                       |
+
+   `SERVER_PUBLIC_URL` בונה את קישורי אישור ההזמנה במייל ואת כתובות החזרה
+   מדף הסליקה. בלעדיו הקישורים יצביעו ל-`localhost`.
 
    **אל תגדיר `PORT`** — Railway מזריק אותו אוטומטית.
 
-4. העתק את כתובת השרת: `https://xxx.up.railway.app`
-5. ודא: `curl https://xxx.up.railway.app/health` → `{"status":"ok"}`
+4. **Settings → Networking → Custom Domain**: הוסף `api.thailab.co.il`
+   והצב את רשומת ה-CNAME שRailway מציג אצל רשם הדומיין.
+5. ודא: `curl https://api.thailab.co.il/health` → `{"status":"ok"}`
 
 ---
 
@@ -93,37 +98,70 @@ npm run db:setup:prod
 2. **Root Directory**: `client`
 3. **Environment Variables**:
 
-   | משתנה                      | ערך                              |
-   | -------------------------- | -------------------------------- |
-   | `NEXT_PUBLIC_API_BASE_URL` | `https://xxx.up.railway.app/api` |
+   | משתנה                      | ערך                             |
+   | -------------------------- | ------------------------------- |
+   | `NEXT_PUBLIC_API_BASE_URL` | `https://api.thailab.co.il/api` |
 
    שים לב לסיומת `/api`.
 
-4. **Deploy** → העתק את הכתובת: `https://your-app.vercel.app`
+4. **Deploy**, ואז **Settings → Domains**: הוסף `thailab.co.il`
+   ו-`www.thailab.co.il` לפי ההוראות של Vercel אצל רשם הדומיין.
 
 ---
 
 ## 5. סגירת המעגל (חובה)
 
-חזור ל-Railway ועדכן:
+ודא שב-Railway מוגדר:
 
 ```
-CLIENT_ORIGIN=https://your-app.vercel.app
+CLIENT_ORIGIN=https://thailab.co.il
 ```
 
 בלי זה הדפדפן יחסום כל קריאה ל-API בגלל CORS. הכתובת **ללא** `/` בסוף.
 
 ---
 
-## 6. בדיקות קבלה
+## 6. סליקת אשראי (אופציונלי)
 
-| בדיקה                               | ציפייה                 |
-| ----------------------------------- | ---------------------- |
-| `https://your-app.vercel.app/menu`  | התפריט נטען            |
-| `https://your-app.vercel.app/admin` | טופס כניסה             |
-| כניסה עם פרטי `SEED_ADMIN_USERS`    | "מצב ניהול פעיל"       |
-| עריכת מנה                           | נשמר ומופיע לאחר רענון |
-| גלישה פרטית → `/menu`               | **ללא** כפתורי ניהול   |
+**דלג על השלב הזה עד שעופר ימסור את פרטי חברת הסליקה.** כל עוד
+`PAYMENT_PROVIDER` אינו מוגדר, אפשרות התשלום באשראי מוסתרת בצ'קאאוט
+והאתר עובד עם תשלום בעת האיסוף בלבד.
+
+הוסף ב-Railway:
+
+| משתנה                 | ערך                                             |
+| --------------------- | ----------------------------------------------- |
+| `PAYMENT_PROVIDER`    | `CARDCOM` או `PAYPLUS`                          |
+| `PAYMENT_TERMINAL_ID` | CardCom: מספר טרמינל. PayPlus: Payment Page UID |
+| `PAYMENT_API_KEY`     | CardCom: ApiName. PayPlus: api_key              |
+| `PAYMENT_API_SECRET`  | CardCom: ApiPassword. PayPlus: secret_key       |
+| `PAYMENT_TEST_MODE`   | `true` עד לאימות מלא, אחר כך `false`            |
+
+בממשק חברת הסליקה יש להגדיר את כתובת ה-webhook:
+
+```
+https://api.thailab.co.il/api/payments/:uuid/callback
+```
+
+ה-webhook הוא **המקור היחיד** שקובע שהזמנה שולמה — חזרת הדפדפן מדף
+הסליקה לעולם אינה מעדכנת סטטוס תשלום.
+
+לאחר ההגדרה בצע הזמנת בדיקה בסביבת ה-sandbox של הספק, ורק כשההזמנה
+מסומנת `PAID` בפאנל הניהול העבר את `PAYMENT_TEST_MODE` ל-`false`.
+
+---
+
+## 7. בדיקות קבלה
+
+| בדיקה                            | ציפייה                 |
+| -------------------------------- | ---------------------- |
+| `https://thailab.co.il/menu`     | התפריט נטען            |
+| `https://thailab.co.il/admin`    | טופס כניסה             |
+| כניסה עם פרטי `SEED_ADMIN_USERS` | "מצב ניהול פעיל"       |
+| עריכת מנה                        | נשמר ומופיע לאחר רענון |
+| גלישה פרטית → `/menu`            | **ללא** כפתורי ניהול   |
+| הזמנה מלאה עד דף התודה           | מייל מגיע ל-`ADMIN_EMAIL` |
+| שליחת ביקורת                     | ממתינה לאישור בפאנל    |
 
 ---
 
@@ -143,3 +181,7 @@ CLIENT_ORIGIN=https://your-app.vercel.app
 | `relation does not exist`          | שלב 2 לא רץ                             |
 | קריאות API נכשלות ב-404            | חסר `/api` ב-`NEXT_PUBLIC_API_BASE_URL` |
 | כל המשתמשים מנהלים                 | `SEED_ADMIN_USERS` מכיל כתובת לא נכונה  |
+| אפשרות אשראי לא מופיעה בצ'קאאוט    | `PAYMENT_PROVIDER` לא מוגדר או שגוי     |
+| "סליקת אשראי אינה מוגדרת"          | אותה סיבה — השרת עלה בלי משתני הסליקה   |
+| הזמנה נשארת `PENDING` אחרי תשלום   | ה-webhook לא מוגדר או לא מגיע לשרת      |
+| קישורים במייל מצביעים ל-localhost  | חסר `SERVER_PUBLIC_URL`                 |
