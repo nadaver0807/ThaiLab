@@ -10,7 +10,12 @@ const footer: SxProps<Theme> = {
 const grid: SxProps<Theme> = {
   display: 'grid',
   gap: 4,
-  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+  gridTemplateColumns: {
+    xs: '1fr',
+    sm: 'repeat(2, 1fr)',
+    md: 'repeat(3, 1fr)',
+    lg: 'repeat(5, 1fr)',
+  },
   paddingBlock: 8,
 };
 
@@ -65,7 +70,11 @@ const copyright: SxProps<Theme> = {
   color: 'rgba(255,255,255,0.7)',
 };
 
-const phoneNumber: SxProps = { textDecoration: 'none', color: 'inherit' };
+const socialLink: SxProps<Theme> = {
+  color: 'warning.main',
+  textDecoration: 'none',
+  '&:hover': { textDecoration: 'underline' },
+};
 
 const Styles = {
   footer,
@@ -79,7 +88,7 @@ const Styles = {
   brand,
   orderCta,
   copyright,
-  phoneNumber,
+  socialLink,
 };
 
 export default Styles;

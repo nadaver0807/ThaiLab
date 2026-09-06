@@ -7,6 +7,7 @@ import {
   ABOUT_CHEF_PARAGRAPHS,
   ABOUT_HERO,
   ABOUT_PLACE_PARAGRAPHS,
+  ABOUT_PLACE_TITLE,
   ABOUT_VALUES,
 } from '@/app/about/AbouteMe.const';
 import Styles from '@/app/about/AboutMe.style';
@@ -14,7 +15,7 @@ import Styles from '@/app/about/AboutMe.style';
 const AboutMe: FC = () => (
   <PageContainer>
     <Box component="section" sx={Styles.hero}>
-      <Box role="img" aria-label="השף של Thai Lab" sx={Styles.heroImage(ABOUT_HERO.image)} />
+      <Box role="img" aria-label="עופר שזר" sx={Styles.heroImage(ABOUT_HERO.image)} />
       <Stack sx={Styles.heroText}>
         <Typography variant="body2" sx={Styles.tagline}>
           {ABOUT_HERO.tagline}
@@ -29,9 +30,6 @@ const AboutMe: FC = () => (
     </Box>
 
     <Box component="section" sx={Styles.block}>
-      <Typography variant="h2" component="h2" sx={Styles.sectionHeading}>
-        השף
-      </Typography>
       {ABOUT_CHEF_PARAGRAPHS.map((paragraph) => (
         <Typography key={paragraph} variant="body1" sx={Styles.paragraph}>
           {paragraph}
@@ -42,7 +40,7 @@ const AboutMe: FC = () => (
     <Box component="section" sx={Styles.block}>
       <Box sx={Styles.blockDark}>
         <Typography variant="h2" component="h2" sx={Styles.headingLight}>
-          המקום
+          {ABOUT_PLACE_TITLE}
         </Typography>
         {ABOUT_PLACE_PARAGRAPHS.map((paragraph) => (
           <Typography key={paragraph} variant="body1" sx={Styles.paragraphLight}>
@@ -66,11 +64,11 @@ const AboutMe: FC = () => (
     </Box>
 
     <Box component="section" sx={Styles.cta}>
-      <LinkButton href={Route.Contact} size="large">
-        הזמנת אירוע פרטי
+      <LinkButton href={Route.Menu} size="large">
+        להזמנת מנות
       </LinkButton>
-      <LinkButton href={Route.Menu} variant="outlined" size="large">
-        לתפריטי האירועים
+      <LinkButton href={Route.PrivateEvents} variant="outlined" size="large">
+        לאירוע פרטי
       </LinkButton>
     </Box>
   </PageContainer>

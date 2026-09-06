@@ -108,7 +108,7 @@ export const DISH_SEEDS: DishSeed[] = [
     description:
       'אטריות אורז מוקפצות עם ביצה, נבטים, בצל ירוק ורוטב תמרינדי אותנטי. מוגש עם בוטנים קלויים, ליים וכוסברה.',
     menuCategory: DishCategory.Mains,
-    priceOptions: { 'עוף / טופו': 65, שרימפס: 75 },
+    priceOptions: { עוף: 65, טופו: 65, שרימפס: 75 },
     isVegetarian: true,
     isVegan: true,
     isGlutenFree: false,
@@ -117,11 +117,11 @@ export const DISH_SEEDS: DishSeed[] = [
     displayOrder: 7,
   },
   {
-    name: 'עוף / טופו בקשיו',
+    name: 'קשיו',
     description:
       "עוף או טופו פריכים מוקפצים עם שום, בצל, גזר, באק צ'וי ובצל ירוק, ברוטב עשיר עם קשיו קלוי.",
     menuCategory: DishCategory.Mains,
-    priceOptions: { default: 70 },
+    priceOptions: { עוף: 70, טופו: 70 },
     isVegetarian: true,
     isVegan: true,
     isGlutenFree: true,
@@ -134,7 +134,7 @@ export const DISH_SEEDS: DishSeed[] = [
     description:
       'עוף / טופו, חלב קוקוס, תפוחי אדמה, בצל, כוכב אניס, עלי כפיר ליים, קינמון ובוטנים קלויים. מוגש עם אורז מאודה.',
     menuCategory: DishCategory.Mains,
-    priceOptions: { default: 75 },
+    priceOptions: { עוף: 75, טופו: 75 },
     isVegetarian: false,
     isVegan: true,
     isGlutenFree: false,
@@ -147,7 +147,7 @@ export const DISH_SEEDS: DishSeed[] = [
     description:
       "דג פריך / שרימפס בתבשיל חלב קוקוס עם קארי אדום מתקתק, שעועית תאילנדית, דלעת תאילנדית, בזיליקום תאילנדי, עלי כפיר ליים וצ'ילי. מוגש עם אורז מאודה.",
     menuCategory: DishCategory.Mains,
-    priceOptions: { default: 80 },
+    priceOptions: { 'דג פריך': 80, שרימפס: 80 },
     isVegetarian: false,
     isVegan: false,
     isGlutenFree: true,

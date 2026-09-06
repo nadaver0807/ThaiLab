@@ -4,7 +4,6 @@ import { type FC } from 'react';
 import NextLink from 'next/link';
 import { Box, Button, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { DEFAULT_PRICE_KEY } from '@shared/consts/order.const';
 import { Route } from '@shared/enums/route.enum';
 import QuantityStepper from '@components/cart/quantity-stepper/QuantityStepper';
 import useCart from '@/hooks/cart/useCart';
@@ -44,9 +43,14 @@ const CartDrawer: FC = () => {
                     <Typography variant="body1" sx={Styles.itemName}>
                       {item.dishName}
                     </Typography>
-                    {item.priceKey !== DEFAULT_PRICE_KEY && (
+                    {!!item.variantLabel && (
                       <Typography variant="body2" sx={Styles.itemOption}>
-                        {item.priceKey}
+                        {item.variantLabel}
+                      </Typography>
+                    )}
+                    {!!item.selectedNotes?.length && (
+                      <Typography variant="body2" sx={Styles.itemOption}>
+                        {item.selectedNotes.join(' • ')}
                       </Typography>
                     )}
                   </Box>

@@ -11,8 +11,10 @@ import {
 
 export const orderItemSchema = z.object({
   dishUuid: z.string().uuid(),
+  /** מפתח המחיר הוא גם הווריאציה שנבחרה — "עוף", "טופו", "שרימפס". */
   priceKey: limitedString(1, 60),
   quantity: z.coerce.number().int().min(1).max(50),
+  selectedNotes: z.array(limitedString(1, 60)).max(12).default([]),
   specialRequest: optionalString(300),
 });
 
@@ -44,6 +46,7 @@ export const customerLookupSchema = z.object({
 export const checkoutFormSchema = z
   .object({
     type: enumValue(OrderType),
+    paymentMethod: enumValue(PaymentMethod),
     firstName: limitedString(2, 40),
     lastName: optionalString(40),
     phone: israeliPhone(),

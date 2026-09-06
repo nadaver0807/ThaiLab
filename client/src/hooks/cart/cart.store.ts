@@ -9,8 +9,11 @@ const listeners = new Set<Listener>();
 let cachedItems: CartItem[] = [];
 let isCacheLoaded = false;
 
-export const buildLineId = (dishUuid: string, priceKey: string): string =>
-  `${dishUuid}::${priceKey}`;
+export const buildLineId = (
+  dishUuid: string,
+  priceKey: string,
+  selectedNotes: string[] = [],
+): string => [dishUuid, priceKey, [...selectedNotes].sort().join('|')].join('::');
 
 const isCartItem = (value: unknown): value is CartItem => {
   if (typeof value !== 'object' || value === null) {
@@ -97,7 +100,7 @@ const SERVER_ITEMS: CartItem[] = [];
 export const getServerCartItems = (): CartItem[] => SERVER_ITEMS;
 
 export const addToCart = (item: Omit<CartItem, 'lineId'>): void => {
-  const lineId = buildLineId(item.dishUuid, item.priceKey);
+  const lineId = buildLineId(item.dishUuid, item.priceKey, item.selectedNotes ?? []);
   const items = getCartItems();
   const existing = items.find((current) => current.lineId === lineId);
 

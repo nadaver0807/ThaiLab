@@ -24,6 +24,10 @@ export class Dish extends BaseEntity {
   @Column({ type: 'varchar' })
   name: string;
 
+  /** הערות מוכנות לסימון — "בלי כוסברה", "פחות חריף". */
+  @Column({ type: 'jsonb', default: () => `'[]'::jsonb` })
+  optionNotes: string[];
+
   @Column({ type: 'varchar', default: '' })
   description: string;
 

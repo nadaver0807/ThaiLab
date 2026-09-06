@@ -12,6 +12,7 @@ const priceOptions = () =>
 
 export const createDishSchema = z.object({
   name: limitedString(2, 80),
+  optionNotes: z.array(limitedString(1, 60)).max(12).default([]),
   description: limitedString(0, 600).default(''),
   menuCategory: z.nativeEnum(DishCategory),
   priceOptions: priceOptions(),

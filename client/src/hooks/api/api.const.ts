@@ -6,4 +6,6 @@ export enum API_ROUTES {
   Auth = '/auth',
   Orders = '/orders',
   CustomerLookup = '/customers/lookup',
+  Reviews = '/reviews',
+  Payments = '/payments',
 }

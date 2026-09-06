@@ -22,15 +22,12 @@ const title: SxProps<Theme> = {
 
 const grid: SxProps<Theme> = {
   display: 'grid',
-  gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
-  gridAutoRows: { xs: 130, md: 180 },
-  gap: 2,
-  '& > *:nth-of-type(1)': { gridRow: 'span 2' },
-  '& > *:nth-of-type(4)': { gridRow: 'span 2' },
-  '& > *:nth-of-type(6)': { gridRow: 'span 2' },
+  gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)', md: 'repeat(4, 1fr)' },
+  gap: { xs: 1.5, md: 2 },
 };
 
 const tile = (image: string): SxProps<Theme> => ({
+  aspectRatio: '1 / 1',
   borderRadius: 1,
   backgroundImage: `url(${image})`,
   backgroundSize: 'cover',
@@ -38,8 +35,8 @@ const tile = (image: string): SxProps<Theme> => ({
   border: '1px solid rgba(176,141,87,0.35)',
   boxShadow: '0 20px 40px -28px rgba(74, 81, 56, 0.45)',
   transition: 'transform 0.4s ease, filter 0.4s ease',
-  filter: 'saturate(1.05)',
-  '&:hover': { transform: 'scale(1.03)', filter: 'saturate(1.15) brightness(1.05)' },
+  filter: 'saturate(1.02) contrast(1.02)',
+  '&:hover': { transform: 'scale(1.03)', filter: 'saturate(1.1) brightness(1.04)' },
 });
 
 const Styles = { section, tagline, title, grid, tile };

@@ -20,40 +20,38 @@ const theme = createTheme(
     typography: {
       fontFamily: 'var(--font-sans)',
       h1: {
-        fontFamily: 'var(--font-display)',
         fontSize: '3rem',
-        fontWeight: 700,
+        fontWeight: 600,
         lineHeight: 1.15,
-        letterSpacing: '0.01em',
+        letterSpacing: '-0.015em',
       },
       h2: {
-        fontFamily: 'var(--font-display)',
         fontSize: '2.25rem',
-        fontWeight: 700,
-        letterSpacing: '0.01em',
+        fontWeight: 600,
+        lineHeight: 1.2,
+        letterSpacing: '-0.015em',
       },
       h3: {
-        fontFamily: 'var(--font-display)',
         fontSize: '1.5rem',
-        fontWeight: 700,
-        letterSpacing: '0.02em',
+        fontWeight: 600,
+        lineHeight: 1.3,
+        letterSpacing: '-0.01em',
       },
       subtitle1: { fontSize: '1.125rem', fontWeight: 400, lineHeight: 1.8 },
       body1: { fontSize: '1rem', lineHeight: 1.8 },
       body2: { fontSize: '0.875rem' },
       overline: { letterSpacing: '0.28em', fontWeight: 600 },
       button: {
-        fontFamily: 'var(--font-display)',
-        fontWeight: 700,
+        fontWeight: 600,
         textTransform: 'none',
-        letterSpacing: '0.03em',
+        letterSpacing: '0.02em',
       },
     },
     components: {
       MuiButton: {
         defaultProps: { disableElevation: true },
         styleOverrides: {
-          root: { borderRadius: 999, paddingInline: 30, paddingBlock: 12, letterSpacing: '0.06em' },
+          root: { borderRadius: 999, paddingInline: 30, paddingBlock: 12, letterSpacing: '0.02em' },
           outlined: {
             borderWidth: 1.5,
             '&:hover': { borderWidth: 1.5, backgroundColor: 'rgba(74, 81, 56, 0.08)' },

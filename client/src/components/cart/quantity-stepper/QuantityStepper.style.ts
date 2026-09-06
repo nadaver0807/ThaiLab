@@ -7,7 +7,7 @@ const stepper: SxProps<Theme> = {
   border: '1px solid',
   borderColor: 'divider',
   borderRadius: 999,
-  paddingInline: 0.5,
+  paddingInline: 2,
 };
 
 const button: SxProps<Theme> = {

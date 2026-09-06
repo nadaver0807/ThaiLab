@@ -44,6 +44,7 @@ export const formatPriceOptions = (options: PriceOptions): string =>
 /** סכימת הטופס — המחירים מאומתים אחרי הפירוק מטקסט. */
 export const dishFormSchema = z.object({
   name: z.string().trim().min(2, 'שם המנה קצר מדי').max(80, 'שם המנה ארוך מדי'),
+  optionNotesText: z.string().trim().max(800, 'רשימת ההערות ארוכה מדי'),
   description: z.string().trim().max(600, 'התיאור ארוך מדי'),
   menuCategory: z.nativeEnum(DishCategory),
   spiceLevel: z.nativeEnum(SpiceLevel),
@@ -69,8 +70,19 @@ export const dishFormSchema = z.object({
 
 export type DishFormValues = z.infer<typeof dishFormSchema>;
 
+/** ההערות המוכנות מוזנות שורה לשורה, למשל "בלי כוסברה". */
+export const parseOptionNotes = (raw: string): string[] =>
+  raw
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, 12);
+
+export const formatOptionNotes = (notes: string[]): string => (notes ?? []).join('\n');
+
 export const EMPTY_DISH_FORM: DishFormValues = {
   name: '',
+  optionNotesText: '',
   description: '',
   menuCategory: DishCategory.Mains,
   spiceLevel: SpiceLevel.None,

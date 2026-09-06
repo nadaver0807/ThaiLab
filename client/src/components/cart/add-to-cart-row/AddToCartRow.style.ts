@@ -1,5 +1,15 @@
 import { type SxProps, type Theme } from '@mui/material';
 
+const wrapper: SxProps<Theme> = {
+  gap: 1,
+};
+
+const notes: SxProps<Theme> = {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  gap: 0.75,
+};
+
 const row: SxProps<Theme> = {
   flexDirection: 'row',
   alignItems: 'center',
@@ -14,7 +24,8 @@ const priceGroup: SxProps<Theme> = {
 };
 
 const option: SxProps<Theme> = {
-  color: 'text.secondary',
+  fontWeight: 600,
+  color: 'text.primary',
 };
 
 const price: SxProps<Theme> = {
@@ -28,6 +39,6 @@ const addButton: SxProps<Theme> = {
   whiteSpace: 'nowrap',
 };
 
-const Styles = { row, priceGroup, option, price, addButton };
+const Styles = { wrapper, notes, row, priceGroup, option, price, addButton };
 
 export default Styles;

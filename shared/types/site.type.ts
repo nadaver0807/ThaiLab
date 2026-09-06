@@ -17,6 +17,8 @@ export type Dish = {
   displayOrder: number;
   isAvailable: boolean;
   basePrice: number;
+  /** הערות מוכנות שהלקוח יכול לסמן — "בלי כוסברה", "פחות חריף". */
+  optionNotes: string[];
 };
 
 export type NavLink = {
@@ -27,7 +29,10 @@ export type NavLink = {
 export type SocialLinks = {
   instagram: string;
   facebook: string;
+  /** צ'אט אישי עם עופר */
   whatsapp: string;
+  /** קבוצת הוואטסאפ של ThaiLab — עדכוני תפריט ואירועים */
+  whatsappGroup: string;
 };
 
 export type SiteConfig = {

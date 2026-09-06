@@ -51,12 +51,40 @@ const Footer: FC = () => (
               component="a"
               href={`tel:${SITE.phone}`}
               variant="body1"
-              sx={Styles.phoneNumber}
+              sx={Styles.socialLink}
             >
               {SITE.phone}
             </Typography>
           )}
           {SITE.email && <Typography variant="body2">{SITE.email}</Typography>}
+        </Stack>
+        <Stack sx={Styles.contact}>
+          <Typography variant="h3" component="p" sx={Styles.columnTitle}>
+            שווה לעקוב
+          </Typography>
+          <Typography variant="body2">
+            בקבוצת הוואטסאפ ובאינסטגרם אני מעלה תפריטים חדשים, תאריכי ארוחות שף ומה שיוצא מהמטבח.
+          </Typography>
+          <Typography
+            component="a"
+            href={SITE.social.whatsappGroup}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="body2"
+            sx={Styles.socialLink}
+          >
+            קבוצת הוואטסאפ של ThaiLab
+          </Typography>
+          <Typography
+            component="a"
+            href={SITE.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="body2"
+            sx={Styles.socialLink}
+          >
+            אינסטגרם
+          </Typography>
         </Stack>
       </Box>
     </PageContainer>

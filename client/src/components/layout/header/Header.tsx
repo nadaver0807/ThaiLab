@@ -51,7 +51,7 @@ const Header: FC = () => {
           <Stack sx={Styles.actions}>
             <CartButton />
             <OrderButton />
-            <LinkButton href={Route.Contact} variant="outlined" color="primary">
+            <LinkButton href={Route.PrivateEvents} variant="outlined" color="primary">
               אירוע פרטי
             </LinkButton>
           </Stack>

@@ -3,26 +3,16 @@
 import { useEffect, type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Stack,
-} from '@mui/material';
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { type Dish } from '@shared/types/site.type';
 import { type CreateDishPayload } from '@shared/validations/dish.validation';
-import ControlledTextField from '@/components/shared/text-field/ThailabTextField';
-import ThailabSelect from '@/components/shared/select/ThailabSelect';
-import ThailabSwitch from '@/components/shared/switch/ThailabSwitch';
+import DishFormFields from '@components/menu/dish-form-dialog/DishFormFields';
 import {
-  CATEGORY_OPTIONS,
   EMPTY_DISH_FORM,
-  SPICE_OPTIONS,
   dishFormSchema,
+  formatOptionNotes,
   formatPriceOptions,
+  parseOptionNotes,
   parsePriceOptions,
   type DishFormValues,
 } from '@components/menu/dish-form-dialog/DishFormDialog.const';
@@ -41,6 +31,7 @@ const mapDishForm = (dish: Dish | null): DishFormValues =>
   dish
     ? {
         name: dish.name,
+        optionNotesText: formatOptionNotes(dish.optionNotes ?? []),
         description: dish.description ?? '',
         menuCategory: dish.menuCategory,
         spiceLevel: dish.spiceLevel,
@@ -77,10 +68,11 @@ const DishFormDialog: FC<DishFormDialogProps> = ({
   }, [isOpen, dish, reset]);
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    const { priceOptionsText, notes, ...rest } = values;
+    const { priceOptionsText, optionNotesText, notes, ...rest } = values;
 
     onSubmit({
       ...rest,
+      optionNotes: parseOptionNotes(optionNotesText),
       notes: notes || null,
       priceOptions: parsePriceOptions(priceOptionsText),
     });
@@ -93,50 +85,7 @@ const DishFormDialog: FC<DishFormDialogProps> = ({
       <FormProvider {...form}>
         <form onSubmit={handleSubmit} noValidate>
           <DialogContent sx={Styles.content}>
-            <ControlledTextField<DishFormValues> name="name" label="שם המנה" required />
-
-            <ControlledTextField<DishFormValues>
-              name="description"
-              label="תיאור"
-              multiline
-              minRows={3}
-            />
-
-            <Stack sx={Styles.row}>
-              <ThailabSelect<DishFormValues>
-                name="menuCategory"
-                label="קטגוריה"
-                options={CATEGORY_OPTIONS}
-              />
-              <ThailabSelect<DishFormValues>
-                name="spiceLevel"
-                label="רמת חריפות"
-                options={SPICE_OPTIONS}
-              />
-            </Stack>
-
-            <ControlledTextField<DishFormValues>
-              name="priceOptionsText"
-              label='מחירים — שורה לכל אפשרות, למשל "עוף: 70"'
-              multiline
-              minRows={2}
-              required
-            />
-
-            <ControlledTextField<DishFormValues> name="notes" label="הערות" />
-
-            <ControlledTextField<DishFormValues>
-              name="displayOrder"
-              label="סדר תצוגה"
-              type="number"
-            />
-
-            <Stack sx={Styles.switches}>
-              <ThailabSwitch<DishFormValues> name="isVegetarian" label="צמחוני" />
-              <ThailabSwitch<DishFormValues> name="isVegan" label="טבעוני" />
-              <ThailabSwitch<DishFormValues> name="isGlutenFree" label="ללא גלוטן" />
-              <ThailabSwitch<DishFormValues> name="isAvailable" label="זמין" />
-            </Stack>
+            <DishFormFields />
 
             {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
           </DialogContent>

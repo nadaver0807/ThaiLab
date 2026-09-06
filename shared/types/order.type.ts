@@ -7,9 +7,12 @@ export type OrderItemSummary = {
   uuid: string;
   dishUuid: string | null;
   dishName: string;
+  /** הווריאציה שהוזמנה — "עוף"/"טופו". נשמר גם אם המחיר זהה. */
+  variantLabel: string | null;
   priceKey: string;
   quantity: number;
   unitPrice: number;
+  selectedNotes: string[];
   specialRequest: string | null;
 };
 

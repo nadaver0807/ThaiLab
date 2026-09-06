@@ -7,6 +7,7 @@ import { OrderItem } from '@/order-item/OrderItem.entity';
 import { upsertByPhone } from '@/costumer/costumer.service';
 import { notifyAdminOfNewOrder, notifyCustomerOfDecision } from '@/order/orderNotification.service';
 import { DELIVERY_FEE } from '@shared/consts/order.const';
+import { resolveVariantLabel } from '@shared/util/variant.util';
 import { OrderStatus } from '@shared/enums/order-status.enum';
 import { OrderType } from '@shared/enums/order-type.enum';
 import { PaymentStatus } from '@shared/enums/payment-status.enum';
@@ -37,9 +38,11 @@ const toSummary = (order: Order): OrderSummary => ({
     uuid: item.uuid,
     dishUuid: item.dish?.uuid ?? null,
     dishName: item.dishName,
+    variantLabel: item.variantLabel,
     priceKey: item.priceKey,
     quantity: item.quantity,
     unitPrice: item.unitPrice,
+    selectedNotes: item.selectedNotes ?? [],
     specialRequest: item.specialRequest,
   })),
 });
@@ -64,12 +67,19 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
       );
     }
 
+    // הערות מוכנות מאומתות מול המנה כדי שלא יישלחו ערכים שרירותיים
+    const allowedNotes = new Set(dish.optionNotes ?? []);
+    const selectedNotes = (item.selectedNotes ?? []).filter((note) => allowedNotes.has(note));
+
     return OrderItem.create({
       dish,
       dishName: dish.name,
+      // מפתח המחיר הוא הבחירה עצמה — "עוף", "טופו", "שרימפס"
+      variantLabel: resolveVariantLabel(item.priceKey),
       priceKey: item.priceKey,
       quantity: item.quantity,
       unitPrice,
+      selectedNotes,
       specialRequest: item.specialRequest || null,
     });
   });

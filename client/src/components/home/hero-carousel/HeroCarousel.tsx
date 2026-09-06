@@ -22,11 +22,11 @@ const HeroCarousel: FC = () => {
       ))}
       <PageContainer>
         <Box sx={Styles.content}>
-          <Typography variant="h2" component="p" sx={Styles.brand}>
+          <Typography variant="body2" component="p" sx={Styles.brand}>
             {SITE.name}
           </Typography>
           <Typography variant="body2" sx={Styles.tagline}>
-            Private Thai Chef
+            עופר שזר · מטבח תאילנדי
           </Typography>
           <Typography variant="h1" component="h1" sx={Styles.title}>
             {activeSlide.title}
@@ -36,7 +36,7 @@ const HeroCarousel: FC = () => {
           </Typography>
           <Stack sx={Styles.actions}>
             <OrderButton size="large" />
-            <LinkButton href={Route.Contact} variant="outlined" size="large">
+            <LinkButton href={Route.PrivateEvents} variant="outlined" size="large">
               הזמנת אירוע פרטי
             </LinkButton>
           </Stack>

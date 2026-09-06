@@ -4,6 +4,7 @@ import CartDrawer from '@components/cart/cart-drawer/CartDrawer';
 import NavDrawer from '@components/layout/nav-drawer/NavDrawer';
 import Footer from '@components/layout/footer/Footer';
 import Header from '@components/layout/header/Header';
+import WhatsappFab from '@components/layout/whatsapp-fab/WhatsappFab';
 import { Box } from '@mui/material';
 import { SITE } from '@shared/consts/site.const';
 import Providers from '@theme/Providers';
@@ -15,12 +16,6 @@ import { type ReactNode } from 'react';
 const heebo = Heebo({
   variable: '--font-sans',
   subsets: ['hebrew', 'latin'],
-});
-
-const ozrad = localFont({
-  variable: '--font-display',
-  src: [{ path: './fonts/OzradCLM-Bold.woff', weight: '700', style: 'normal' }],
-  display: 'swap',
 });
 
 const chaipot = localFont({
@@ -42,7 +37,7 @@ type RootLayoutProps = {
 };
 
 const RootLayout = ({ children }: RootLayoutProps) => (
-  <html lang="he" dir="rtl" className={`${heebo.variable} ${ozrad.variable} ${chaipot.variable}`}>
+  <html lang="he" dir="rtl" className={`${heebo.variable} ${chaipot.variable}`}>
     <body>
       <Providers>
         <Box sx={Styles.layout}>
@@ -53,6 +48,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
           <Footer />
         </Box>
         <BottomOrderBar />
+        <WhatsappFab />
         <CartDrawer />
         <NavDrawer />
       </Providers>

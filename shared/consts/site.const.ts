@@ -11,13 +11,27 @@ export const SITE: SiteConfig = {
   social: {
     instagram: 'https://www.instagram.com/thai__lab',
     facebook: 'https://facebook.com/thailab',
-    whatsapp: 'https://wa.me/972501234567',
+    whatsapp: 'https://wa.me/972555567083',
+    whatsappGroup: 'https://chat.whatsapp.com/Ki8ngpp4EQy1yPgMxy64k4?s=cl&p=a&mlu=0&ilr=4',
   },
 };
 
+/** הודעה מוכנה מראש לפנייה בוואטסאפ לפי נושא. */
+export const WHATSAPP_MESSAGE = {
+  general: 'היי עופר, הגעתי מהאתר של ThaiLab ורציתי לשאול משהו',
+  chefAtHome: 'היי עופר, מעניין אותי לשמוע על ארוחת שף בבת שלמה',
+  privateEvent: 'היי עופר, אשמח לקבל הצעה לאירוע פרטי',
+} as const;
+
+/** בונה קישור וואטסאפ עם הודעה מוכנה. */
+export const buildWhatsappLink = (message: string): string =>
+  `${SITE.social.whatsapp}?text=${encodeURIComponent(message)}`;
+
 export const NAV_LINKS: NavLink[] = [
   { href: Route.Home, label: 'בית' },
-  { href: Route.Menu, label: 'תפריט' },
+  { href: Route.Menu, label: 'טייק אווי ומשלוחים' },
+  { href: Route.ChefAtHome, label: 'ארוחות שף' },
+  { href: Route.PrivateEvents, label: 'אירועים פרטיים' },
   { href: Route.About, label: 'אודות' },
   { href: Route.Contact, label: 'צור קשר' },
 ];

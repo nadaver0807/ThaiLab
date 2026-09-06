@@ -29,8 +29,7 @@ const content: SxProps<Theme> = {
 };
 
 const brand: SxProps<Theme> = {
-  fontFamily: 'var(--font-brand)',
-  fontWeight: 700,
+  fontWeight: 500,
   color: 'common.white',
   fontSize: { xs: '3.2rem', md: '5rem' },
   lineHeight: 1,

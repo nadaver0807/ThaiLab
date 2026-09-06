@@ -27,8 +27,16 @@ export class OrderItem extends BaseEntity {
   @Column({ type: 'varchar' })
   dishName: string;
 
+  /** הווריאציה שהוזמנה — נשמר בנפרד כדי שההזמנה תהיה חד־משמעית. */
+  @Column({ type: 'varchar', nullable: true })
+  variantLabel: string | null;
+
   @Column({ type: 'varchar', default: 'default' })
   priceKey: string;
+
+  /** ההערות המוכנות שהלקוח סימן. */
+  @Column({ type: 'jsonb', default: () => `'[]'::jsonb` })
+  selectedNotes: string[];
 
   @Column({ type: 'int' })
   quantity: number;

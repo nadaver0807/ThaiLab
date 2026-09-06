@@ -10,10 +10,10 @@ const GallerySection: FC = () => (
   <Box component="section" id="gallery" sx={Styles.section}>
     <PageContainer>
       <Typography variant="body2" sx={Styles.tagline}>
-        Event Gallery
+        גלריה
       </Typography>
       <Typography variant="h2" component="h2" sx={Styles.title}>
-        רגעים מאירועים פרטיים
+        מהמטבח, מהגג ומהשולחן
       </Typography>
       <Box sx={Styles.grid}>
         {GALLERY_IMAGES.map((item) => (

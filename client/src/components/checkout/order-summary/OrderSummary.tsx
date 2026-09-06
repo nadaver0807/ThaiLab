@@ -2,7 +2,6 @@
 
 import { type FC } from 'react';
 import { Box, Divider, Stack, Typography } from '@mui/material';
-import { DEFAULT_PRICE_KEY } from '@shared/consts/order.const';
 import { OrderType } from '@shared/enums/order-type.enum';
 import { type CartItem, type CartTotals } from '@shared/types/cart.type';
 import QuantityStepper from '@components/cart/quantity-stepper/QuantityStepper';
@@ -27,9 +26,14 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items, totals, orderType, onQuant
           <Typography variant="body1" sx={Styles.itemName}>
             {item.dishName}
           </Typography>
-          {item.priceKey !== DEFAULT_PRICE_KEY && (
+          {!!item.variantLabel && (
             <Typography variant="body2" sx={Styles.itemOption}>
-              {item.priceKey}
+              {item.variantLabel}
+            </Typography>
+          )}
+          {!!item.selectedNotes?.length && (
+            <Typography variant="body2" sx={Styles.itemOption}>
+              {item.selectedNotes.join(' • ')}
             </Typography>
           )}
         </Box>

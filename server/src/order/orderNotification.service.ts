@@ -1,9 +1,10 @@
-import { ADMIN_EMAIL, SERVER_PUBLIC_URL } from '@/server.const';
+import { ADMIN_EMAIL, CLIENT_ORIGIN, SERVER_PUBLIC_URL } from '@/server.const';
 import { sendHtmlEmail } from '@/email/email.service';
 import { renderAdminOrderEmail, renderCustomerDecisionEmail } from '@/email/orderEmail.template';
 import { createDecisionToken, OrderDecision } from '@/util/decisionToken.util';
 import { logger, toSafeError } from '@/util/logger';
 import { type OrderSummary } from '@shared/types/order.type';
+import { Route } from '@shared/enums/route.enum';
 
 const buildDecisionUrl = (orderUuid: string, decision: OrderDecision): string =>
   `${SERVER_PUBLIC_URL}/api/orders/${orderUuid}/decision/${decision}?token=${createDecisionToken(
@@ -44,7 +45,11 @@ export const notifyCustomerOfDecision = async (
     await sendHtmlEmail({
       to: order.contactEmail,
       subject: isConfirmed ? 'ההזמנה שלכם אושרה — ThaiLab' : 'עדכון לגבי ההזמנה שלכם — ThaiLab',
-      html: renderCustomerDecisionEmail(order, isConfirmed),
+      html: renderCustomerDecisionEmail(
+        order,
+        isConfirmed,
+        `${CLIENT_ORIGIN.replace(/\/$/, '')}${Route.Review}?order=${order.uuid}`,
+      ),
     });
   } catch (error) {
     logger.error(

@@ -8,4 +8,5 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 'shrimp', image: '/images/shrimp.jpeg', alt: '' },
   { id: 'scallop', image: '/images/scallop.jpeg', alt: '' },
   { id: 'coconut-balls', image: '/images/coconut-balls.jpeg', alt: '' },
+  { id: 'intro-ofer', image: '/images/intro-ofer.jpeg', alt: '' },
 ];

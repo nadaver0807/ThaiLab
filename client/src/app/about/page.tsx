@@ -3,7 +3,7 @@ import AboutMe from '@/app/about/AboutMe';
 
 export const metadata: Metadata = {
   title: 'אודות',
-  description: 'הסיפור שמאחורי Thai Lab — שף פרטי, מטבח תאילנדי אותנטי וחוויה קולינרית אישית.',
+  description: 'נעים מאוד, אני עופר שזר — הסיפור שמאחורי ThaiLab והדרך שלי למטבח התאילנדי.',
 };
 
 const Page = () => <AboutMe />;

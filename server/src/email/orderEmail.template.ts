@@ -1,4 +1,3 @@
-import { DEFAULT_PRICE_KEY } from '@shared/consts/order.const';
 import { OrderTypeLabel } from '@shared/enums/order-type.enum';
 import { type OrderSummary } from '@shared/types/order.type';
 
@@ -11,10 +10,28 @@ export const escapeHtml = (value: string): string =>
 const renderItems = (order: OrderSummary): string =>
   order.items
     .map((item) => {
-      const option = item.priceKey === DEFAULT_PRICE_KEY ? '' : ` (${escapeHtml(item.priceKey)})`;
+      // הווריאציה מוצגת תמיד — גם כשהמחיר זהה חייבים לדעת מה בדיוק הוזמן
+      const variant = item.variantLabel
+        ? `<div style="font-weight:700;color:#B08D57;">${escapeHtml(item.variantLabel)}</div>`
+        : '';
+
+      const notes = item.selectedNotes?.length
+        ? `<div style="color:#555;font-size:13px;">• ${item.selectedNotes
+            .map(escapeHtml)
+            .join('<br />• ')}</div>`
+        : '';
+
+      const request = item.specialRequest
+        ? `<div style="color:#555;font-size:13px;font-style:italic;">${escapeHtml(item.specialRequest)}</div>`
+        : '';
 
       return `<tr>
-        <td style="padding:6px 10px;border:1px solid #ddd;">${item.quantity} × ${escapeHtml(item.dishName)}${option}</td>
+        <td style="padding:6px 10px;border:1px solid #ddd;">
+          ${item.quantity} × ${escapeHtml(item.dishName)}
+          ${variant}
+          ${notes}
+          ${request}
+        </td>
         <td style="padding:6px 10px;border:1px solid #ddd;white-space:nowrap;">₪${item.unitPrice * item.quantity}</td>
       </tr>`;
     })
@@ -87,7 +104,11 @@ export const renderAdminOrderEmail = (
 </div>`;
 
 /** מייל ללקוח לאחר החלטת המנהל. */
-export const renderCustomerDecisionEmail = (order: OrderSummary, isConfirmed: boolean): string => {
+export const renderCustomerDecisionEmail = (
+  order: OrderSummary,
+  isConfirmed: boolean,
+  reviewUrl?: string,
+): string => {
   const headline = isConfirmed ? 'ההזמנה שלכם אושרה!' : 'ההזמנה שלכם לא אושרה';
 
   const body = isConfirmed
@@ -98,6 +119,15 @@ export const renderCustomerDecisionEmail = (order: OrderSummary, isConfirmed: bo
       } התשלום מתבצע במקום, במזומן או באשראי.`
     : 'לצערנו לא נוכל להכין את ההזמנה הפעם. נשמח לעמוד לרשותכם בטלפון לפרטים נוספים.';
 
+  // הקישור נשלח רק אחרי הזמנה שאושרה — כך רק מי שבאמת הזמין יכול לכתוב ביקורת
+  const reviewSection =
+    isConfirmed && reviewUrl
+      ? `<div style="margin-top:28px;padding-top:20px;border-top:1px solid #ddd;">
+          <p style="${FONT}margin:0 0 12px;">אחרי שתטעמו — נשמח לשמוע מה חשבתם.</p>
+          ${button(reviewUrl, 'לכתיבת ביקורת', '#B08D57')}
+        </div>`
+      : '';
+
   return `<div dir="rtl" style="${FONT}font-size:14px;color:#222;">
     <h2>${headline}</h2>
     <p>שלום ${escapeHtml(order.contactName)},</p>
@@ -107,6 +137,7 @@ export const renderCustomerDecisionEmail = (order: OrderSummary, isConfirmed: bo
     <table style="border-collapse:collapse;">${renderItems(order)}</table>
 
     ${renderTotals(order)}
+    ${reviewSection}
 
     <p style="color:#777;font-size:12px;">מספר אסמכתא: ${order.uuid.slice(0, 8).toUpperCase()}</p>
   </div>`;

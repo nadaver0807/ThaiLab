@@ -5,6 +5,7 @@ import { Hospitality } from '@/hospitality/Hospitality.entity';
 import { Order } from '@/order/Order.entity';
 import { OrderItem } from '@/order-item/OrderItem.entity';
 import { Reservation } from '@/reservation/Reservation.entity';
+import { Review } from '@/review/Review.entity';
 import dotEnv from 'dotenv';
 import { resolve } from 'node:path';
 import { DataSource, type DataSourceOptions } from 'typeorm';
@@ -34,7 +35,17 @@ const migrations = IS_COMPILED
   : [resolve(__dirname, '../../..', `${MIGRATIONS_PATH || ''}migrations`, '*.ts')];
 
 const sharedOptions = {
-  entities: [Category, Costumer, Dish, Hospitality, Order, OrderItem, Reservation, AdminUser],
+  entities: [
+    Category,
+    Costumer,
+    Dish,
+    Hospitality,
+    Order,
+    OrderItem,
+    Reservation,
+    Review,
+    AdminUser,
+  ],
   logging: WORKSPACE === 'local',
   migrations,
   migrationsTableName: 'migrations',

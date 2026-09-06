@@ -2,11 +2,12 @@
 
 import { type FC } from 'react';
 import NextLink from 'next/link';
-import { Alert, Box, Button, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, Stack } from '@mui/material';
 import { FormProvider } from 'react-hook-form';
 import { Route } from '@shared/enums/route.enum';
 import OrderSummary from '@components/checkout/order-summary/OrderSummary';
 import OrderTypeField from '@components/checkout/checkout-form/OrderTypeField';
+import PaymentMethodField from '@components/checkout/checkout-form/PaymentMethodField';
 import CustomerFields from '@components/checkout/checkout-form/CustomerFields';
 import EmptyState from '@components/shared/empty-state/EmptyState';
 import useCart from '@/hooks/cart/useCart';
@@ -44,14 +45,11 @@ const CheckoutForm: FC = () => {
             isReturningCustomer={checkout.isReturningCustomer}
           />
 
-          <Stack sx={Styles.block}>
-            <Typography variant="h3" component="h2" sx={Styles.blockTitle}>
-              תשלום
-            </Typography>
-            <Typography variant="body2" sx={Styles.paymentNote}>
-              התשלום מתבצע במקום — במזומן או באשראי בעת האיסוף או המסירה. תשלום מקוון יתווסף בקרוב.
-            </Typography>
-          </Stack>
+          <PaymentMethodField
+            value={checkout.paymentMethod}
+            isCreditCardEnabled={checkout.isCreditCardEnabled}
+            onChange={(method) => checkout.form.setValue('paymentMethod', method)}
+          />
 
           {checkout.errorMessage && <Alert severity="error">{checkout.errorMessage}</Alert>}
 

@@ -11,11 +11,13 @@ import { type CartItem } from '@shared/types/cart.type';
 import { israeliPhone } from '@shared/validations/common.validation';
 import { checkoutFormSchema, type CheckoutForm } from '@shared/validations/order.validation';
 import useCreateOrder from '@/hooks/api/useCreateOrder';
+import useStartPayment, { useGetPaymentConfig } from '@/hooks/api/useStartPayment';
 import useLookupCustomer from '@/hooks/api/useLookupCustomer';
 import useDebouncedValue from '@/hooks/shared/useDebouncedValue';
 
 const DEFAULT_VALUES: CheckoutForm = {
   type: OrderType.Pickup,
+  paymentMethod: PaymentMethod.OnCollection,
   firstName: '',
   lastName: '',
   phone: '',
@@ -36,6 +38,8 @@ type UseCheckoutParams = {
 type UseCheckoutResult = {
   form: UseFormReturn<CheckoutForm>;
   orderType: OrderType;
+  paymentMethod: PaymentMethod;
+  isCreditCardEnabled: boolean;
   isLookingUp: boolean;
   isReturningCustomer: boolean;
   isPending: boolean;
@@ -55,6 +59,7 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   });
 
   const orderType = useWatch({ control: form.control, name: 'type' });
+  const paymentMethod = useWatch({ control: form.control, name: 'paymentMethod' });
   const phone = useWatch({ control: form.control, name: 'phone' });
 
   const debouncedPhone = useDebouncedValue(phone, LOOKUP_DEBOUNCE_MS);
@@ -66,6 +71,8 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   );
 
   const { mutateAsync: submitOrder, isPending, isError, error } = useCreateOrder();
+  const { mutateAsync: startPayment } = useStartPayment();
+  const { data: paymentConfig } = useGetPaymentConfig();
 
   useEffect(() => {
     if (!lookupResult || filledPhoneRef.current === debouncedPhone) {
@@ -93,7 +100,7 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   const submit = form.handleSubmit(async (values) => {
     const order = await submitOrder({
       type: values.type,
-      paymentMethod: PaymentMethod.OnCollection,
+      paymentMethod: values.paymentMethod,
       customer: {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -106,17 +113,30 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
         dishUuid: item.dishUuid,
         priceKey: item.priceKey,
         quantity: item.quantity,
+        selectedNotes: item.selectedNotes ?? [],
         specialRequest: item.specialRequest,
       })),
     });
 
     onSuccess();
+
+    // בתשלום באשראי מפנים לדף המאובטח של ספק הסליקה
+    if (values.paymentMethod === PaymentMethod.CreditCard) {
+      const { paymentUrl } = await startPayment(order.uuid);
+
+      window.location.assign(paymentUrl);
+
+      return;
+    }
+
     router.push(`${Route.Checkout}/${order.uuid}`);
   });
 
   return {
     form,
     orderType,
+    paymentMethod,
+    isCreditCardEnabled: Boolean(paymentConfig?.isCreditCardEnabled),
     isLookingUp,
     isReturningCustomer,
     isPending,
