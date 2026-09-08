@@ -14,10 +14,13 @@ import {
   subscribeToCart,
 } from '@/hooks/cart/cart.store';
 
-const useCart = (orderType: OrderType = OrderType.Pickup) => {
+const useCart = (orderType: OrderType = OrderType.Pickup, city?: string | null) => {
   const items = useSyncExternalStore(subscribeToCart, getCartItems, getServerCartItems);
 
-  const totals = useMemo(() => calculateTotals(items, orderType), [items, orderType]);
+  const totals = useMemo(
+    () => calculateTotals(items, orderType, city),
+    [items, orderType, city],
+  );
 
   const itemCount = useMemo(() => items.reduce((sum, item) => sum + item.quantity, 0), [items]);
 

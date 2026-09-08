@@ -22,6 +22,7 @@ const DEFAULT_VALUES: CheckoutForm = {
   lastName: '',
   phone: '',
   email: '',
+  city: '',
   address: '',
   notes: '',
 };
@@ -38,6 +39,8 @@ type UseCheckoutParams = {
 type UseCheckoutResult = {
   form: UseFormReturn<CheckoutForm>;
   orderType: OrderType;
+  /** ישוב המשלוח שנבחר — קובע את דמי המשלוח בסיכום. */
+  city: string;
   paymentMethod: PaymentMethod;
   isCreditCardEnabled: boolean;
   isLookingUp: boolean;
@@ -59,6 +62,7 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   });
 
   const orderType = useWatch({ control: form.control, name: 'type' });
+  const city = useWatch({ control: form.control, name: 'city' });
   const paymentMethod = useWatch({ control: form.control, name: 'paymentMethod' });
   const phone = useWatch({ control: form.control, name: 'phone' });
 
@@ -107,6 +111,7 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
         phone: values.phone,
         email: values.email,
       },
+      city: values.city,
       address: values.address,
       notes: values.notes,
       items: items.map((item) => ({
@@ -135,6 +140,7 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
   return {
     form,
     orderType,
+    city: city ?? '',
     paymentMethod,
     isCreditCardEnabled: Boolean(paymentConfig?.isCreditCardEnabled),
     isLookingUp,

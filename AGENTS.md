@@ -113,6 +113,28 @@ ThaiLab/
 - Status codes come from `StatusCodes` (`http-status-codes`) — never hardcoded numbers.
 - Bodies are validated with `validateZodSchema(schema)` using a schema from `@thailab/shared`.
 
+### Database & Migrations
+
+The schema is owned **exclusively** by the migrations in `server/migrations/`.
+`synchronize` is `false` and must stay that way — nothing reconciles the database automatically.
+
+- **Never edit a migration that has already run.** TypeORM records every executed migration in the
+  `migrations` table and will not re-run it. Editing the file changes nothing in any database that
+  already ran it, and the code silently drifts from the actual schema. This applies the moment a
+  migration ran **anywhere** — including your own local database.
+- **To change the schema, always add a new migration.** Correcting a mistake in an old migration is
+  itself a new migration.
+- Changing an entity (`*.entity.ts`) is only half the work — a matching migration is mandatory,
+  otherwise the app fails at runtime with `column X does not exist`.
+- Write `up` **and** `down`; `down` must actually reverse `up`.
+- Use `IF NOT EXISTS` / `IF EXISTS` in a corrective migration, so that a database created from
+  scratch (which already has the fix baked into the original migration) passes it without error.
+- Schema is always qualified with `"${DB_SCHEMA}"`, read from the environment.
+- Data corrections targeting specific rows (e.g. updating dishes by name) belong in a migration too
+  — the seed only covers a fresh setup.
+- After running locally, verify against the database itself, not only against the code.
+- Production is a separate database with its own migration state: `npm run migration:run:prod`.
+
 ### Naming
 
 - **One folder per component**, folder name in `kebab-case`, holding every file that belongs to it:
@@ -217,6 +239,8 @@ ThaiLab/
 - `function` declarations instead of arrow functions; missing `FC` typing; named export instead of `export default`
 - `watch` instead of `useWatch`; passing form methods as props
 - Duplicating a validation instead of reusing `common.validation.ts`
+- **Editing a migration that already ran instead of adding a new one** — it will never re-run
+- **Changing an entity without a matching migration** — causes `column X does not exist` at runtime
 - `shared/` importing client code
 - Hardcoded colors/fonts instead of theme tokens
 - Mirroring server data into `useState`; skipping `invalidateQueries`

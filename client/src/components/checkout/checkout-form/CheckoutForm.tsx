@@ -4,6 +4,7 @@ import { type FC } from 'react';
 import NextLink from 'next/link';
 import { Alert, Box, Button, Stack } from '@mui/material';
 import { FormProvider } from 'react-hook-form';
+import { DELIVERY_MIN_SUBTOTAL } from '@shared/consts/delivery.const';
 import { Route } from '@shared/enums/route.enum';
 import OrderSummary from '@components/checkout/order-summary/OrderSummary';
 import OrderTypeField from '@components/checkout/checkout-form/OrderTypeField';
@@ -17,7 +18,7 @@ import Styles from '@components/checkout/checkout-form/CheckoutForm.style';
 const CheckoutForm: FC = () => {
   const { items, clear } = useCart();
   const checkout = useCheckout({ items, onSuccess: clear });
-  const { totals, setQuantity } = useCart(checkout.orderType);
+  const { totals, setQuantity } = useCart(checkout.orderType, checkout.city);
 
   if (!items.length) {
     return (
@@ -53,6 +54,13 @@ const CheckoutForm: FC = () => {
 
           {checkout.errorMessage && <Alert severity="error">{checkout.errorMessage}</Alert>}
 
+          {!totals.isDeliveryAllowed && (
+            <Alert severity="warning">
+              מינימום ההזמנה למשלוח הוא ₪{DELIVERY_MIN_SUBTOTAL} — חסרים עוד ₪
+              {totals.missingForDelivery}. אפשר להוסיף מנות או לבחור איסוף עצמי.
+            </Alert>
+          )}
+
           <Box sx={Styles.actions}>
             <Button
               type="submit"
@@ -60,7 +68,7 @@ const CheckoutForm: FC = () => {
               color="secondary"
               size="large"
               fullWidth
-              disabled={checkout.isPending}
+              disabled={checkout.isPending || !totals.isDeliveryAllowed}
             >
               {checkout.isPending ? 'שולח…' : `שליחת הזמנה — ₪${totals.total}`}
             </Button>

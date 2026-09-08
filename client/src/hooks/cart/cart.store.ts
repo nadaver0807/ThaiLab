@@ -1,4 +1,5 @@
-import { CART_STORAGE_KEY, DELIVERY_FEE } from '@shared/consts/order.const';
+import { CART_STORAGE_KEY } from '@shared/consts/order.const';
+import { DELIVERY_MIN_SUBTOTAL, getDeliveryFee } from '@shared/consts/delivery.const';
 import { OrderType } from '@shared/enums/order-type.enum';
 import { type CartItem, type CartTotals } from '@shared/types/cart.type';
 
@@ -142,9 +143,25 @@ export const clearCart = (): void => {
 export const calculateSubtotal = (items: CartItem[]): number =>
   items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
 
-export const calculateTotals = (items: CartItem[], orderType: OrderType): CartTotals => {
+export const calculateTotals = (
+  items: CartItem[],
+  orderType: OrderType,
+  city?: string | null,
+): CartTotals => {
   const subtotal = calculateSubtotal(items);
-  const deliveryFee = orderType === OrderType.Delivery && items.length ? DELIVERY_FEE : 0;
+  const isDelivery = orderType === OrderType.Delivery && items.length > 0;
 
-  return { subtotal, deliveryFee, total: subtotal + deliveryFee };
+  // דמי המשלוח נגזרים מהישוב — כל עוד לא נבחר ישוב אין מה לגבות
+  const deliveryFee = isDelivery ? (getDeliveryFee(city) ?? 0) : 0;
+
+  const missingForDelivery =
+    isDelivery && subtotal < DELIVERY_MIN_SUBTOTAL ? DELIVERY_MIN_SUBTOTAL - subtotal : 0;
+
+  return {
+    subtotal,
+    deliveryFee,
+    total: subtotal + deliveryFee,
+    missingForDelivery,
+    isDeliveryAllowed: !isDelivery || missingForDelivery === 0,
+  };
 };

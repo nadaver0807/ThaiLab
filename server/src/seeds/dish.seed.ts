@@ -12,6 +12,8 @@ export type DishSeed = {
   isGlutenFree: boolean;
   spiceLevel: SpiceLevel;
   notes: string | null;
+  /** הערות מוכנות שהלקוח יכול לסמן בהזמנה — "בלי בוטנים", "בלי כוסברה". */
+  optionNotes?: string[];
   displayOrder: number;
 };
 
@@ -36,6 +38,7 @@ export const DISH_SEEDS: DishSeed[] = [
     isGlutenFree: true,
     spiceLevel: toSpiceLevel(3),
     notes: null,
+    optionNotes: ['בלי בוטנים'],
     displayOrder: 1,
   },
   {
@@ -49,6 +52,7 @@ export const DISH_SEEDS: DishSeed[] = [
     isGlutenFree: true,
     spiceLevel: toSpiceLevel(2),
     notes: null,
+    optionNotes: ['בלי קשיו'],
     displayOrder: 2,
   },
   {
@@ -62,6 +66,7 @@ export const DISH_SEEDS: DishSeed[] = [
     isGlutenFree: false,
     spiceLevel: toSpiceLevel(2),
     notes: null,
+    optionNotes: ['בלי קשיו'],
     displayOrder: 3,
   },
   {
@@ -114,6 +119,7 @@ export const DISH_SEEDS: DishSeed[] = [
     isGlutenFree: false,
     spiceLevel: toSpiceLevel(0),
     notes: 'גרסה צמחונית עם ביצה | גרסה טבעונית ללא ביצה',
+    optionNotes: ['בלי בוטנים', 'בלי כוסברה', 'בלי נבטים', 'בלי ביצה'],
     displayOrder: 7,
   },
   {
@@ -140,6 +146,7 @@ export const DISH_SEEDS: DishSeed[] = [
     isGlutenFree: false,
     spiceLevel: toSpiceLevel(2),
     notes: null,
+    optionNotes: ['בלי בוטנים'],
     displayOrder: 9,
   },
   {

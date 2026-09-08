@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { isDeliverableCity } from '@shared/consts/delivery.const';
 import { OrderType } from '@shared/enums/order-type.enum';
 import { PaymentMethod } from '@shared/enums/payment-method.enum';
 import {
@@ -11,7 +12,6 @@ import {
 
 export const orderItemSchema = z.object({
   dishUuid: z.string().uuid(),
-  /** מפתח המחיר הוא גם הווריאציה שנבחרה — "עוף", "טופו", "שרימפס". */
   priceKey: limitedString(1, 60),
   quantity: z.coerce.number().int().min(1).max(50),
   selectedNotes: z.array(limitedString(1, 60)).max(12).default([]),
@@ -30,6 +30,7 @@ export const createOrderSchema = z
     type: enumValue(OrderType),
     paymentMethod: enumValue(PaymentMethod).default(PaymentMethod.OnCollection),
     customer: customerDetailsSchema,
+    city: optionalString(60),
     address: optionalString(200),
     notes: optionalString(500),
     items: z.array(orderItemSchema).min(1, 'העגלה ריקה'),
@@ -37,6 +38,10 @@ export const createOrderSchema = z
   .refine((order) => order.type !== OrderType.Delivery || Boolean(order.address?.trim()), {
     message: 'כתובת נדרשת עבור משלוח',
     path: ['address'],
+  })
+  .refine((order) => order.type !== OrderType.Delivery || isDeliverableCity(order.city), {
+    message: 'אין משלוחים לישוב הזה — אפשר לבחור איסוף עצמי או ליצור קשר',
+    path: ['city'],
   });
 
 export const customerLookupSchema = z.object({
@@ -51,8 +56,17 @@ export const checkoutFormSchema = z
     lastName: optionalString(40),
     phone: israeliPhone(),
     email: email(),
+    city: optionalString(60),
     address: optionalString(200),
     notes: optionalString(500),
+  })
+  .refine((form) => form.type !== OrderType.Delivery || Boolean(form.city?.trim()), {
+    message: 'יש לבחור ישוב למשלוח',
+    path: ['city'],
+  })
+  .refine((form) => form.type !== OrderType.Delivery || isDeliverableCity(form.city), {
+    message: 'אין משלוחים לישוב הזה — אפשר לבחור איסוף עצמי או ליצור קשר',
+    path: ['city'],
   })
   .refine((form) => form.type !== OrderType.Delivery || Boolean(form.address?.trim()), {
     message: 'כתובת נדרשת עבור משלוח',

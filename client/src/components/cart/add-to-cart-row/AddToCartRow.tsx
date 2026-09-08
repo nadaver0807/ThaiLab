@@ -27,16 +27,44 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
 }) => {
   const { items, add, setQuantity } = useCart();
   const [selectedNotes, setSelectedNotes] = useState<string[]>([]);
+  const [addedLineId, setAddedLineId] = useState<string | null>(null);
 
   const variantLabel = resolveVariantLabel(priceKey);
   const label = variantLabel ? `${dishName} — ${variantLabel}` : dishName;
   const lineId = buildLineId(dishUuid, priceKey, selectedNotes);
-  const quantity = items.find((item) => item.lineId === lineId)?.quantity ?? 0;
+  const activeLineId = addedLineId ?? lineId;
+  const quantity = items.find((item) => item.lineId === activeLineId)?.quantity ?? 0;
 
   const toggleNote = (note: string): void => {
+    // סימון הערה מתחיל הרכבה של פריט חדש ולא משנה את זה שכבר נוסף
+    setAddedLineId(null);
     setSelectedNotes((current) =>
       current.includes(note) ? current.filter((item) => item !== note) : [...current, note],
     );
+  };
+
+  const handleAdd = (): void => {
+    add({
+      dishUuid,
+      dishName,
+      variantLabel,
+      priceKey,
+      unitPrice,
+      quantity: 1,
+      selectedNotes,
+    });
+
+    // הפריט הבא מתחיל מדף חלק — ההערות לא נגררות להזמנה הבאה
+    setAddedLineId(lineId);
+    setSelectedNotes([]);
+  };
+
+  const handleQuantityChange = (next: number): void => {
+    setQuantity(activeLineId, next);
+
+    if (next <= 0) {
+      setAddedLineId(null);
+    }
   };
 
   return (
@@ -54,11 +82,7 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
         </Stack>
 
         {quantity > 0 ? (
-          <QuantityStepper
-            quantity={quantity}
-            label={label}
-            onChange={(next) => setQuantity(lineId, next)}
-          />
+          <QuantityStepper quantity={quantity} label={label} onChange={handleQuantityChange} />
         ) : (
           <Button
             size="small"
@@ -67,17 +91,7 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
             startIcon={<AddRoundedIcon />}
             sx={Styles.addButton}
             aria-label={`הוספת ${label} לעגלה`}
-            onClick={() =>
-              add({
-                dishUuid,
-                dishName,
-                variantLabel,
-                priceKey,
-                unitPrice,
-                quantity: 1,
-                selectedNotes,
-              })
-            }
+            onClick={handleAdd}
           >
             הוספה
           </Button>

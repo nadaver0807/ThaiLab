@@ -2,7 +2,11 @@
 
 import { type FC } from 'react';
 import { FormControlLabel, Radio, RadioGroup, Stack, Typography } from '@mui/material';
-import { DELIVERY_FEE } from '@shared/consts/order.const';
+import {
+  DELIVERY_FEE_FAR,
+  DELIVERY_FEE_NEAR,
+  DELIVERY_MIN_SUBTOTAL,
+} from '@shared/consts/delivery.const';
 import { OrderType, OrderTypeLabel } from '@shared/enums/order-type.enum';
 import Styles from '@components/checkout/checkout-form/CheckoutForm.style';
 
@@ -26,9 +30,15 @@ const OrderTypeField: FC<OrderTypeFieldProps> = ({ value, onChange }) => (
       <FormControlLabel
         value={OrderType.Delivery}
         control={<Radio />}
-        label={`${OrderTypeLabel[OrderType.Delivery]} — ₪${DELIVERY_FEE}`}
+        label={`${OrderTypeLabel[OrderType.Delivery]} — ₪${DELIVERY_FEE_NEAR}–₪${DELIVERY_FEE_FAR} לפי הישוב`}
       />
     </RadioGroup>
+
+    {value === OrderType.Delivery && (
+      <Typography variant="body2" sx={Styles.hint}>
+        מינימום הזמנה למשלוח — ₪{DELIVERY_MIN_SUBTOTAL}. דמי המשלוח נקבעים לפי הישוב שתבחרו.
+      </Typography>
+    )}
   </Stack>
 );
 

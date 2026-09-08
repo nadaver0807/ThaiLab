@@ -4,6 +4,7 @@ import { type FC } from 'react';
 import NextLink from 'next/link';
 import { Box, Button, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { DELIVERY_MIN_SUBTOTAL } from '@shared/consts/delivery.const';
 import { Route } from '@shared/enums/route.enum';
 import QuantityStepper from '@components/cart/quantity-stepper/QuantityStepper';
 import useCart from '@/hooks/cart/useCart';
@@ -81,7 +82,8 @@ const CartDrawer: FC = () => {
             </Stack>
 
             <Typography variant="body2" sx={Styles.itemOption}>
-              דמי משלוח יתווספו בעמוד התשלום, בהתאם לסוג ההזמנה.
+              מינימום הזמנה למשלוח ₪{DELIVERY_MIN_SUBTOTAL}. דמי המשלוח נקבעים לפי הישוב ומתווספים
+              בעמוד התשלום.
             </Typography>
 
             <Button

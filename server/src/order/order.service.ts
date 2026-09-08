@@ -6,7 +6,7 @@ import { Order } from '@/order/Order.entity';
 import { OrderItem } from '@/order-item/OrderItem.entity';
 import { upsertByPhone } from '@/costumer/costumer.service';
 import { notifyAdminOfNewOrder, notifyCustomerOfDecision } from '@/order/orderNotification.service';
-import { DELIVERY_FEE } from '@shared/consts/order.const';
+import { DELIVERY_MIN_SUBTOTAL, getDeliveryFee } from '@shared/consts/delivery.const';
 import { resolveVariantLabel } from '@shared/util/variant.util';
 import { OrderStatus } from '@shared/enums/order-status.enum';
 import { OrderType } from '@shared/enums/order-type.enum';
@@ -85,8 +85,23 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
   });
 
   const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-  const deliveryFee = payload.type === OrderType.Delivery ? DELIVERY_FEE : 0;
-  const address = payload.type === OrderType.Delivery ? (payload.address ?? null) : null;
+  const isDelivery = payload.type === OrderType.Delivery;
+
+  // דמי המשלוח נקבעים בשרת לפי הישוב — הלקוח לא יכול להשפיע על התעריף
+  const cityFee = isDelivery ? getDeliveryFee(payload.city) : 0;
+
+  if (isDelivery && cityFee === null) {
+    throw new OrderValidationError('אין משלוחים לישוב שנבחר');
+  }
+
+  if (isDelivery && subtotal < DELIVERY_MIN_SUBTOTAL) {
+    throw new OrderValidationError(`מינימום הזמנה למשלוח הוא ₪${DELIVERY_MIN_SUBTOTAL}`);
+  }
+
+  const deliveryFee = cityFee ?? 0;
+  const address = isDelivery
+    ? [payload.address?.trim(), payload.city?.trim()].filter(Boolean).join(', ')
+    : null;
 
   const costumer = await upsertByPhone(payload.customer, address ?? undefined);
 

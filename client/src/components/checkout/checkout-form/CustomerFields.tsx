@@ -2,10 +2,18 @@
 
 import { type FC } from 'react';
 import { Alert, CircularProgress, Stack, Typography } from '@mui/material';
+import { DELIVERY_CITIES, getDeliveryFee } from '@shared/consts/delivery.const';
 import { OrderType } from '@shared/enums/order-type.enum';
 import { type CheckoutForm } from '@shared/validations/order.validation';
 import ThailabTextField from '@components/shared/text-field/ThailabTextField';
+import ControlledSelect from '@components/shared/select/ControlledSelect';
 import Styles from '@components/checkout/checkout-form/CheckoutForm.style';
+
+/** הישובים שאליהם יוצא משלוח, עם דמי המשלוח שלהם — כדי שהבחירה תהיה שקופה. */
+const CITY_OPTIONS = DELIVERY_CITIES.map((city) => ({
+  value: city,
+  label: `${city} — ₪${getDeliveryFee(city)}`,
+}));
 
 type CustomerFieldsProps = {
   orderType: OrderType;
@@ -50,7 +58,10 @@ const CustomerFields: FC<CustomerFieldsProps> = ({
     <ThailabTextField<CheckoutForm> name="email" label="אימייל" type="email" required />
 
     {orderType === OrderType.Delivery && (
-      <ThailabTextField<CheckoutForm> name="address" label="כתובת למשלוח" required />
+      <>
+        <ControlledSelect<CheckoutForm> name="city" label="ישוב למשלוח" options={CITY_OPTIONS} />
+        <ThailabTextField<CheckoutForm> name="address" label="רחוב ומספר בית" required />
+      </>
     )}
 
     <ThailabTextField<CheckoutForm> name="notes" label="הערות להזמנה" multiline minRows={2} />

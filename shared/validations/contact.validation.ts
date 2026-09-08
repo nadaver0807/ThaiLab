@@ -23,7 +23,7 @@ export const reservationSchema = z.object({
   fullName: limitedString(2, 60),
   phone: israeliPhone(),
   date: requiredString(30),
-  guests: z.coerce.number().int().min(1).max(30),
+  guests: z.coerce.number().int().min(1).max(200),
   notes: limitedString(0, 500).optional(),
 });
 
