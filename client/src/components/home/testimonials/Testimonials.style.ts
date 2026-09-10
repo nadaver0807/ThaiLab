@@ -60,6 +60,12 @@ const action: SxProps<Theme> = {
   textAlign: 'center',
 };
 
+/** כפתור "עוד ביקורות" צמוד יותר לרשת, כדי שיקרא כהמשך שלה. */
+const showMore: SxProps<Theme> = {
+  marginBlockStart: { xs: 2, md: 3 },
+  textAlign: 'center',
+};
+
 const pendingChip: SxProps<Theme> = {
   alignSelf: 'flex-start',
 };
@@ -76,6 +82,7 @@ const Styles = {
   author,
   context,
   action,
+  showMore,
   pendingChip,
 };
 

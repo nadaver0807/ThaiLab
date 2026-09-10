@@ -78,18 +78,18 @@ npm run db:setup:prod
    - Start Command: `npm run start -w @thailab/server`
 3. **Variables** — הוסף:
 
-   | משתנה                  | ערך                                     |
-   | ---------------------- | --------------------------------------- |
-   | `NODE_ENV`             | `production`                            |
-   | `DATABASE_URL`         | המחרוזת מ-Neon                          |
-   | `DB_SSL`               | `true`                                  |
-   | `DB_SCHEMA`            | `thailab`                               |
-   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                             |
-   | `CLIENT_ORIGIN`        | `https://thailab.co.il` — ללא `/` בסוף  |
-   | `SERVER_PUBLIC_URL`    | `https://api.thailab.co.il`             |
-   | `RESEND_API_KEY`       | מפתח Resend                             |
-   | `EMAIL_FROM`           | `ThaiLab <hello@thailab.co.il>`         |
-   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                       |
+   | משתנה                  | ערך                                    |
+   | ---------------------- | -------------------------------------- |
+   | `NODE_ENV`             | `production`                           |
+   | `DATABASE_URL`         | המחרוזת מ-Neon                         |
+   | `DB_SSL`               | `true`                                 |
+   | `DB_SCHEMA`            | `thailab`                              |
+   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                            |
+   | `CLIENT_ORIGIN`        | `https://thailab.co.il` — ללא `/` בסוף |
+   | `SERVER_PUBLIC_URL`    | `https://api.thailab.co.il`            |
+   | `RESEND_API_KEY`       | מפתח Resend                            |
+   | `EMAIL_FROM`           | `ThaiLab <hello@thailab.co.il>`        |
+   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                      |
 
    `SERVER_PUBLIC_URL` בונה את קישורי אישור ההזמנה במייל ואת כתובות החזרה
    מדף הסליקה. בלעדיו הקישורים יצביעו ל-`localhost`.
@@ -163,15 +163,15 @@ https://api.thailab.co.il/api/payments/:uuid/callback
 
 ## 7. בדיקות קבלה
 
-| בדיקה                            | ציפייה                 |
-| -------------------------------- | ---------------------- |
-| `https://thailab.co.il/menu`     | התפריט נטען            |
-| `https://thailab.co.il/admin`    | טופס כניסה             |
-| כניסה עם פרטי `SEED_ADMIN_USERS` | "מצב ניהול פעיל"       |
-| עריכת מנה                        | נשמר ומופיע לאחר רענון |
-| גלישה פרטית → `/menu`            | **ללא** כפתורי ניהול   |
+| בדיקה                            | ציפייה                    |
+| -------------------------------- | ------------------------- |
+| `https://thailab.co.il/menu`     | התפריט נטען               |
+| `https://thailab.co.il/admin`    | טופס כניסה                |
+| כניסה עם פרטי `SEED_ADMIN_USERS` | "מצב ניהול פעיל"          |
+| עריכת מנה                        | נשמר ומופיע לאחר רענון    |
+| גלישה פרטית → `/menu`            | **ללא** כפתורי ניהול      |
 | הזמנה מלאה עד דף התודה           | מייל מגיע ל-`ADMIN_EMAIL` |
-| שליחת ביקורת                     | ממתינה לאישור בפאנל    |
+| שליחת ביקורת                     | ממתינה לאישור בפאנל       |
 
 ---
 
