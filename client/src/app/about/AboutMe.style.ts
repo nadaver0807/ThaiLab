@@ -1,4 +1,5 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, OLIVE_GRADIENT, SAND_TINT } from '@theme/theme';
 
 const hero: SxProps<Theme> = {
   position: 'relative',
@@ -35,7 +36,7 @@ const tagline: SxProps<Theme> = {
 };
 
 const heroTitle: SxProps<Theme> = {
-  color: 'text.primary',
+  color: 'primary.main',
   fontWeight: 700,
 };
 
@@ -51,17 +52,18 @@ const block: SxProps<Theme> = {
 
 const blockDark: SxProps<Theme> = {
   position: 'relative',
-  backgroundColor: 'primary.dark',
+  backgroundImage: OLIVE_GRADIENT,
   borderRadius: 2,
   padding: { xs: 4, md: 8 },
   border: '1px solid',
-  borderColor: 'rgba(176, 141, 87, 0.5)',
+  borderColor: GOLD_LINE,
   boxShadow: '0 40px 80px -40px rgba(74, 81, 56, 0.45)',
 };
 
 const sectionHeading: SxProps<Theme> = {
   marginBlockEnd: 3,
   fontWeight: 700,
+  color: 'primary.main',
 };
 
 const paragraph: SxProps<Theme> = {
@@ -77,7 +79,7 @@ const paragraphLight: SxProps<Theme> = {
 const headingLight: SxProps<Theme> = {
   marginBlockEnd: 3,
   fontWeight: 700,
-  color: 'common.white',
+  color: 'secondary.light',
 };
 
 const values: SxProps<Theme> = {
@@ -90,9 +92,9 @@ const values: SxProps<Theme> = {
 const valueCard: SxProps<Theme> = {
   padding: { xs: 3, md: 4 },
   borderRadius: 2,
-  backgroundColor: 'background.paper',
+  backgroundColor: SAND_TINT,
   border: '1px solid',
-  borderColor: 'divider',
+  borderColor: GOLD_LINE,
   textAlign: 'center',
 };
 

@@ -8,7 +8,7 @@ import WhatsappFab from '@components/layout/whatsapp-fab/WhatsappFab';
 import { Box } from '@mui/material';
 import { SITE } from '@shared/consts/site.const';
 import Providers from '@theme/Providers';
-import { type Metadata } from 'next';
+import { type Metadata, type Viewport } from 'next';
 import { Heebo } from 'next/font/google';
 import localFont from 'next/font/local';
 import { type ReactNode } from 'react';
@@ -30,6 +30,14 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
+};
+
+/** `viewport-fit=cover` מאפשר שימוש ב-safe-area כדי שה-footer יגע בתחתית המסך. */
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#4A5138',
 };
 
 type RootLayoutProps = {

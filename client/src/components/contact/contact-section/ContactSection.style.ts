@@ -1,4 +1,5 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE } from '@theme/theme';
 
 const layout: SxProps<Theme> = {
   display: 'flex',
@@ -12,6 +13,10 @@ const details: SxProps<Theme> = {
   flexDirection: 'column',
   gap: 2.5,
   flex: 1,
+  backgroundColor: 'background.paper',
+  border: `1px solid ${GOLD_LINE}`,
+  borderRadius: 2,
+  padding: { xs: 3, md: 4 },
 };
 
 const group: SxProps<Theme> = {
@@ -22,7 +27,7 @@ const group: SxProps<Theme> = {
 
 const groupTitle: SxProps<Theme> = {
   fontWeight: 700,
-  color: 'secondary.main',
+  color: 'secondary.dark',
 };
 
 const phoneLink: SxProps<Theme> = {

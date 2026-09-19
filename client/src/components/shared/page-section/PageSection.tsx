@@ -13,19 +13,25 @@ type PageSectionProps = {
 
 const PageSection: FC<PageSectionProps> = ({ title, description, children }) => (
   <Box component="section" sx={Styles.section}>
-    <PageContainer>
-      <Typography variant="h1" component="h1">
-        {title}
-      </Typography>
-
-      {description && (
-        <Typography variant="subtitle1" sx={Styles.description}>
-          {description}
+    <Box sx={Styles.hero}>
+      <PageContainer>
+        <Typography variant="h1" component="h1" sx={Styles.heroTitle}>
+          {title}
         </Typography>
-      )}
 
-      {children && <Box sx={Styles.content}>{children}</Box>}
-    </PageContainer>
+        {description && (
+          <Typography variant="subtitle1" sx={Styles.heroDescription}>
+            {description}
+          </Typography>
+        )}
+      </PageContainer>
+    </Box>
+
+    {children && (
+      <Box sx={Styles.body}>
+        <PageContainer>{children}</PageContainer>
+      </Box>
+    )}
   </Box>
 );
 

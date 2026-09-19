@@ -1,4 +1,5 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE } from '@theme/theme';
 
 const card: SxProps<Theme> = {
   display: 'flex',
@@ -6,8 +7,14 @@ const card: SxProps<Theme> = {
   height: '100%',
   overflow: 'hidden',
   borderRadius: 2,
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-  '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 24px 48px -32px rgba(74,81,56,0.6)' },
+  backgroundColor: 'background.paper',
+  borderColor: GOLD_LINE,
+  transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 24px 48px -32px rgba(74,81,56,0.6)',
+    borderColor: 'secondary.main',
+  },
 };
 
 const image = (url: string): SxProps<Theme> => ({
@@ -15,6 +22,7 @@ const image = (url: string): SxProps<Theme> => ({
   backgroundImage: `url(${url})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
+  borderBlockEnd: `1px solid ${GOLD_LINE}`,
 });
 
 const body: SxProps<Theme> = {
@@ -33,6 +41,7 @@ const badge: SxProps<Theme> = {
 
 const title: SxProps<Theme> = {
   fontWeight: 600,
+  color: 'primary.main',
 };
 
 const summary: SxProps<Theme> = {

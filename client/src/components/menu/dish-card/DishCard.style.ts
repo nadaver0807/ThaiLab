@@ -1,12 +1,12 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE } from '@theme/theme';
 
 const card: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
   gap: 1,
   paddingBlock: 2.5,
-  borderBottom: '1px solid',
-  borderColor: 'divider',
+  borderBottom: `1px solid ${GOLD_LINE}`,
 };
 
 const header: SxProps<Theme> = {
@@ -18,6 +18,7 @@ const header: SxProps<Theme> = {
 
 const name: SxProps<Theme> = {
   fontWeight: 700,
+  color: 'primary.main',
 };
 
 const prices: SxProps<Theme> = {

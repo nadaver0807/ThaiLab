@@ -1,7 +1,9 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, OLIVE_GRADIENT } from '@theme/theme';
 
 const section: SxProps<Theme> = {
-  backgroundColor: 'primary.dark',
+  backgroundImage: OLIVE_GRADIENT,
+  borderBlock: `1px solid ${GOLD_LINE}`,
   paddingBlock: { xs: 8, md: 14 },
   textAlign: 'center',
 };
@@ -16,7 +18,7 @@ const tagline: SxProps<Theme> = {
 const title: SxProps<Theme> = {
   marginBlockStart: 1,
   marginBlockEnd: 5,
-  color: 'common.white',
+  color: 'secondary.light',
   fontWeight: 700,
 };
 

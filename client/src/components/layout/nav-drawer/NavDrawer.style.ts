@@ -1,4 +1,5 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, OLIVE_GRADIENT } from '@theme/theme';
 
 const paper: SxProps<Theme> = {
   width: { xs: 260, sm: 300 },
@@ -12,19 +13,22 @@ const header: SxProps<Theme> = {
   justifyContent: 'space-between',
   gap: 2,
   padding: 2,
-  borderBottom: '1px solid',
-  borderColor: 'divider',
+  backgroundImage: OLIVE_GRADIENT,
+  borderBottom: `1px solid ${GOLD_LINE}`,
+  color: 'common.white',
 };
 
 const title: SxProps<Theme> = {
   fontWeight: 700,
+  color: 'secondary.light',
 };
 
 const sectionLabel: SxProps<Theme> = {
   paddingInline: 2,
   paddingBlock: 1,
-  color: 'text.secondary',
+  color: 'secondary.dark',
   fontWeight: 700,
+  letterSpacing: '0.12em',
 };
 
 const icon: SxProps<Theme> = {
@@ -34,7 +38,9 @@ const icon: SxProps<Theme> = {
 
 const activeItem: SxProps<Theme> = {
   backgroundColor: 'rgba(74, 81, 56, 0.08)',
-  '& .MuiListItemText-primary': { fontWeight: 700 },
+  borderInlineEnd: '3px solid',
+  borderColor: 'secondary.main',
+  '& .MuiListItemText-primary': { fontWeight: 700, color: 'primary.main' },
 };
 
 const Styles = { paper, header, title, sectionLabel, icon, activeItem };

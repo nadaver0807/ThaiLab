@@ -1,8 +1,10 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, SAND_TINT } from '@theme/theme';
 
 const section: SxProps<Theme> = {
   paddingBlock: { xs: 8, md: 12 },
-  backgroundColor: 'background.paper',
+  backgroundColor: SAND_TINT,
+  borderBlock: `1px solid ${GOLD_LINE}`,
 };
 
 const intro: SxProps<Theme> = {
@@ -35,6 +37,8 @@ const card: SxProps<Theme> = {
   height: '100%',
   padding: 3,
   borderRadius: 2,
+  backgroundColor: 'background.paper',
+  borderColor: GOLD_LINE,
 };
 
 const quoteIcon: SxProps<Theme> = {

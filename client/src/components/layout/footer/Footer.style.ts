@@ -1,10 +1,17 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, OLIVE_GRADIENT } from '@theme/theme';
 
 const footer: SxProps<Theme> = {
-  backgroundColor: 'primary.main',
-  borderTop: '1px solid rgba(201, 169, 120, 0.35)',
+  backgroundImage: OLIVE_GRADIENT,
+  borderTop: `2px solid ${GOLD_LINE}`,
   marginBlockStart: 'auto',
   color: 'common.white',
+  /** לא מתכווץ, ומפנה מקום ל-safe-area ולסרגל ההזמנה הקבוע במובייל. */
+  flexShrink: 0,
+  paddingBottom: {
+    xs: 'calc(72px + env(safe-area-inset-bottom))',
+    md: 'env(safe-area-inset-bottom)',
+  },
 };
 
 const grid: SxProps<Theme> = {
@@ -36,7 +43,8 @@ const tagline: SxProps<Theme> = {
 const columnTitle: SxProps<Theme> = {
   fontWeight: 700,
   marginBlockEnd: 1,
-  color: 'common.white',
+  color: 'secondary.light',
+  letterSpacing: '0.04em',
 };
 
 const nav: SxProps<Theme> = {
@@ -64,7 +72,7 @@ const orderCta: SxProps<Theme> = {
 };
 
 const copyright: SxProps<Theme> = {
-  borderTop: '1px solid rgba(255,255,255,0.12)',
+  borderTop: `1px solid ${GOLD_LINE}`,
   paddingBlock: 2,
   textAlign: 'center',
   color: 'rgba(255,255,255,0.7)',

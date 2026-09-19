@@ -1,16 +1,18 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE } from '@theme/theme';
 
 const panel: SxProps<Theme> = {
   gap: 1.5,
   padding: 2.5,
   borderRadius: 2,
   border: '1px solid',
-  borderColor: 'divider',
+  borderColor: GOLD_LINE,
   backgroundColor: 'background.paper',
 };
 
 const title: SxProps<Theme> = {
   fontWeight: 700,
+  color: 'primary.main',
 };
 
 const row: SxProps<Theme> = {
@@ -43,6 +45,7 @@ const totalRow: SxProps<Theme> = {
 const totalLabel: SxProps<Theme> = {
   fontWeight: 700,
   fontSize: '1.1rem',
+  color: 'primary.main',
 };
 
 const Styles = { panel, title, row, itemName, itemOption, amount, totalRow, totalLabel };

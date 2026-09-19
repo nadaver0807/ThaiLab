@@ -1,7 +1,8 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { SAND_TINT } from '@theme/theme';
 
 const section: SxProps<Theme> = {
-  backgroundColor: 'background.default',
+  backgroundColor: SAND_TINT,
   paddingBlock: { xs: 8, md: 14 },
 };
 

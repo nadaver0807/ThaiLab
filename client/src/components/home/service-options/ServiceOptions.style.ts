@@ -1,8 +1,10 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, SAND_TINT } from '@theme/theme';
 
 const section: SxProps<Theme> = {
   paddingBlock: { xs: 8, md: 12 },
-  backgroundColor: 'background.default',
+  backgroundColor: SAND_TINT,
+  borderBlockEnd: `1px solid ${GOLD_LINE}`,
 };
 
 const intro: SxProps<Theme> = {
@@ -19,6 +21,7 @@ const tagline: SxProps<Theme> = {
 
 const title: SxProps<Theme> = {
   marginBlockStart: 1,
+  color: 'primary.main',
 };
 
 const description: SxProps<Theme> = {

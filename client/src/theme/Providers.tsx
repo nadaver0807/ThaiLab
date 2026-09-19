@@ -4,8 +4,10 @@ import { type FC, type ReactNode, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import GlobalStyles from '@mui/material/GlobalStyles';
 import RtlCacheProvider from '@theme/RtlCacheProvider';
 import theme from '@theme/theme';
+import Styles from '@/app/RootLayout.style';
 import { QUERY_STALE_TIME_MS } from '@shared/consts/site.const';
 
 type ProvidersProps = {
@@ -27,6 +29,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <RtlCacheProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <GlobalStyles styles={Styles.globalReset} />
           {children}
         </ThemeProvider>
       </RtlCacheProvider>

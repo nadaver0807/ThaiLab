@@ -3,6 +3,15 @@
 import { createTheme } from '@mui/material/styles';
 import { heIL } from '@mui/material/locale';
 
+/** גרדיאנט ירוק־זית לשימוש ברצועות ובאזורים כהים באתר. */
+export const OLIVE_GRADIENT = 'linear-gradient(135deg, #333A26 0%, #4A5138 55%, #5B6343 100%)';
+
+/** גוון קרם חם לשבירת שטחים לבנים גדולים. */
+export const SAND_TINT = '#F1E9D8';
+
+/** קו זהב עדין להפרדות ולמסגרות. */
+export const GOLD_LINE = 'rgba(176, 141, 87, 0.45)';
+
 const theme = createTheme(
   {
     direction: 'rtl',

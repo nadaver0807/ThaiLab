@@ -1,10 +1,10 @@
 import { type CSSProperties } from 'react';
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE } from '@theme/theme';
 
 const appBar: SxProps<Theme> = {
   backgroundColor: '#F2ECDF',
-  borderBottom: 1,
-  borderColor: 'divider',
+  borderBottom: `2px solid ${GOLD_LINE}`,
 };
 
 const toolbar: SxProps<Theme> = {

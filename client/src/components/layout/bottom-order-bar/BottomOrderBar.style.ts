@@ -1,4 +1,5 @@
 import { type SxProps, type Theme } from '@mui/material';
+import { GOLD_LINE, OLIVE_GRADIENT } from '@theme/theme';
 
 const bar: SxProps<Theme> = {
   display: { xs: 'flex', md: 'none' },
@@ -13,18 +14,18 @@ const bar: SxProps<Theme> = {
   paddingInline: 2,
   paddingBlock: 1.5,
   paddingBottom: 'calc(12px + env(safe-area-inset-bottom))',
-  borderTop: '1px solid',
-  borderColor: 'divider',
-  backgroundColor: 'background.paper',
-  boxShadow: '0 -8px 24px rgba(74, 81, 56, 0.14)',
+  borderTop: `1px solid ${GOLD_LINE}`,
+  backgroundImage: OLIVE_GRADIENT,
+  boxShadow: '0 -8px 24px rgba(51, 58, 38, 0.28)',
 };
 
 const label: SxProps<Theme> = {
   fontWeight: 700,
+  color: 'secondary.light',
 };
 
 const hint: SxProps<Theme> = {
-  color: 'text.secondary',
+  color: 'rgba(255, 255, 255, 0.75)',
 };
 
 const Styles = { bar, label, hint };
