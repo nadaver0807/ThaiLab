@@ -16,7 +16,13 @@ const CartDrawer: FC = () => {
   const { items, totals, itemCount, setQuantity, clear } = useCart();
 
   return (
-    <Drawer anchor="left" open={isOpen} onClose={close} slotProps={{ paper: { sx: Styles.paper } }}>
+    <Drawer
+      anchor="left"
+      open={isOpen}
+      onClose={close}
+      sx={Styles.drawer}
+      slotProps={{ paper: { sx: Styles.paper } }}
+    >
       <Stack sx={Styles.header}>
         <Typography variant="h3" component="h2" sx={Styles.title}>
           העגלה שלי {itemCount > 0 && `(${itemCount})`}
@@ -40,7 +46,7 @@ const CartDrawer: FC = () => {
             {items.map((item) => (
               <Box key={item.lineId}>
                 <Stack sx={Styles.item}>
-                  <Box>
+                  <Box sx={Styles.itemInfo}>
                     <Typography variant="body1" sx={Styles.itemName}>
                       {item.dishName}
                     </Typography>
@@ -56,15 +62,17 @@ const CartDrawer: FC = () => {
                     )}
                   </Box>
 
-                  <QuantityStepper
-                    quantity={item.quantity}
-                    label={item.dishName}
-                    onChange={(next) => setQuantity(item.lineId, next)}
-                  />
+                  <Stack sx={Styles.itemControls}>
+                    <QuantityStepper
+                      quantity={item.quantity}
+                      label={item.dishName}
+                      onChange={(next) => setQuantity(item.lineId, next)}
+                    />
 
-                  <Typography variant="body1" sx={Styles.itemPrice}>
-                    ₪{item.unitPrice * item.quantity}
-                  </Typography>
+                    <Typography variant="body1" sx={Styles.itemPrice}>
+                      ₪{item.unitPrice * item.quantity}
+                    </Typography>
+                  </Stack>
                 </Stack>
                 <Divider sx={Styles.divider} />
               </Box>

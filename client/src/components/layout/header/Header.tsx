@@ -1,7 +1,7 @@
 'use client';
 
 import { type FC } from 'react';
-import { AppBar, IconButton, Stack, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import NextLink from 'next/link';
@@ -37,6 +37,9 @@ const Header: FC = () => {
             >
               <InstagramIcon />
             </IconButton>
+            <Box sx={Styles.mobileCart}>
+              <CartButton />
+            </Box>
           </Stack>
           <NextLink href={Route.Home} aria-label={SITE.name} style={Styles.brandLink}>
             <Image

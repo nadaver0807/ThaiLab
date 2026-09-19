@@ -19,6 +19,24 @@ const bar: SxProps<Theme> = {
   boxShadow: '0 -8px 24px rgba(51, 58, 38, 0.28)',
 };
 
+const summary: SxProps<Theme> = {
+  alignItems: 'flex-start',
+  textAlign: 'start',
+};
+
+const summaryButton: SxProps<Theme> = {
+  ...summary,
+  appearance: 'none',
+  background: 'none',
+  border: 0,
+  padding: 0,
+  font: 'inherit',
+  color: 'inherit',
+  cursor: 'pointer',
+  borderRadius: 1,
+  '&:focus-visible': { outline: '2px solid', outlineColor: 'secondary.light' },
+};
+
 const label: SxProps<Theme> = {
   fontWeight: 700,
   color: 'secondary.light',
@@ -28,6 +46,6 @@ const hint: SxProps<Theme> = {
   color: 'rgba(255, 255, 255, 0.75)',
 };
 
-const Styles = { bar, label, hint };
+const Styles = { bar, summary, summaryButton, label, hint };
 
 export default Styles;

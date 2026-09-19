@@ -43,6 +43,10 @@ const brandImage: CSSProperties = {
   objectFit: 'contain',
 };
 
+const mobileCart: SxProps<Theme> = {
+  display: { xs: 'inline-flex', md: 'none' },
+};
+
 const actions: SxProps<Theme> = {
   flexDirection: 'row',
   alignItems: 'center',
@@ -52,6 +56,16 @@ const actions: SxProps<Theme> = {
   display: { xs: 'none', md: 'flex' },
 };
 
-const Styles = { appBar, toolbar, side, menuIcon, socialIcon, brandLink, brandImage, actions };
+const Styles = {
+  appBar,
+  toolbar,
+  side,
+  menuIcon,
+  socialIcon,
+  brandLink,
+  brandImage,
+  mobileCart,
+  actions,
+};
 
 export default Styles;
