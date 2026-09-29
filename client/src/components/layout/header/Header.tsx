@@ -12,6 +12,7 @@ import OrderButton from '@components/shared/order-button/OrderButton';
 import CartButton from '@components/cart/cart-button/CartButton';
 import useNavDrawer from '@/hooks/layout/useNavDrawer';
 import { NAV_DRAWER_LABEL } from '@components/layout/nav-drawer/NavDrawer.const';
+import { PRESERVE_COLORS_CLASS } from '@components/layout/accessibility/Accessibility.const';
 import Styles from '@components/layout/header/Header.style';
 import { SITE } from '@shared/consts/site.const';
 import { Route } from '@shared/enums/route.enum';
@@ -48,6 +49,7 @@ const Header: FC = () => {
               width={1024}
               height={297}
               priority
+              className={PRESERVE_COLORS_CLASS}
               style={Styles.brandImage}
             />
           </NextLink>

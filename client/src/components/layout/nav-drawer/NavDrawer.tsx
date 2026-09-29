@@ -27,9 +27,9 @@ import {
   PUBLIC_NAV_LINKS,
   type NavDrawerLink,
 } from '@components/layout/nav-drawer/NavDrawer.const';
+import { PRESERVE_COLORS_CLASS } from '@components/layout/accessibility/Accessibility.const';
 import Styles from '@components/layout/nav-drawer/NavDrawer.style';
 
-/** תפריט הניווט הצדדי. קישורי הניהול מוצגים רק למנהל מחובר. */
 const NavDrawer: FC = () => {
   const { isOpen, close } = useNavDrawer();
   const { userEmail } = useAuth();
@@ -63,7 +63,13 @@ const NavDrawer: FC = () => {
       aria-label={NAV_DRAWER_LABEL}
     >
       <Stack sx={Styles.header}>
-        <Image src="/images/thailab-label.jpeg" alt={SITE.name} width={150} height={40} />
+        <Image
+          src="/images/thailab-label.jpeg"
+          alt={SITE.name}
+          width={150}
+          height={40}
+          className={PRESERVE_COLORS_CLASS}
+        />
         <IconButton aria-label="סגירת התפריט" onClick={close}>
           <CloseRoundedIcon />
         </IconButton>

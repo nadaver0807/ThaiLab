@@ -1,3 +1,22 @@
+import { PRESERVE_COLORS_CLASS } from '@components/layout/accessibility/Accessibility.const';
+
+const preserve = `.${PRESERVE_COLORS_CLASS}`;
+
+const preserveColors = {
+  [`html[data-a11y-contrast="high"] ${preserve}`]: {
+    filter: 'contrast(0.741) saturate(0.833)',
+  },
+  [`html[data-a11y-grayscale="true"] ${preserve}`]: {
+    filter: 'none',
+  },
+  [`html[data-a11y-grayscale="true"][data-a11y-contrast="high"] ${preserve}`]: {
+    filter: 'contrast(0.741) saturate(0.833)',
+  },
+  [`html[data-a11y-contrast="dark"] ${preserve}`]: {
+    filter: 'none',
+  },
+};
+
 const accessibilityGlobal = {
   ':root': { '--a11y-font-scale': 1 },
   'html[data-a11y-contrast]': {
@@ -15,9 +34,10 @@ const accessibilityGlobal = {
   'html[data-a11y-contrast="dark"]': {
     '--a11y-contrast-filter': 'invert(1) hue-rotate(180deg)',
   },
-  'html[data-a11y-contrast="dark"] img, html[data-a11y-contrast="dark"] video': {
+  [`html[data-a11y-contrast="dark"] img:not(${preserve}), html[data-a11y-contrast="dark"] video`]: {
     filter: 'invert(1) hue-rotate(180deg)',
   },
+  ...preserveColors,
   'html[data-a11y-readable-font="true"] body, html[data-a11y-readable-font="true"] body *': {
     fontFamily: 'Arial, Helvetica, sans-serif !important',
     letterSpacing: '0.02em',

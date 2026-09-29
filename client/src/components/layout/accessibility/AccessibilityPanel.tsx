@@ -33,7 +33,7 @@ const AccessibilityPanel: FC = () => {
 
   return (
     <Drawer
-      anchor="right"
+      anchor="left"
       open={isOpen}
       onClose={close}
       slotProps={{ paper: { sx: Styles.paper } }}

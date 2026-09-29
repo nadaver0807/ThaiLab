@@ -19,6 +19,8 @@ export const SKIP_LINK_LABEL = 'דילוג לתוכן הראשי';
 
 export const MAIN_CONTENT_ID = 'main-content';
 
+export const PRESERVE_COLORS_CLASS = 'a11y-preserve-colors';
+
 export const RESET_LABEL = 'איפוס הגדרות';
 
 export const FONT_SECTION_LABEL = 'גודל טקסט';
