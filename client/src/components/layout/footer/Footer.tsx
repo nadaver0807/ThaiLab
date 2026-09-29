@@ -6,6 +6,7 @@ import OrderButton from '@components/shared/order-button/OrderButton';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import { Box, Stack, Typography } from '@mui/material';
 import { NAV_LINKS, SITE } from '@shared/consts/site.const';
+import { Route } from '@shared/enums/route.enum';
 import { type FC } from 'react';
 import { OPENING_HOURS } from './Footer.const';
 
@@ -27,6 +28,7 @@ const Footer: FC = () => (
               {link.label}
             </NavLink>
           ))}
+          <NavLink href={Route.Accessibility}>הצהרת נגישות</NavLink>
         </Stack>
         <Stack sx={Styles.hours}>
           <Typography variant="h3" component="p" sx={Styles.columnTitle}>

@@ -88,7 +88,7 @@ npm run db:setup:prod
    | `CLIENT_ORIGIN`        | `https://thailab.co.il` — ללא `/` בסוף |
    | `SERVER_PUBLIC_URL`    | `https://api.thailab.co.il`            |
    | `RESEND_API_KEY`       | מפתח Resend                            |
-   | `EMAIL_FROM`           | `ThaiLab <hello@thailab.co.il>`        |
+   | `EMAIL_FROM`           | `ThaiLab <ofershazar22@gmail.com>`        |
    | `ADMIN_EMAIL`          | כתובת לקבלת פניות                      |
 
    `SERVER_PUBLIC_URL` בונה את קישורי אישור ההזמנה במייל ואת כתובות החזרה

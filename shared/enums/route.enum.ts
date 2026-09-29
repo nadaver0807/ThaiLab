@@ -7,6 +7,7 @@ export enum Route {
   Contact = '/contact',
   Checkout = '/checkout',
   Review = '/review',
+  Accessibility = '/accessibility',
   AdminLogin = '/admin',
   AdminOrders = '/admin/orders',
 }

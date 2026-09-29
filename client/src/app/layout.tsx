@@ -1,5 +1,10 @@
 import Styles from '@/app/RootLayout.style';
 import BottomOrderBar from '@components/layout/bottom-order-bar/BottomOrderBar';
+import AccessibilityFab from '@components/layout/accessibility/AccessibilityFab';
+import AccessibilityGlobalStyles from '@components/layout/accessibility/AccessibilityGlobalStyles';
+import AccessibilityPanel from '@components/layout/accessibility/AccessibilityPanel';
+import SkipToContentLink from '@components/layout/accessibility/SkipToContentLink';
+import { MAIN_CONTENT_ID } from '@components/layout/accessibility/Accessibility.const';
 import CartDrawer from '@components/cart/cart-drawer/CartDrawer';
 import NavDrawer from '@components/layout/nav-drawer/NavDrawer';
 import Footer from '@components/layout/footer/Footer';
@@ -48,15 +53,19 @@ const RootLayout = ({ children }: RootLayoutProps) => (
   <html lang="he" dir="rtl" className={`${heebo.variable} ${chaipot.variable}`}>
     <body>
       <Providers>
+        <AccessibilityGlobalStyles />
+        <SkipToContentLink />
         <Box sx={Styles.layout}>
           <Header />
-          <Box component="main" sx={Styles.main}>
+          <Box component="main" id={MAIN_CONTENT_ID} tabIndex={-1} sx={Styles.main}>
             {children}
           </Box>
           <Footer />
         </Box>
         <BottomOrderBar />
         <WhatsappFab />
+        <AccessibilityFab />
+        <AccessibilityPanel />
         <CartDrawer />
         <NavDrawer />
       </Providers>

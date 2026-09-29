@@ -6,7 +6,7 @@ export const SITE: SiteConfig = {
   tagline: 'מטבח תאילנדי אותנטי',
   description: 'ThaiLab — מטבח תאילנדי אותנטי, חומרי גלם טריים וטעמים אמיתיים מתאילנד.',
   phone: '055-5567083',
-  email: 'hello@thailab.co.il',
+  email: 'ofershazar22@gmail.com',
   address: 'הזית 18, בת שלמה',
   social: {
     instagram: 'https://www.instagram.com/thai__lab',
