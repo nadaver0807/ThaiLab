@@ -46,6 +46,8 @@ type UseCheckoutResult = {
   isLookingUp: boolean;
   isReturningCustomer: boolean;
   isPending: boolean;
+  /** true בזמן שההזמנה כבר נוצרה והמשתמש מועבר לדף התשלום המאובטח. */
+  isRedirectingToPayment: boolean;
   errorMessage?: string;
   submit: () => Promise<void>;
 };
@@ -53,6 +55,7 @@ type UseCheckoutResult = {
 const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult => {
   const router = useRouter();
   const [isReturningCustomer, setIsReturningCustomer] = useState(false);
+  const [isRedirectingToPayment, setIsRedirectingToPayment] = useState(false);
 
   const filledPhoneRef = useRef<string | null>(null);
 
@@ -127,6 +130,8 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
 
     // בתשלום באשראי מפנים לדף המאובטח של ספק הסליקה
     if (values.paymentMethod === PaymentMethod.CreditCard) {
+      setIsRedirectingToPayment(true);
+
       const { paymentUrl } = await startPayment(order.uuid);
 
       window.location.assign(paymentUrl);
@@ -146,6 +151,7 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
     isLookingUp,
     isReturningCustomer,
     isPending,
+    isRedirectingToPayment,
     errorMessage: isError ? (error as Error).message : undefined,
     submit,
   };

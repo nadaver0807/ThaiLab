@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import { confirmPayment, isCreditCardEnabled, startPayment } from '@/payment/payment.service';
 import { PaymentError } from '@/payment/payment.gateway';
+import { verifyMakeWebhookSecret } from '@/checkout/verifyMakeWebhookSecret.middleware';
 import { logger, toSafeError } from '@/util/logger';
 import { type MessageResponse } from '@shared/types/api.type';
 import { type StartPaymentResponse } from '@shared/types/payment.type';
@@ -38,11 +39,12 @@ paymentRouter.post(
 );
 
 /**
- * Webhook של ספק הסליקה. זהו המקור היחיד לאמת שההזמנה שולמה —
- * הדפדפן לעולם לא קובע את סטטוס התשלום.
+ * Webhook של ספק הסליקה (כולל Make/Grow). זהו המקור היחיד לאמת שההזמנה שולמה —
+ * הדפדפן לעולם לא קובע את סטטוס התשלום. מוגן בסוד משותף כשהספק הפעיל הוא Make.
  */
 paymentRouter.post(
   '/:uuid/callback',
+  verifyMakeWebhookSecret,
   async (request: Request<{ uuid: string }>, response: Response<MessageResponse>) => {
     try {
       const status = await confirmPayment(

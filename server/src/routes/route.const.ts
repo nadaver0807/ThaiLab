@@ -8,6 +8,7 @@ export enum API_ROUTES {
   Customers = '/customers',
   Reviews = '/reviews',
   Payments = '/payments',
+  Checkout = '/checkout',
 }
 
 export const HEALTH_ROUTE = '/health';

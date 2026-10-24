@@ -3,6 +3,7 @@ import { AppDataSource } from '@/config/db/db.config';
 import { Order } from '@/order/Order.entity';
 import { cardComGateway } from '@/payment/cardcom.gateway';
 import { payPlusGateway } from '@/payment/payplus.gateway';
+import { makeGateway } from '@/payment/make.gateway';
 import { PaymentError, type PaymentGateway } from '@/payment/payment.gateway';
 import { logger, toSafeError } from '@/util/logger';
 import { PaymentProvider } from '@shared/enums/payment-provider.enum';
@@ -13,6 +14,7 @@ import { Route } from '@shared/enums/route.enum';
 const GATEWAYS: Partial<Record<string, PaymentGateway>> = {
   [PaymentProvider.CardCom]: cardComGateway,
   [PaymentProvider.PayPlus]: payPlusGateway,
+  [PaymentProvider.Make]: makeGateway,
 };
 
 const OrderRepository = AppDataSource.getRepository(Order);

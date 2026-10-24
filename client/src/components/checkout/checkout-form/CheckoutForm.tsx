@@ -10,6 +10,7 @@ import OrderSummary from '@components/checkout/order-summary/OrderSummary';
 import OrderTypeField from '@components/checkout/checkout-form/OrderTypeField';
 import PaymentMethodField from '@components/checkout/checkout-form/PaymentMethodField';
 import CustomerFields from '@components/checkout/checkout-form/CustomerFields';
+import PaymentRedirectOverlay from '@components/checkout/payment-redirect-overlay/PaymentRedirectOverlay';
 import EmptyState from '@components/shared/empty-state/EmptyState';
 import useCart from '@/hooks/cart/useCart';
 import useCheckout from '@/hooks/checkout/useCheckout';
@@ -33,6 +34,8 @@ const CheckoutForm: FC = () => {
 
   return (
     <FormProvider {...checkout.form}>
+      <PaymentRedirectOverlay open={checkout.isRedirectingToPayment} />
+
       <Box sx={Styles.layout}>
         <Box component="form" onSubmit={checkout.submit} noValidate sx={Styles.form}>
           <OrderTypeField
@@ -68,7 +71,9 @@ const CheckoutForm: FC = () => {
               color="secondary"
               size="large"
               fullWidth
-              disabled={checkout.isPending || !totals.isDeliveryAllowed}
+              disabled={
+                checkout.isPending || checkout.isRedirectingToPayment || !totals.isDeliveryAllowed
+              }
             >
               {checkout.isPending ? 'שולח…' : `שליחת הזמנה — ₪${totals.total}`}
             </Button>

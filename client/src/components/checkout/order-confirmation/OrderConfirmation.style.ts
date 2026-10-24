@@ -16,6 +16,11 @@ const icon: SxProps<Theme> = {
   color: 'success.main',
 };
 
+const errorIcon: SxProps<Theme> = {
+  fontSize: 64,
+  color: 'error.main',
+};
+
 const title: SxProps<Theme> = {
   fontWeight: 700,
 };
@@ -30,6 +35,6 @@ const note: SxProps<Theme> = {
   maxWidth: 460,
 };
 
-const Styles = { panel, icon, title, reference, note };
+const Styles = { panel, icon, errorIcon, title, reference, note };
 
 export default Styles;

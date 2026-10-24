@@ -58,3 +58,21 @@ export const PAYMENT_API_SECRET = process.env.PAYMENT_API_SECRET ?? '';
 
 /** האם לעבוד מול סביבת הבדיקות של הספק. */
 export const PAYMENT_TEST_MODE = process.env.PAYMENT_TEST_MODE === 'true';
+
+/* ------------------------------ Make.com (Integromat) ------------------------------ */
+
+/** כתובת ה-webhook ב-Make שמייצר את קישור התשלום (Grow / ספק אחר מאחוריו). */
+export const MAKE_PAYMENT_WEBHOOK_URL = process.env.MAKE_PAYMENT_WEBHOOK_URL ?? '';
+
+/**
+ * סוד משותף לאימות שבקשות ל-`/checkout/payment-webhook` אכן מגיעות מ-Make.
+ * נשלח כ-header (ראו `MAKE_WEBHOOK_SECRET_HEADER`) ולא ב-body, כדי שלא יופיע בלוגים.
+ */
+export const MAKE_WEBHOOK_SECRET = process.env.MAKE_WEBHOOK_SECRET ?? '';
+
+export const MAKE_WEBHOOK_SECRET_HEADER = 'x-make-webhook-secret';
+
+/** זמן המתנה מקסימלי (מ״ש) לתגובת ה-webhook של Make בעת יצירת קישור תשלום. */
+export const MAKE_PAYMENT_WEBHOOK_TIMEOUT_MS = Number(
+  process.env.MAKE_PAYMENT_WEBHOOK_TIMEOUT_MS ?? 10_000,
+);
