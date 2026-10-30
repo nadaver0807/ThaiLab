@@ -39,6 +39,24 @@ const addButton: SxProps<Theme> = {
   whiteSpace: 'nowrap',
 };
 
-const Styles = { wrapper, notes, row, priceGroup, option, price, addButton };
+const lines: SxProps<Theme> = {
+  gap: 0.5,
+  paddingInlineStart: 1.5,
+  borderInlineStart: '2px solid',
+  borderColor: 'divider',
+};
+
+const line: SxProps<Theme> = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 1.5,
+};
+
+const lineText: SxProps<Theme> = {
+  color: 'text.secondary',
+};
+
+const Styles = { wrapper, notes, row, priceGroup, option, price, addButton, lines, line, lineText };
 
 export default Styles;

@@ -6,7 +6,6 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { resolveVariantLabel } from '@shared/util/variant.util';
 import QuantityStepper from '@components/cart/quantity-stepper/QuantityStepper';
 import useCart from '@/hooks/cart/useCart';
-import { buildLineId } from '@/hooks/cart/cart.store';
 import Styles from '@components/cart/add-to-cart-row/AddToCartRow.style';
 
 type AddToCartRowProps = {
@@ -27,17 +26,16 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
 }) => {
   const { items, add, setQuantity } = useCart();
   const [selectedNotes, setSelectedNotes] = useState<string[]>([]);
-  const [addedLineId, setAddedLineId] = useState<string | null>(null);
 
   const variantLabel = resolveVariantLabel(priceKey);
   const label = variantLabel ? `${dishName} — ${variantLabel}` : dishName;
-  const lineId = buildLineId(dishUuid, priceKey, selectedNotes);
-  const activeLineId = addedLineId ?? lineId;
-  const quantity = items.find((item) => item.lineId === activeLineId)?.quantity ?? 0;
+
+  // כל השורות של המנה והווריאציה הזו בעגלה — לכל שילוב הערות שורה נפרדת
+  const cartLines = items.filter(
+    (item) => item.dishUuid === dishUuid && item.priceKey === priceKey,
+  );
 
   const toggleNote = (note: string): void => {
-    // סימון הערה מתחיל הרכבה של פריט חדש ולא משנה את זה שכבר נוסף
-    setAddedLineId(null);
     setSelectedNotes((current) =>
       current.includes(note) ? current.filter((item) => item !== note) : [...current, note],
     );
@@ -55,16 +53,7 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
     });
 
     // הפריט הבא מתחיל מדף חלק — ההערות לא נגררות להזמנה הבאה
-    setAddedLineId(lineId);
     setSelectedNotes([]);
-  };
-
-  const handleQuantityChange = (next: number): void => {
-    setQuantity(activeLineId, next);
-
-    if (next <= 0) {
-      setAddedLineId(null);
-    }
   };
 
   return (
@@ -81,21 +70,17 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
           </Typography>
         </Stack>
 
-        {quantity > 0 ? (
-          <QuantityStepper quantity={quantity} label={label} onChange={handleQuantityChange} />
-        ) : (
-          <Button
-            size="small"
-            variant="outlined"
-            color="secondary"
-            startIcon={<AddRoundedIcon />}
-            sx={Styles.addButton}
-            aria-label={`הוספת ${label} לעגלה`}
-            onClick={handleAdd}
-          >
-            הוספה
-          </Button>
-        )}
+        <Button
+          size="small"
+          variant="outlined"
+          color="secondary"
+          startIcon={<AddRoundedIcon />}
+          sx={Styles.addButton}
+          aria-label={`הוספת ${label} לעגלה`}
+          onClick={handleAdd}
+        >
+          הוספה
+        </Button>
       </Stack>
 
       {optionNotes.length > 0 && (
@@ -111,6 +96,26 @@ const AddToCartRow: FC<AddToCartRowProps> = ({
               aria-pressed={selectedNotes.includes(note)}
               onClick={() => toggleNote(note)}
             />
+          ))}
+        </Stack>
+      )}
+
+      {cartLines.length > 0 && (
+        <Stack sx={Styles.lines}>
+          {cartLines.map((line) => (
+            <Stack key={line.lineId} sx={Styles.line}>
+              <Typography variant="body2" sx={Styles.lineText}>
+                {line.selectedNotes?.length ? line.selectedNotes.join(' • ') : 'ללא שינויים'}
+              </Typography>
+
+              <QuantityStepper
+                quantity={line.quantity}
+                label={
+                  line.selectedNotes?.length ? `${label} (${line.selectedNotes.join(', ')})` : label
+                }
+                onChange={(next) => setQuantity(line.lineId, next)}
+              />
+            </Stack>
           ))}
         </Stack>
       )}
