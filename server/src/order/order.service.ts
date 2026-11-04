@@ -1,18 +1,31 @@
-import { In } from 'typeorm';
+import { In } from "typeorm";
 
-import { AppDataSource } from '@/config/db/db.config';
-import { Dish } from '@/dish/Dish.entity';
-import { Order } from '@/order/Order.entity';
-import { OrderItem } from '@/order-item/OrderItem.entity';
-import { upsertByPhone } from '@/costumer/costumer.service';
-import { notifyAdminOfNewOrder, notifyCustomerOfDecision } from '@/order/orderNotification.service';
-import { DELIVERY_MIN_SUBTOTAL, getDeliveryFee } from '@shared/consts/delivery.const';
-import { resolveVariantLabel } from '@shared/util/variant.util';
-import { OrderStatus } from '@shared/enums/order-status.enum';
-import { OrderType } from '@shared/enums/order-type.enum';
-import { PaymentStatus } from '@shared/enums/payment-status.enum';
-import { type OrderSummary } from '@shared/types/order.type';
-import { type CreateOrderPayload } from '@shared/validations/order.validation';
+import { AppDataSource } from "@/config/db/db.config";
+import { type Coupon } from "@/coupon/Coupon.entity";
+import {
+  consume as consumeCoupon,
+  CouponError,
+  validate as validateCoupon,
+} from "@/coupon/coupon.service";
+import { Dish } from "@/dish/Dish.entity";
+import { Order } from "@/order/Order.entity";
+import { OrderItem } from "@/order-item/OrderItem.entity";
+import { upsertByPhone } from "@/costumer/costumer.service";
+import {
+  notifyAdminOfNewOrder,
+  notifyCustomerOfDecision,
+} from "@/order/orderNotification.service";
+import {
+  DELIVERY_MIN_SUBTOTAL,
+  getDeliveryFee,
+} from "@shared/consts/delivery.const";
+import { resolveVariantLabel } from "@shared/util/variant.util";
+import { validateSlot } from "@shared/util/schedule.util";
+import { OrderStatus } from "@shared/enums/order-status.enum";
+import { OrderType } from "@shared/enums/order-type.enum";
+import { PaymentStatus } from "@shared/enums/payment-status.enum";
+import { type OrderSummary } from "@shared/types/order.type";
+import { type CreateOrderPayload } from "@shared/validations/order.validation";
 
 const OrderRepository = AppDataSource.getRepository(Order);
 const DishRepository = AppDataSource.getRepository(Dish);
@@ -27,7 +40,10 @@ const toSummary = (order: Order): OrderSummary => ({
   paymentStatus: order.paymentStatus,
   subtotal: order.subtotal,
   deliveryFee: order.deliveryFee,
+  couponCode: order.couponCode,
+  discount: order.discount,
   totalPrice: order.totalPrice,
+  scheduledFor: order.scheduledFor ? order.scheduledFor.toISOString() : null,
   address: order.address,
   contactName: order.contactName,
   contactPhone: order.contactPhone,
@@ -47,7 +63,9 @@ const toSummary = (order: Order): OrderSummary => ({
   })),
 });
 
-export const create = async (payload: CreateOrderPayload): Promise<OrderSummary> => {
+export const create = async (
+  payload: CreateOrderPayload,
+): Promise<OrderSummary> => {
   const dishUuids = payload.items.map((item) => item.dishUuid);
   const dishes = await DishRepository.find({ where: { uuid: In(dishUuids) } });
   const dishByUuid = new Map(dishes.map((dish) => [dish.uuid, dish]));
@@ -56,12 +74,12 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
     const dish = dishByUuid.get(item.dishUuid);
 
     if (!dish || !dish.isAvailable) {
-      throw new OrderValidationError('אחת המנות בעגלה אינה זמינה יותר');
+      throw new OrderValidationError("אחת המנות בעגלה אינה זמינה יותר");
     }
 
     const unitPrice = dish.priceOptions?.[item.priceKey];
 
-    if (typeof unitPrice !== 'number') {
+    if (typeof unitPrice !== "number") {
       throw new OrderValidationError(
         `אפשרות המחיר "${item.priceKey}" אינה קיימת עבור ${dish.name}`,
       );
@@ -69,7 +87,9 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
 
     // הערות מוכנות מאומתות מול המנה כדי שלא יישלחו ערכים שרירותיים
     const allowedNotes = new Set(dish.optionNotes ?? []);
-    const selectedNotes = (item.selectedNotes ?? []).filter((note) => allowedNotes.has(note));
+    const selectedNotes = (item.selectedNotes ?? []).filter((note) =>
+      allowedNotes.has(note),
+    );
 
     return OrderItem.create({
       dish,
@@ -84,24 +104,61 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
     });
   });
 
-  const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + item.unitPrice * item.quantity,
+    0,
+  );
   const isDelivery = payload.type === OrderType.Delivery;
 
   // דמי המשלוח נקבעים בשרת לפי הישוב — הלקוח לא יכול להשפיע על התעריף
   const cityFee = isDelivery ? getDeliveryFee(payload.city) : 0;
 
   if (isDelivery && cityFee === null) {
-    throw new OrderValidationError('אין משלוחים לישוב שנבחר');
+    throw new OrderValidationError("אין משלוחים לישוב שנבחר");
   }
 
   if (isDelivery && subtotal < DELIVERY_MIN_SUBTOTAL) {
-    throw new OrderValidationError(`מינימום הזמנה למשלוח הוא ₪${DELIVERY_MIN_SUBTOTAL}`);
+    throw new OrderValidationError(
+      `מינימום הזמנה למשלוח הוא ₪${DELIVERY_MIN_SUBTOTAL}`,
+    );
   }
 
   const deliveryFee = cityFee ?? 0;
   const address = isDelivery
-    ? [payload.address?.trim(), payload.city?.trim()].filter(Boolean).join(', ')
+    ? [payload.address?.trim(), payload.city?.trim()].filter(Boolean).join(", ")
     : null;
+
+  // מועד מתוזמן — מאומת בשרת באותם כללים שהלקוח רואה
+  let scheduledFor: Date | null = null;
+
+  if (payload.scheduledFor) {
+    scheduledFor = new Date(payload.scheduledFor);
+
+    const slotError = validateSlot(scheduledFor);
+
+    if (slotError) {
+      throw new OrderValidationError(slotError);
+    }
+  }
+
+  // הקופון מחושב מחדש בשרת — הלקוח לא יכול להשפיע על גובה ההנחה
+  let coupon: Coupon | null = null;
+  let discount = 0;
+
+  if (payload.couponCode?.trim()) {
+    try {
+      const result = await validateCoupon(payload.couponCode, subtotal);
+
+      coupon = result.coupon;
+      discount = result.discount;
+    } catch (error) {
+      if (error instanceof CouponError) {
+        throw new OrderValidationError(error.message);
+      }
+
+      throw error;
+    }
+  }
 
   const costumer = await upsertByPhone(payload.customer, address ?? undefined);
 
@@ -114,15 +171,36 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
     paymentStatus: PaymentStatus.Unpaid,
     subtotal,
     deliveryFee,
-    totalPrice: subtotal + deliveryFee,
+    couponCode: coupon?.code ?? null,
+    discount,
+    totalPrice: subtotal - discount + deliveryFee,
+    scheduledFor,
     address,
-    contactName: `${payload.customer.firstName} ${payload.customer.lastName ?? ''}`.trim(),
+    contactName:
+      `${payload.customer.firstName} ${payload.customer.lastName ?? ""}`.trim(),
     contactPhone: costumer.phone,
     contactEmail: payload.customer.email,
     notes: payload.notes || null,
   });
 
-  const summary = toSummary(await OrderRepository.save(order));
+  const saved = await OrderRepository.save(order);
+
+  if (coupon) {
+    try {
+      await consumeCoupon(coupon);
+    } catch (error) {
+      // מישהו ניצל את השימוש האחרון בין הבדיקה לשמירה — מבטלים את ההזמנה
+      await OrderRepository.remove(saved);
+
+      if (error instanceof CouponError) {
+        throw new OrderValidationError(error.message);
+      }
+
+      throw error;
+    }
+  }
+
+  const summary = toSummary(saved);
 
   void notifyAdminOfNewOrder(summary);
 
@@ -132,13 +210,15 @@ export const create = async (payload: CreateOrderPayload): Promise<OrderSummary>
 export const findAll = async (): Promise<OrderSummary[]> => {
   const orders = await OrderRepository.find({
     relations: { items: { dish: true }, costumer: true },
-    order: { createDate: 'DESC' },
+    order: { createDate: "DESC" },
   });
 
   return orders.map(toSummary);
 };
 
-export const findByUuid = async (uuid: string): Promise<OrderSummary | null> => {
+export const findByUuid = async (
+  uuid: string,
+): Promise<OrderSummary | null> => {
   const order = await OrderRepository.findOne({
     where: { uuid },
     relations: { items: { dish: true }, costumer: true },

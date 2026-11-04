@@ -5,7 +5,6 @@ export enum PaymentProvider {
   PayPlus = 'PAYPLUS',
   Tranzila = 'TRANZILA',
   Meshulam = 'MESHULAM',
-  Make = 'MAKE',
 }
 
 export const PaymentProviderLabel: Record<PaymentProvider, string> = {
@@ -14,5 +13,4 @@ export const PaymentProviderLabel: Record<PaymentProvider, string> = {
   [PaymentProvider.PayPlus]: 'PayPlus',
   [PaymentProvider.Tranzila]: 'Tranzila',
   [PaymentProvider.Meshulam]: 'משולם',
-  [PaymentProvider.Make]: 'Make',
 };

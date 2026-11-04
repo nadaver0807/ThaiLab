@@ -10,4 +10,5 @@ export enum Route {
   Accessibility = '/accessibility',
   AdminLogin = '/admin',
   AdminOrders = '/admin/orders',
+  AdminCoupons = '/admin/coupons',
 }

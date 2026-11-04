@@ -1,5 +1,6 @@
 import { Category } from '@/category/Category.entity';
 import { Costumer } from '@/costumer/Costumer.entity';
+import { Coupon } from '@/coupon/Coupon.entity';
 import { Dish } from '@/dish/Dish.entity';
 import { Hospitality } from '@/hospitality/Hospitality.entity';
 import { Order } from '@/order/Order.entity';
@@ -38,6 +39,7 @@ const sharedOptions = {
   entities: [
     Category,
     Costumer,
+    Coupon,
     Dish,
     Hospitality,
     Order,

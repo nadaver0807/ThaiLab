@@ -11,10 +11,17 @@ type OrderSummaryProps = {
   items: CartItem[];
   totals: CartTotals;
   orderType: OrderType;
+  discount?: number;
   onQuantityChange: (lineId: string, quantity: number) => void;
 };
 
-const OrderSummary: FC<OrderSummaryProps> = ({ items, totals, orderType, onQuantityChange }) => (
+const OrderSummary: FC<OrderSummaryProps> = ({
+  items,
+  totals,
+  orderType,
+  discount = 0,
+  onQuantityChange,
+}) => (
   <Stack sx={Styles.panel}>
     <Typography variant="h3" component="h2" sx={Styles.title}>
       סיכום ההזמנה
@@ -68,6 +75,15 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items, totals, orderType, onQuant
       </Stack>
     )}
 
+    {discount > 0 && (
+      <Stack sx={Styles.totalRow}>
+        <Typography variant="body1">הנחת קופון</Typography>
+        <Typography variant="body1" sx={Styles.amount}>
+          -₪{discount}
+        </Typography>
+      </Stack>
+    )}
+
     <Divider />
 
     <Stack sx={Styles.totalRow}>
@@ -75,7 +91,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items, totals, orderType, onQuant
         לתשלום
       </Typography>
       <Typography variant="body1" sx={Styles.totalLabel}>
-        ₪{totals.total}
+        ₪{Math.max(0, totals.total - discount)}
       </Typography>
     </Stack>
   </Stack>

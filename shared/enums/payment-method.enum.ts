@@ -4,6 +4,6 @@ export enum PaymentMethod {
 }
 
 export const PaymentMethodLabel: Record<PaymentMethod, string> = {
-  [PaymentMethod.OnCollection]: 'תשלום במקום',
+  [PaymentMethod.OnCollection]: 'מזומן',
   [PaymentMethod.CreditCard]: 'כרטיס אשראי',
 };

@@ -1,16 +1,17 @@
-import { escapeHtml } from '@/email/orderEmail.template';
-import { ServiceTypeLabel } from '@shared/enums/service-type.enum';
-import { type Review } from '@/review/Review.entity';
+import { escapeHtml } from "@/email/orderEmail.template";
+import { ServiceTypeLabel } from "@shared/enums/service-type.enum";
+import { type Review } from "@/review/Review.entity";
 
-const FONT = 'font-family:Arial,Helvetica,sans-serif;';
+const FONT = "font-family:Arial,Helvetica,sans-serif;";
 
-const renderStars = (rating: number): string => '★'.repeat(rating) + '☆'.repeat(5 - rating);
+const renderStars = (rating: number): string =>
+  "★".repeat(rating) + "☆".repeat(5 - rating);
 
 /** מייל שנשלח לעופר בכל פעם שלקוח משאיר ביקורת חדשה. */
 export const buildNewReviewEmail = (review: Review): string => {
   const title = review.title
     ? `<h3 style="${FONT}margin:0 0 8px;">${escapeHtml(review.title)}</h3>`
-    : '';
+    : "";
 
   return `<div style="${FONT}direction:rtl;text-align:right;font-size:14px;color:#2E2A22;">
     <h2 style="${FONT}margin:0 0 16px;">התקבלה ביקורת חדשה</h2>

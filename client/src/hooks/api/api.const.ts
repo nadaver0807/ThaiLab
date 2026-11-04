@@ -8,4 +8,5 @@ export enum API_ROUTES {
   CustomerLookup = '/customers/lookup',
   Reviews = '/reviews',
   Payments = '/payments',
+  Coupons = '/coupons',
 }

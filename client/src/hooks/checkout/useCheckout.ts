@@ -25,6 +25,8 @@ const DEFAULT_VALUES: CheckoutForm = {
   city: '',
   address: '',
   notes: '',
+  couponCode: '',
+  scheduledFor: null,
 };
 
 const LOOKUP_DEBOUNCE_MS = 500;
@@ -34,6 +36,8 @@ const phoneSchema = israeliPhone();
 type UseCheckoutParams = {
   items: CartItem[];
   onSuccess: () => void;
+  /** קופון שאומת בצ'קאאוט. */
+  couponCode?: string | null;
 };
 
 type UseCheckoutResult = {
@@ -46,16 +50,13 @@ type UseCheckoutResult = {
   isLookingUp: boolean;
   isReturningCustomer: boolean;
   isPending: boolean;
-  /** true בזמן שההזמנה כבר נוצרה והמשתמש מועבר לדף התשלום המאובטח. */
-  isRedirectingToPayment: boolean;
   errorMessage?: string;
   submit: () => Promise<void>;
 };
 
-const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult => {
+const useCheckout = ({ items, onSuccess, couponCode }: UseCheckoutParams): UseCheckoutResult => {
   const router = useRouter();
   const [isReturningCustomer, setIsReturningCustomer] = useState(false);
-  const [isRedirectingToPayment, setIsRedirectingToPayment] = useState(false);
 
   const filledPhoneRef = useRef<string | null>(null);
 
@@ -117,6 +118,8 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
       city: values.city,
       address: values.address,
       notes: values.notes,
+      couponCode: couponCode ?? undefined,
+      scheduledFor: values.scheduledFor ?? null,
       items: items.map((item) => ({
         dishUuid: item.dishUuid,
         priceKey: item.priceKey,
@@ -130,8 +133,6 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
 
     // בתשלום באשראי מפנים לדף המאובטח של ספק הסליקה
     if (values.paymentMethod === PaymentMethod.CreditCard) {
-      setIsRedirectingToPayment(true);
-
       const { paymentUrl } = await startPayment(order.uuid);
 
       window.location.assign(paymentUrl);
@@ -151,7 +152,6 @@ const useCheckout = ({ items, onSuccess }: UseCheckoutParams): UseCheckoutResult
     isLookingUp,
     isReturningCustomer,
     isPending,
-    isRedirectingToPayment,
     errorMessage: isError ? (error as Error).message : undefined,
     submit,
   };

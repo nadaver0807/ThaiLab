@@ -1,4 +1,4 @@
-const FONT = 'font-family:Arial,Helvetica,sans-serif;';
+const FONT = "font-family:Arial,Helvetica,sans-serif;";
 
 type DecisionPageParams = {
   title: string;
@@ -6,7 +6,11 @@ type DecisionPageParams = {
   color: string;
 };
 
-export const renderDecisionPage = ({ title, message, color }: DecisionPageParams): string =>
+export const renderDecisionPage = ({
+  title,
+  message,
+  color,
+}: DecisionPageParams): string =>
   `<!DOCTYPE html>
 <html lang="he" dir="rtl">
   <head>

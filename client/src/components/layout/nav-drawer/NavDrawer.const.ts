@@ -5,6 +5,7 @@ import MailRoundedIcon from '@mui/icons-material/MailRounded';
 import AccessibilityNewRoundedIcon from '@mui/icons-material/AccessibilityNewRounded';
 import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import { type SvgIconComponent } from '@mui/icons-material';
 import { Route } from '@shared/enums/route.enum';
 
@@ -24,6 +25,7 @@ export const PUBLIC_NAV_LINKS: NavDrawerLink[] = [
 
 export const ADMIN_NAV_LINKS: NavDrawerLink[] = [
   { href: Route.AdminOrders, label: 'הזמנות לקוחות', Icon: ReceiptLongRoundedIcon },
+  { href: Route.AdminCoupons, label: 'קופונים', Icon: LocalOfferRoundedIcon },
   { href: Route.AdminLogin, label: 'ניהול', Icon: SettingsRoundedIcon },
 ];
 

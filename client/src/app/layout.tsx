@@ -7,6 +7,7 @@ import SkipToContentLink from '@components/layout/accessibility/SkipToContentLin
 import { MAIN_CONTENT_ID } from '@components/layout/accessibility/Accessibility.const';
 import CartDrawer from '@components/cart/cart-drawer/CartDrawer';
 import NavDrawer from '@components/layout/nav-drawer/NavDrawer';
+import RestaurantJsonLd from '@components/shared/RestaurantJsonLd';
 import Footer from '@components/layout/footer/Footer';
 import Header from '@components/layout/header/Header';
 import WhatsappFab from '@components/layout/whatsapp-fab/WhatsappFab';
@@ -30,11 +31,22 @@ const chaipot = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: {
     default: `${SITE.name} — ${SITE.tagline}`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
+  verification: {
+    google: 'n52SMUpgVZ5isH6SoaXXCJboZZiduyCgVWz9hGtY75c',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'he_IL',
+    siteName: SITE.name,
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+  },
 };
 
 /** `viewport-fit=cover` מאפשר שימוש ב-safe-area כדי שה-footer יגע בתחתית המסך. */
@@ -52,6 +64,7 @@ type RootLayoutProps = {
 const RootLayout = ({ children }: RootLayoutProps) => (
   <html lang="he" dir="rtl" className={`${heebo.variable} ${chaipot.variable}`}>
     <body>
+      <RestaurantJsonLd />
       <Providers>
         <AccessibilityGlobalStyles />
         <SkipToContentLink />

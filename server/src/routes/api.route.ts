@@ -6,7 +6,7 @@ import orderRouter from '../order/order.route';
 import costumerRouter from '../costumer/costumer.route';
 import reviewRouter from '../review/review.route';
 import paymentRouter from '../payment/payment.route';
-import checkoutRouter from '../checkout/checkout.route';
+import couponRouter from '../coupon/coupon.route';
 import { API_ROUTES } from './route.const';
 
 const apiRouter = Router();
@@ -18,6 +18,6 @@ apiRouter.use(API_ROUTES.Orders, orderRouter);
 apiRouter.use(API_ROUTES.Customers, costumerRouter);
 apiRouter.use(API_ROUTES.Reviews, reviewRouter);
 apiRouter.use(API_ROUTES.Payments, paymentRouter);
-apiRouter.use(API_ROUTES.Checkout, checkoutRouter);
+apiRouter.use(API_ROUTES.Coupons, couponRouter);
 
 export default apiRouter;

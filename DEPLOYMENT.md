@@ -175,6 +175,19 @@ https://api.thailab.co.il/api/payments/:uuid/callback
 
 ---
 
+## SEO ו-Google Search Console
+
+האתר מפיק `robots.txt` ו-`sitemap.xml` אוטומטית (`/robots.txt`, `/sitemap.xml`), וכולל נתוני Restaurant מובנים.
+כתובת האתר נקבעת ב-`SITE.url` בקובץ `shared/consts/site.const.ts`.
+
+1. היכנסו ל-[Search Console](https://search.google.com/search-console) → **Add property** → **Domain** → `thailab.co.il`.
+2. הוסיפו את רשומת ה-TXT שגוגל נותן אצל רשם הדומיין, ולחצו **Verify**.
+3. **Sitemaps** → הוסיפו `sitemap.xml` ושלחו.
+4. **URL Inspection** → הדביקו את `https://thailab.co.il/` → **Request indexing**. חזרו על זה ל-`/menu`.
+5. ב-[Google Business Profile](https://business.google.com) ודאו שהכתובת, הטלפון והאתר זהים לאלה שב-`SITE`.
+
+---
+
 ## עדכון סיסמת מנהל
 
 ערוך `SEED_ADMIN_USERS` ב-`server/.env.production` והרץ `npm run seed:prod`. זריעה חוזרת מעדכנת סיסמה קיימת.

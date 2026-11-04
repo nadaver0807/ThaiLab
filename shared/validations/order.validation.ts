@@ -33,6 +33,9 @@ export const createOrderSchema = z
     city: optionalString(60),
     address: optionalString(200),
     notes: optionalString(500),
+    couponCode: optionalString(30),
+    /** ISO של תחילת חלון הזמן שנבחר. ריק = בהקדם האפשרי. */
+    scheduledFor: z.string().datetime().nullable().optional(),
     items: z.array(orderItemSchema).min(1, 'העגלה ריקה'),
   })
   .refine((order) => order.type !== OrderType.Delivery || Boolean(order.address?.trim()), {
@@ -59,6 +62,9 @@ export const checkoutFormSchema = z
     city: optionalString(60),
     address: optionalString(200),
     notes: optionalString(500),
+    couponCode: optionalString(30),
+    /** ISO של תחילת חלון הזמן. ריק = בהקדם האפשרי. */
+    scheduledFor: z.string().datetime().nullable().optional(),
   })
   .refine((form) => form.type !== OrderType.Delivery || Boolean(form.city?.trim()), {
     message: 'יש לבחור ישוב למשלוח',

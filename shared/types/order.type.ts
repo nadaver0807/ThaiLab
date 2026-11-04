@@ -24,7 +24,12 @@ export type OrderSummary = {
   paymentStatus: PaymentStatus;
   subtotal: number;
   deliveryFee: number;
+  couponCode: string | null;
+  /** סכום ההנחה בשקלים — כבר מנוכה מ-`totalPrice`. */
+  discount: number;
   totalPrice: number;
+  /** המועד שנבחר. ריק = בהקדם האפשרי. */
+  scheduledFor: string | null;
   address: string | null;
   contactName: string;
   contactPhone: string;

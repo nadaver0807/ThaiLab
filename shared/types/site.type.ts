@@ -36,6 +36,8 @@ export type SocialLinks = {
 };
 
 export type SiteConfig = {
+  /** כתובת האתר הציבורית, בלי / בסוף. */
+  url: string;
   name: string;
   tagline: string;
   description: string;

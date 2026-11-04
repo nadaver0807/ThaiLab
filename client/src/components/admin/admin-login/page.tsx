@@ -6,6 +6,7 @@ import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import RestaurantMenuRoundedIcon from '@mui/icons-material/RestaurantMenuRounded';
 import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
+import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import { Route } from '@shared/enums/route.enum';
 import useAuth from '@/hooks/auth/useAuth';
 import useGetDishes from '@/hooks/api/useGetDishes';
@@ -100,6 +101,15 @@ const AdminLogin: FC = () => {
             startIcon={<ReceiptLongRoundedIcon />}
           >
             להזמנות
+          </Button>
+        )}
+        {isAdmin && (
+          <Button
+            variant="contained"
+            href={Route.AdminCoupons}
+            startIcon={<LocalOfferRoundedIcon />}
+          >
+            לקופונים
           </Button>
         )}
         <Button variant="outlined" startIcon={<LogoutRoundedIcon />} onClick={signOut}>
