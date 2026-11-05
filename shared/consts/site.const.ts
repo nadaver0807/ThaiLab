@@ -2,7 +2,7 @@ import { Route } from '@shared/enums/route.enum';
 import { type NavLink, type SiteConfig } from '@shared/types/site.type';
 
 export const SITE: SiteConfig = {
-  url: 'https://thailab.co.il',
+  url: 'https://www.thailab.co.il',
   name: 'ThaiLab',
   tagline: 'מטבח תאילנדי אותנטי',
   description: 'ThaiLab — מטבח תאילנדי אותנטי, חומרי גלם טריים וטעמים אמיתיים מתאילנד.',
