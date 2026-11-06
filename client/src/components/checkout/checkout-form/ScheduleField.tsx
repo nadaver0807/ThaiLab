@@ -3,6 +3,7 @@
 import { useMemo, useState, type FC } from 'react';
 import { MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { buildScheduleDays } from '@shared/util/schedule.util';
+import { useGetOpeningHours } from '@/hooks/api/useOpeningHours';
 
 type ScheduleFieldProps = {
   /** ISO של החלון שנבחר, או ריק = בהקדם האפשרי. */
@@ -13,7 +14,8 @@ type ScheduleFieldProps = {
 const ASAP = 'asap';
 
 const ScheduleField: FC<ScheduleFieldProps> = ({ value, onChange }) => {
-  const days = useMemo(() => buildScheduleDays(new Date()), []);
+  const { days: openingHours } = useGetOpeningHours();
+  const days = useMemo(() => buildScheduleDays(openingHours, new Date()), [openingHours]);
   const [dayDate, setDayDate] = useState<string>(ASAP);
 
   const selectedDay = days.find((day) => day.date === dayDate);

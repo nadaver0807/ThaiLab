@@ -25,9 +25,15 @@ const email: SxProps<Theme> = {
 };
 
 const actions: SxProps<Theme> = {
-  flexDirection: 'row',
+  flexDirection: 'column',
+  alignItems: 'stretch',
   gap: 1.5,
   marginBlockStart: 1,
+  '& .MuiButton-root': {
+    justifyContent: 'flex-start',
+    minHeight: 48,
+    whiteSpace: 'nowrap',
+  },
 };
 
 const Styles = { panel, title, identity, email, actions };

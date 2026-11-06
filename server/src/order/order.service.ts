@@ -1,31 +1,26 @@
-import { In } from "typeorm";
+import { In } from 'typeorm';
 
-import { AppDataSource } from "@/config/db/db.config";
-import { type Coupon } from "@/coupon/Coupon.entity";
+import { AppDataSource } from '@/config/db/db.config';
+import { type Coupon } from '@/coupon/Coupon.entity';
 import {
   consume as consumeCoupon,
   CouponError,
   validate as validateCoupon,
-} from "@/coupon/coupon.service";
-import { Dish } from "@/dish/Dish.entity";
-import { Order } from "@/order/Order.entity";
-import { OrderItem } from "@/order-item/OrderItem.entity";
-import { upsertByPhone } from "@/costumer/costumer.service";
-import {
-  notifyAdminOfNewOrder,
-  notifyCustomerOfDecision,
-} from "@/order/orderNotification.service";
-import {
-  DELIVERY_MIN_SUBTOTAL,
-  getDeliveryFee,
-} from "@shared/consts/delivery.const";
-import { resolveVariantLabel } from "@shared/util/variant.util";
-import { validateSlot } from "@shared/util/schedule.util";
-import { OrderStatus } from "@shared/enums/order-status.enum";
-import { OrderType } from "@shared/enums/order-type.enum";
-import { PaymentStatus } from "@shared/enums/payment-status.enum";
-import { type OrderSummary } from "@shared/types/order.type";
-import { type CreateOrderPayload } from "@shared/validations/order.validation";
+} from '@/coupon/coupon.service';
+import { Dish } from '@/dish/Dish.entity';
+import { Order } from '@/order/Order.entity';
+import { OrderItem } from '@/order-item/OrderItem.entity';
+import { getOpeningHours } from '@/opening-hours/openingHours.service';
+import { upsertByPhone } from '@/costumer/costumer.service';
+import { notifyAdminOfNewOrder, notifyCustomerOfDecision } from '@/order/orderNotification.service';
+import { DELIVERY_MIN_SUBTOTAL, getDeliveryFee } from '@shared/consts/delivery.const';
+import { resolveVariantLabel } from '@shared/util/variant.util';
+import { validateSlot } from '@shared/util/schedule.util';
+import { OrderStatus } from '@shared/enums/order-status.enum';
+import { OrderType } from '@shared/enums/order-type.enum';
+import { PaymentStatus } from '@shared/enums/payment-status.enum';
+import { type OrderSummary } from '@shared/types/order.type';
+import { type CreateOrderPayload } from '@shared/validations/order.validation';
 
 const OrderRepository = AppDataSource.getRepository(Order);
 const DishRepository = AppDataSource.getRepository(Dish);
@@ -63,9 +58,7 @@ const toSummary = (order: Order): OrderSummary => ({
   })),
 });
 
-export const create = async (
-  payload: CreateOrderPayload,
-): Promise<OrderSummary> => {
+export const create = async (payload: CreateOrderPayload): Promise<OrderSummary> => {
   const dishUuids = payload.items.map((item) => item.dishUuid);
   const dishes = await DishRepository.find({ where: { uuid: In(dishUuids) } });
   const dishByUuid = new Map(dishes.map((dish) => [dish.uuid, dish]));
@@ -74,12 +67,12 @@ export const create = async (
     const dish = dishByUuid.get(item.dishUuid);
 
     if (!dish || !dish.isAvailable) {
-      throw new OrderValidationError("אחת המנות בעגלה אינה זמינה יותר");
+      throw new OrderValidationError('אחת המנות בעגלה אינה זמינה יותר');
     }
 
     const unitPrice = dish.priceOptions?.[item.priceKey];
 
-    if (typeof unitPrice !== "number") {
+    if (typeof unitPrice !== 'number') {
       throw new OrderValidationError(
         `אפשרות המחיר "${item.priceKey}" אינה קיימת עבור ${dish.name}`,
       );
@@ -87,9 +80,7 @@ export const create = async (
 
     // הערות מוכנות מאומתות מול המנה כדי שלא יישלחו ערכים שרירותיים
     const allowedNotes = new Set(dish.optionNotes ?? []);
-    const selectedNotes = (item.selectedNotes ?? []).filter((note) =>
-      allowedNotes.has(note),
-    );
+    const selectedNotes = (item.selectedNotes ?? []).filter((note) => allowedNotes.has(note));
 
     return OrderItem.create({
       dish,
@@ -104,28 +95,23 @@ export const create = async (
     });
   });
 
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.unitPrice * item.quantity,
-    0,
-  );
+  const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   const isDelivery = payload.type === OrderType.Delivery;
 
   // דמי המשלוח נקבעים בשרת לפי הישוב — הלקוח לא יכול להשפיע על התעריף
   const cityFee = isDelivery ? getDeliveryFee(payload.city) : 0;
 
   if (isDelivery && cityFee === null) {
-    throw new OrderValidationError("אין משלוחים לישוב שנבחר");
+    throw new OrderValidationError('אין משלוחים לישוב שנבחר');
   }
 
   if (isDelivery && subtotal < DELIVERY_MIN_SUBTOTAL) {
-    throw new OrderValidationError(
-      `מינימום הזמנה למשלוח הוא ₪${DELIVERY_MIN_SUBTOTAL}`,
-    );
+    throw new OrderValidationError(`מינימום הזמנה למשלוח הוא ₪${DELIVERY_MIN_SUBTOTAL}`);
   }
 
   const deliveryFee = cityFee ?? 0;
   const address = isDelivery
-    ? [payload.address?.trim(), payload.city?.trim()].filter(Boolean).join(", ")
+    ? [payload.address?.trim(), payload.city?.trim()].filter(Boolean).join(', ')
     : null;
 
   // מועד מתוזמן — מאומת בשרת באותם כללים שהלקוח רואה
@@ -134,7 +120,7 @@ export const create = async (
   if (payload.scheduledFor) {
     scheduledFor = new Date(payload.scheduledFor);
 
-    const slotError = validateSlot(scheduledFor);
+    const slotError = validateSlot(scheduledFor, await getOpeningHours());
 
     if (slotError) {
       throw new OrderValidationError(slotError);
@@ -176,8 +162,7 @@ export const create = async (
     totalPrice: subtotal - discount + deliveryFee,
     scheduledFor,
     address,
-    contactName:
-      `${payload.customer.firstName} ${payload.customer.lastName ?? ""}`.trim(),
+    contactName: `${payload.customer.firstName} ${payload.customer.lastName ?? ''}`.trim(),
     contactPhone: costumer.phone,
     contactEmail: payload.customer.email,
     notes: payload.notes || null,
@@ -210,15 +195,13 @@ export const create = async (
 export const findAll = async (): Promise<OrderSummary[]> => {
   const orders = await OrderRepository.find({
     relations: { items: { dish: true }, costumer: true },
-    order: { createDate: "DESC" },
+    order: { createDate: 'DESC' },
   });
 
   return orders.map(toSummary);
 };
 
-export const findByUuid = async (
-  uuid: string,
-): Promise<OrderSummary | null> => {
+export const findByUuid = async (uuid: string): Promise<OrderSummary | null> => {
   const order = await OrderRepository.findOne({
     where: { uuid },
     relations: { items: { dish: true }, costumer: true },

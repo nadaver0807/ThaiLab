@@ -5,6 +5,7 @@ import { Dish } from '@/dish/Dish.entity';
 import { Hospitality } from '@/hospitality/Hospitality.entity';
 import { Order } from '@/order/Order.entity';
 import { OrderItem } from '@/order-item/OrderItem.entity';
+import { OpeningHours } from '@/opening-hours/OpeningHours.entity';
 import { Reservation } from '@/reservation/Reservation.entity';
 import { Review } from '@/review/Review.entity';
 import dotEnv from 'dotenv';
@@ -42,6 +43,7 @@ const sharedOptions = {
     Coupon,
     Dish,
     Hospitality,
+    OpeningHours,
     Order,
     OrderItem,
     Reservation,

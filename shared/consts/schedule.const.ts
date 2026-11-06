@@ -5,6 +5,8 @@
  * משותפים לשני הצדדים.
  */
 
+import { type OpeningHoursDay } from '@shared/types/opening-hours.type';
+
 /** גודל חלון הזמן בדקות. */
 export const SLOT_MINUTES = 15;
 
@@ -15,13 +17,15 @@ export const MIN_LEAD_MINUTES = 45;
 export const MAX_DAYS_AHEAD = 7;
 
 /**
- * שעות פעילות זמניות להצגת החלונות, עד שעופר יוכל לערוך שעות פתיחה בפאנל.
- * 0 = יום ראשון … 6 = שבת. יום ללא רשומה סגור.
+ * שעות ברירת מחדל — משמשות כשעדיין לא נשמרו שעות בפאנל הניהול, וכערכי ההתחלה במסד.
+ * 0 = יום ראשון … 6 = שבת.
  */
-export const DEFAULT_OPENING_HOURS: Record<number, { open: string; close: string }> = {
-  0: { open: '12:00', close: '21:00' },
-  1: { open: '12:00', close: '21:00' },
-  2: { open: '12:00', close: '21:00' },
-  3: { open: '12:00', close: '21:00' },
-  4: { open: '12:00', close: '21:00' },
-};
+export const DEFAULT_OPENING_HOURS: OpeningHoursDay[] = [
+  { day: 0, isOpen: true, open: '12:00', close: '21:00' },
+  { day: 1, isOpen: true, open: '12:00', close: '21:00' },
+  { day: 2, isOpen: true, open: '12:00', close: '21:00' },
+  { day: 3, isOpen: true, open: '12:00', close: '21:00' },
+  { day: 4, isOpen: true, open: '12:00', close: '21:00' },
+  { day: 5, isOpen: false, open: '12:00', close: '21:00' },
+  { day: 6, isOpen: false, open: '12:00', close: '21:00' },
+];

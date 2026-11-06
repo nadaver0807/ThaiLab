@@ -4,8 +4,19 @@ import {
   MIN_LEAD_MINUTES,
   SLOT_MINUTES,
 } from '@shared/consts/schedule.const';
+import { type OpeningHoursDay } from '@shared/types/opening-hours.type';
 
 const MS_PER_MINUTE = 60_000;
+
+/** שעות הפעילות של יום מסוים בשבוע, או undefined אם העסק סגור בו. */
+const findDayHours = (
+  openingHours: OpeningHoursDay[],
+  weekday: number,
+): OpeningHoursDay | undefined => {
+  const hours = openingHours.find((entry) => entry.day === weekday);
+
+  return hours?.isOpen ? hours : undefined;
+};
 
 const toMinutes = (time: string): number => {
   const [hours, minutes] = time.split(':').map(Number);
@@ -47,8 +58,11 @@ export const isOnSlotBoundary = (date: Date): boolean =>
   date.getMinutes() % SLOT_MINUTES === 0 && date.getSeconds() === 0 && date.getMilliseconds() === 0;
 
 /** האם החלון בתוך שעות הפעילות של אותו יום. */
-export const isWithinOpeningHours = (date: Date): boolean => {
-  const hours = DEFAULT_OPENING_HOURS[date.getDay()];
+export const isWithinOpeningHours = (
+  date: Date,
+  openingHours: OpeningHoursDay[] = DEFAULT_OPENING_HOURS,
+): boolean => {
+  const hours = findDayHours(openingHours, date.getDay());
 
   if (!hours) {
     return false;
@@ -60,7 +74,11 @@ export const isWithinOpeningHours = (date: Date): boolean => {
 };
 
 /** ולידציה של חלון שנבחר — משותפת ללקוח ולשרת. מחזירה הודעת שגיאה או null. */
-export const validateSlot = (scheduledFor: Date, now: Date = new Date()): string | null => {
+export const validateSlot = (
+  scheduledFor: Date,
+  openingHours: OpeningHoursDay[] = DEFAULT_OPENING_HOURS,
+  now: Date = new Date(),
+): string | null => {
   if (Number.isNaN(scheduledFor.getTime())) {
     return 'מועד ההזמנה אינו תקין';
   }
@@ -81,7 +99,7 @@ export const validateSlot = (scheduledFor: Date, now: Date = new Date()): string
     return `אפשר לתזמן הזמנה עד ${MAX_DAYS_AHEAD} ימים קדימה`;
   }
 
-  if (!isWithinOpeningHours(scheduledFor)) {
+  if (!isWithinOpeningHours(scheduledFor, openingHours)) {
     return 'החלון שנבחר מחוץ לשעות הפעילות';
   }
 
@@ -103,7 +121,10 @@ const buildDayLabel = (date: Date, offset: number): string => {
 };
 
 /** כל החלונות הזמינים להזמנה, מקובצים לפי יום. ימים בלי חלונות לא מוחזרים. */
-export const buildScheduleDays = (now: Date = new Date()): ScheduleDay[] => {
+export const buildScheduleDays = (
+  openingHours: OpeningHoursDay[] = DEFAULT_OPENING_HOURS,
+  now: Date = new Date(),
+): ScheduleDay[] => {
   const days: ScheduleDay[] = [];
 
   for (let offset = 0; offset <= MAX_DAYS_AHEAD; offset += 1) {
@@ -111,7 +132,7 @@ export const buildScheduleDays = (now: Date = new Date()): ScheduleDay[] => {
 
     day.setDate(day.getDate() + offset);
 
-    const hours = DEFAULT_OPENING_HOURS[day.getDay()];
+    const hours = findDayHours(openingHours, day.getDay());
 
     if (!hours) {
       continue;
@@ -128,7 +149,7 @@ export const buildScheduleDays = (now: Date = new Date()): ScheduleDay[] => {
 
       slot.setHours(Math.floor(minutes / 60), minutes % 60, 0, 0);
 
-      if (validateSlot(slot, now) === null) {
+      if (validateSlot(slot, openingHours, now) === null) {
         slots.push({ value: slot.toISOString(), label: formatTime(slot) });
       }
     }
