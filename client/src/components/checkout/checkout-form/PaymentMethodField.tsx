@@ -17,8 +17,8 @@ type PaymentMethodFieldProps = {
 const OPTIONS = [
   {
     method: PaymentMethod.OnCollection,
-    title: 'תשלום במזומן',
-    description: 'תשלום במזומן בלבד בעת האיסוף או המסירה.',
+    title: 'תשלום במקום',
+    description: 'תשלום במקום בעת האיסוף או המסירה.',
     Icon: StorefrontRoundedIcon,
   },
   {
