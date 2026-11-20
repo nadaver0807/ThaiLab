@@ -1,12 +1,12 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from 'crypto';
 
-import dotenv from "dotenv";
-import type { NextFunction, Request, Response } from "express";
-import { addColors, createLogger, format, transports } from "winston";
+import dotenv from 'dotenv';
+import type { NextFunction, Request, Response } from 'express';
+import { addColors, createLogger, format, transports } from 'winston';
 
 dotenv.config();
 
-const isDevelopment = process.env.NODE_ENV === "development";
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -34,7 +34,7 @@ export const toSafeError = (err: unknown): SafeErrorShape => {
   if (!(err instanceof Error)) {
     return {
       message: String(err),
-      type: "UnknownError",
+      type: 'UnknownError',
     };
   }
 
@@ -63,16 +63,13 @@ export const toSafeError = (err: unknown): SafeErrorShape => {
     message: err.message,
     method: errorAsAxios.config?.method?.toUpperCase(),
     responseError:
-      typeof errorAsAxios.response?.data === "object" &&
-      errorAsAxios.response?.data
+      typeof errorAsAxios.response?.data === 'object' && errorAsAxios.response?.data
         ? errorAsAxios.response.data.error
         : undefined,
     responseMessage:
-      typeof errorAsAxios.response?.data === "object" &&
-      errorAsAxios.response?.data
-        ? errorAsAxios.response.data.message ||
-          errorAsAxios.response.data.error_description
-        : typeof errorAsAxios.response?.data === "string"
+      typeof errorAsAxios.response?.data === 'object' && errorAsAxios.response?.data
+        ? errorAsAxios.response.data.message || errorAsAxios.response.data.error_description
+        : typeof errorAsAxios.response?.data === 'string'
           ? errorAsAxios.response.data
           : undefined,
     stack: err.stack,
@@ -85,7 +82,7 @@ export const toSafeError = (err: unknown): SafeErrorShape => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getRoute = (req: any) => {
   if (req.route?.path) {
-    const baseUrl = req.baseUrl || "";
+    const baseUrl = req.baseUrl || '';
 
     return `${baseUrl}${req.route.path}`;
   }
@@ -94,7 +91,7 @@ const getRoute = (req: any) => {
 };
 
 const getOutcome = (statusCode: number) => {
-  return statusCode >= 400 ? "error" : "success";
+  return statusCode >= 400 ? 'error' : 'success';
 };
 
 const LOG_LEVELS = {
@@ -109,15 +106,15 @@ const LOG_LEVELS = {
 type LogLevel = keyof typeof LOG_LEVELS;
 
 addColors({
-  debug: "blue",
-  error: "red",
-  fatal: "red",
-  info: "green",
-  trace: "gray",
-  warn: "yellow",
+  debug: 'blue',
+  error: 'red',
+  fatal: 'red',
+  info: 'green',
+  trace: 'gray',
+  warn: 'yellow',
 });
 
-const LEVEL_SYMBOL = Symbol.for("level");
+const LEVEL_SYMBOL = Symbol.for('level');
 
 const reshapeForJson = format((info) => {
   const { level, message, ...rest } = info as Record<string, unknown> & {
@@ -126,30 +123,30 @@ const reshapeForJson = format((info) => {
   };
 
   const reshaped: Record<string, unknown> = {
-    "@timestamp": new Date().toISOString(),
-    "log.level": level,
+    '@timestamp': new Date().toISOString(),
+    'log.level': level,
     message,
     ...rest,
   };
 
   // Preserve winston's internal level symbol so transports can still filter by level.
-  (reshaped as Record<symbol, unknown>)[LEVEL_SYMBOL] = (
-    info as Record<symbol, unknown>
-  )[LEVEL_SYMBOL];
+  (reshaped as Record<symbol, unknown>)[LEVEL_SYMBOL] = (info as Record<symbol, unknown>)[
+    LEVEL_SYMBOL
+  ];
 
   return reshaped as typeof info;
 });
 
 const devFormat = format.combine(
-  format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
+  format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
   format.colorize({ level: true }),
   format.printf(({ level, message, timestamp, ...meta }) => {
     const metaEntries = Object.entries(meta).filter(
-      ([key]) => key !== "service.name" && key !== "environment",
+      ([key]) => key !== 'service.name' && key !== 'environment',
     );
     const metaString = metaEntries.length
       ? ` ${JSON.stringify(Object.fromEntries(metaEntries))}`
-      : "";
+      : '';
 
     return `[${timestamp}] ${level}: ${message}${metaString}`;
   }),
@@ -158,36 +155,28 @@ const devFormat = format.combine(
 const winstonLogger = createLogger({
   defaultMeta: {
     environment: process.env.NODE_ENV,
-    "service.name": "nifgaim-core",
+    'service.name': 'nifgaim-core',
   },
-  format: isDevelopment
-    ? devFormat
-    : format.combine(reshapeForJson(), format.json()),
-  level: isDevelopment ? "debug" : "info",
+  format: isDevelopment ? devFormat : format.combine(reshapeForJson(), format.json()),
+  level: isDevelopment ? 'debug' : 'info',
   levels: LOG_LEVELS,
   transports: [new transports.Console()],
 });
 
 const isPlainObject = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" &&
-  value !== null &&
-  !Array.isArray(value) &&
-  !(value instanceof Error);
+  typeof value === 'object' && value !== null && !Array.isArray(value) && !(value instanceof Error);
 
 const collectMeta = (values: unknown[]): Record<string, unknown> =>
   values
     .filter(isPlainObject)
-    .reduce<Record<string, unknown>>(
-      (acc, current) => ({ ...acc, ...current }),
-      {},
-    );
+    .reduce<Record<string, unknown>>((acc, current) => ({ ...acc, ...current }), {});
 
 // Adapter that accepts both pino-style calls -- logger.error(objOrErr, 'message') --
 // and winston-style calls -- logger.info('message', { meta }).
 const createLogFn =
   (level: LogLevel) =>
   (objOrMsg: unknown, msgOrMeta?: unknown, ...rest: unknown[]) => {
-    if (typeof objOrMsg === "string") {
+    if (typeof objOrMsg === 'string') {
       const meta = collectMeta([msgOrMeta, ...rest]);
       winstonLogger.log({ ...meta, level, message: objOrMsg });
 
@@ -195,10 +184,8 @@ const createLogFn =
     }
 
     const mergingObject =
-      objOrMsg instanceof Error
-        ? { err: toSafeError(objOrMsg) }
-        : (objOrMsg ?? {});
-    const message = typeof msgOrMeta === "string" ? msgOrMeta : "";
+      objOrMsg instanceof Error ? { err: toSafeError(objOrMsg) } : (objOrMsg ?? {});
+    const message = typeof msgOrMeta === 'string' ? msgOrMeta : '';
     winstonLogger.log({
       ...(mergingObject as Record<string, unknown>),
       level,
@@ -207,58 +194,63 @@ const createLogFn =
   };
 
 export const logger = {
-  debug: createLogFn("debug"),
-  error: createLogFn("error"),
-  fatal: createLogFn("fatal"),
-  info: createLogFn("info"),
-  trace: createLogFn("trace"),
-  warn: createLogFn("warn"),
+  debug: createLogFn('debug'),
+  error: createLogFn('error'),
+  fatal: createLogFn('fatal'),
+  info: createLogFn('info'),
+  trace: createLogFn('trace'),
+  warn: createLogFn('warn'),
 };
+
+/**
+ * מתעד רק את שמות השדות שנשלחו — לעולם לא את תוכנם. גוף הבקשה מכיל שמות, טלפונים,
+ * כתובות, דוא"ל וסיסמאות מנהל, ואין סיבה לשמור אותם ביומנים.
+ */
+const summarizeBody = (body: unknown): string[] | undefined =>
+  body && typeof body === 'object' ? Object.keys(body) : undefined;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getCommonProps = (req: any, res: any, responseTime?: number) => ({
   appid: req.user?.appid,
-  body: req.body,
-  "http.request.method": req.method,
-  "http.response.status_code": res.statusCode,
+  bodyFields: summarizeBody(req.body),
+  'http.request.method': req.method,
+  'http.response.status_code': res.statusCode,
   outcome: getOutcome(res.statusCode),
   reqId: req.id,
   responseTimeMs: responseTime,
   route: getRoute(req),
-  "url.path": req.originalUrl || req.url,
+  'url.path': req.originalUrl || req.url,
   userId: req.user?.id ?? req.user?.teudatZehut,
 });
 
 const NANOSECONDS_PER_MILLISECOND = 1e6;
 
 const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const url = req.url ?? "";
+  const url = req.url ?? '';
 
-  if (url === "/" || url.includes("/health")) {
+  if (url === '/' || url.includes('/health')) {
     next();
 
     return;
   }
 
   if (!req.id) {
-    const headerId = req.headers["x-request-id"];
+    const headerId = req.headers['x-request-id'];
     req.id = (Array.isArray(headerId) ? headerId[0] : headerId) ?? randomUUID();
   }
 
   const startNs = process.hrtime.bigint();
 
   const onFinish = () => {
-    res.removeListener("finish", onFinish);
-    res.removeListener("close", onFinish);
+    res.removeListener('finish', onFinish);
+    res.removeListener('close', onFinish);
 
-    const responseTime =
-      Number(process.hrtime.bigint() - startNs) / NANOSECONDS_PER_MILLISECOND;
+    const responseTime = Number(process.hrtime.bigint() - startNs) / NANOSECONDS_PER_MILLISECOND;
     const commonProps = getCommonProps(req, res, responseTime);
 
     if (res.statusCode >= 400) {
       const err =
-        (res as Response & { err?: unknown }).err ??
-        (res.locals as { err?: unknown })?.err;
+        (res as Response & { err?: unknown }).err ?? (res.locals as { err?: unknown })?.err;
 
       if (err) {
         const safeError = toSafeError(err);
@@ -281,22 +273,16 @@ const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
         return;
       }
 
-      logger.error(
-        commonProps,
-        `${req.method} ${getRoute(req)} failed with ${res.statusCode}`,
-      );
+      logger.error(commonProps, `${req.method} ${getRoute(req)} failed with ${res.statusCode}`);
 
       return;
     }
 
-    logger.info(
-      commonProps,
-      `${req.method} ${getRoute(req)} completed with ${res.statusCode}`,
-    );
+    logger.info(commonProps, `${req.method} ${getRoute(req)} completed with ${res.statusCode}`);
   };
 
-  res.on("finish", onFinish);
-  res.on("close", onFinish);
+  res.on('finish', onFinish);
+  res.on('close', onFinish);
 
   next();
 };

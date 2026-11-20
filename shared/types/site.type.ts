@@ -44,5 +44,9 @@ export type SiteConfig = {
   phone: string;
   email: string;
   address: string;
+  /** שם העסק הרשום. ריק = לא מוצג. */
+  legalName: string;
+  /** מספר עוסק מורשה / ח.פ. ריק = לא מוצג. */
+  businessId: string;
   social: SocialLinks;
 };

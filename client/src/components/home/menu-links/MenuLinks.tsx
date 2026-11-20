@@ -29,7 +29,7 @@ const MenuLinks: FC = () => (
             <Typography variant="body1" sx={Styles.cardDescription}>
               {link.description}
             </Typography>
-            <Stack sx={Styles.cardAction}>
+            <Stack sx={Styles.cardAction(link.tone)}>
               <Typography variant="button">לצפייה</Typography>
               <ArrowBackRoundedIcon fontSize="small" />
             </Stack>

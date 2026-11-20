@@ -6,6 +6,7 @@ import AccessibilityPanel from '@components/layout/accessibility/AccessibilityPa
 import SkipToContentLink from '@components/layout/accessibility/SkipToContentLink';
 import { MAIN_CONTENT_ID } from '@components/layout/accessibility/Accessibility.const';
 import CartDrawer from '@components/cart/cart-drawer/CartDrawer';
+import CookieNotice from '@components/layout/cookie-notice/CookieNotice';
 import NavDrawer from '@components/layout/nav-drawer/NavDrawer';
 import RestaurantJsonLd from '@components/shared/RestaurantJsonLd';
 import Footer from '@components/layout/footer/Footer';
@@ -81,6 +82,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         <AccessibilityPanel />
         <CartDrawer />
         <NavDrawer />
+        <CookieNotice />
       </Providers>
     </body>
   </html>

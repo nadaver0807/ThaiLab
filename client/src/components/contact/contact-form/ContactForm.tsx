@@ -4,15 +4,23 @@ import { type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Box, Button, Typography } from '@mui/material';
+import { Route } from '@shared/enums/route.enum';
 import {
   contactMessageSchema,
   type ContactMessageForm,
 } from '@shared/validations/contact.validation';
 import useSendEmail from '@/hooks/api/useSendEmail';
 import ThailabTextField from '@/components/shared/text-field/ThailabTextField';
+import ThailabCheckbox from '@components/shared/checkbox/ThailabCheckbox';
+import PolicyLink from '@components/shared/checkbox/PolicyLink';
 import Styles from '@components/contact/contact-form/ContactForm.style';
 
-const DEFAULT_VALUES: ContactMessageForm = { fullName: '', email: '', message: '' };
+const DEFAULT_VALUES: ContactMessageForm = {
+  fullName: '',
+  email: '',
+  message: '',
+  hasAcceptedPrivacy: false,
+};
 
 const ContactForm: FC = () => {
   const { mutateAsync, isPending, isSuccess, isError, error } = useSendEmail();
@@ -49,6 +57,16 @@ const ContactForm: FC = () => {
           multiline
           minRows={4}
           required
+        />
+
+        <ThailabCheckbox<ContactMessageForm>
+          name="hasAcceptedPrivacy"
+          label={
+            <>
+              קראתי את <PolicyLink href={Route.Privacy}>מדיניות הפרטיות</PolicyLink> ואני מסכים/ה
+              שהפרטים יישמשו למענה לפנייה
+            </>
+          }
         />
 
         {isSuccess && <Alert severity="success">ההודעה נשלחה בהצלחה. נחזור אליכם בהקדם.</Alert>}

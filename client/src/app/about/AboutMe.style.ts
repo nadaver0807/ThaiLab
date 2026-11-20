@@ -32,7 +32,7 @@ const tagline: SxProps<Theme> = {
   fontWeight: 600,
   letterSpacing: '0.32em',
   textTransform: 'uppercase',
-  color: 'secondary.main',
+  color: 'secondary.dark',
 };
 
 const heroTitle: SxProps<Theme> = {
@@ -101,7 +101,7 @@ const valueCard: SxProps<Theme> = {
 const valueTitle: SxProps<Theme> = {
   fontWeight: 700,
   marginBlockEnd: 1,
-  color: 'secondary.main',
+  color: 'secondary.dark',
 };
 
 const cta: SxProps<Theme> = {

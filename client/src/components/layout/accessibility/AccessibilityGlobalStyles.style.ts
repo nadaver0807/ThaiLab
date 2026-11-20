@@ -59,8 +59,10 @@ const accessibilityGlobal = {
   },
   'a:focus-visible, button:focus-visible, [role="button"]:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible':
     {
-      outline: '3px solid #B08D57',
+      // טבעת כפולה: זהב כהה (6.2:1 על רקע בהיר) + מסגרת לבנה פנימית שנראית גם על רקע כהה.
+      outline: '3px solid #725528',
       outlineOffset: 2,
+      boxShadow: '0 0 0 2px #FFFFFF',
       borderRadius: 4,
     },
 };

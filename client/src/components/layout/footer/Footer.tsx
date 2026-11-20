@@ -5,8 +5,8 @@ import NavLink from '@components/shared/nav-link/NavLink';
 import OrderButton from '@components/shared/order-button/OrderButton';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import { Box, Stack, Typography } from '@mui/material';
-import { NAV_LINKS, SITE } from '@shared/consts/site.const';
-import { Route } from '@shared/enums/route.enum';
+import { NAV_LINKS, LEGAL_LINKS, SITE } from '@shared/consts/site.const';
+import { getLegalIdentity } from '@shared/util/business.util';
 import { type FC } from 'react';
 import { useOpeningHoursRows } from '@/hooks/api/useOpeningHours';
 
@@ -31,7 +31,6 @@ const Footer: FC = () => {
                 {link.label}
               </NavLink>
             ))}
-            <NavLink href={Route.Accessibility}>הצהרת נגישות</NavLink>
           </Stack>
           <Stack sx={Styles.hours}>
             <Typography variant="h3" component="p" sx={Styles.columnTitle}>
@@ -93,8 +92,16 @@ const Footer: FC = () => {
           </Stack>
         </Box>
       </PageContainer>
+      <Stack component="nav" aria-label="מידע משפטי" sx={Styles.legal}>
+        {LEGAL_LINKS.map((link) => (
+          <NavLink key={link.href} href={link.href}>
+            {link.label}
+          </NavLink>
+        ))}
+      </Stack>
       <Typography variant="body2" sx={Styles.copyright}>
         © {new Date().getFullYear()} {SITE.name}. כל הזכויות שמורות.
+        {getLegalIdentity() && ` ${getLegalIdentity()}.`} {SITE.address}.
       </Typography>
     </Box>
   );

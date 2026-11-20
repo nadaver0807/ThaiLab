@@ -49,6 +49,11 @@ const actions: SxProps<Theme> = {
   marginBlockStart: 1,
 };
 
+const consent: SxProps<Theme> = {
+  gap: 0,
+  marginBlockStart: 1,
+};
+
 const paymentNote: SxProps<Theme> = {
   color: 'text.secondary',
   marginBlockStart: 0.5,
@@ -69,6 +74,7 @@ const Styles = {
   lookupStatus,
   nameRow,
   actions,
+  consent,
   paymentNote,
   empty,
 };

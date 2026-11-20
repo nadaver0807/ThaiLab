@@ -1,7 +1,9 @@
 'use client';
 
 import { useMemo, type FC } from 'react';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import PageContainer from '@components/shared/page-container/PageContainer';
 import LinkButton from '@components/shared/link-button/LinkButton';
 import OrderButton from '@components/shared/order-button/OrderButton';
@@ -12,7 +14,7 @@ import { SITE } from '@shared/consts/site.const';
 import { Route } from '@shared/enums/route.enum';
 
 const HeroCarousel: FC = () => {
-  const { activeIndex, goToSlide } = useHeroCarousel();
+  const { activeIndex, goToSlide, isPaused, togglePause } = useHeroCarousel();
   const activeSlide = useMemo(() => HERO_SLIDES[activeIndex], [activeIndex]);
 
   return (
@@ -41,10 +43,18 @@ const HeroCarousel: FC = () => {
             </LinkButton>
           </Stack>
           <Stack sx={Styles.dots}>
+            <IconButton
+              aria-label={isPaused ? 'הפעלת סליידר התמונות' : 'עצירת סליידר התמונות'}
+              onClick={togglePause}
+              sx={Styles.pause}
+            >
+              {isPaused ? <PlayArrowRoundedIcon /> : <PauseRoundedIcon />}
+            </IconButton>
             {HERO_SLIDES.map((slide, index) => (
               <Button
                 key={slide.id}
                 aria-label={slide.title}
+                aria-current={index === activeIndex}
                 onClick={() => goToSlide(index)}
                 sx={Styles.dot(index === activeIndex)}
               />

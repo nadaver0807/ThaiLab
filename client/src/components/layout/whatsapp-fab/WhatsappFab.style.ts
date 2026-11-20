@@ -5,9 +5,9 @@ const fab: SxProps<Theme> = {
   insetInlineEnd: { xs: 16, md: 24 },
   bottom: { xs: 'calc(92px + env(safe-area-inset-bottom))', md: 24 },
   zIndex: (theme) => theme.zIndex.appBar + 1,
-  backgroundColor: '#25D366',
+  backgroundColor: '#0B7A4B',
   color: 'common.white',
-  '&:hover': { backgroundColor: '#1DA851' },
+  '&:hover': { backgroundColor: '#075E54' },
 };
 
 const Styles = { fab };

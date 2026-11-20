@@ -4,11 +4,16 @@ import { type NavLink, type SiteConfig } from '@shared/types/site.type';
 export const SITE: SiteConfig = {
   url: 'https://www.thailab.co.il',
   name: 'ThaiLab',
-  tagline: 'מטבח תאילנדי אותנטי',
-  description: 'ThaiLab — מטבח תאילנדי אותנטי, חומרי גלם טריים וטעמים אמיתיים מתאילנד.',
+  tagline: 'מטבח תאילנדי',
+  description:
+    'ThaiLab — מטבח תאילנדי של עופר שזר בבת שלמה: טייק אווי, משלוחים, ארוחות שף ואירועים פרטיים.',
   phone: '055-5567083',
   email: 'ofershazar22@gmail.com',
   address: 'הזית 18, בת שלמה',
+  // למילוי בעל העסק: שם העסק הרשום ומספר עוסק מורשה / ח.פ.
+  // מוצגים בפוטר, במסמכים המשפטיים ובמיילים רק כשהשדה אינו ריק.
+  legalName: '',
+  businessId: '',
   social: {
     instagram: 'https://www.instagram.com/thai__lab',
     facebook: 'https://facebook.com/thailab',
@@ -38,5 +43,15 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 export const SEARCH_DEBOUNCE_MS = 300;
+
+/** מסמכים משפטיים ובקשות פרטיות — מוצגים בפוטר בכל עמוד. */
+export const LEGAL_LINKS: NavLink[] = [
+  { href: Route.Privacy, label: 'מדיניות פרטיות' },
+  { href: Route.Terms, label: 'תנאי שימוש' },
+  { href: Route.RefundPolicy, label: 'ביטולים והחזרים' },
+  { href: Route.CookiePolicy, label: 'עוגיות ואחסון' },
+  { href: Route.DataRequest, label: 'בקשה בנושא מידע אישי' },
+  { href: Route.Accessibility, label: 'הצהרת נגישות' },
+];
 
 export const QUERY_STALE_TIME_MS = 5 * 60 * 1000;

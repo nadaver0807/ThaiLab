@@ -4,7 +4,7 @@ import MenuList from '@components/menu/menu-list/MenuList';
 
 export const metadata: Metadata = {
   title: 'תפריט',
-  description: 'התפריט המלא של המסעדה — מנות תאילנדיות אותנטיות.',
+  description: 'התפריט של ThaiLab — מנות תאילנדיות לטייק אווי ולמשלוח.',
 };
 
 const MenuPage = () => (

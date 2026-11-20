@@ -71,6 +71,16 @@ const orderCta: SxProps<Theme> = {
   marginBlockStart: 2,
 };
 
+const legal: SxProps<Theme> = {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  gap: 3,
+  paddingBlock: 2,
+  paddingInline: 2,
+  borderTop: `1px solid ${GOLD_LINE}`,
+};
+
 const copyright: SxProps<Theme> = {
   borderTop: `1px solid ${GOLD_LINE}`,
   paddingBlock: 2,
@@ -95,6 +105,7 @@ const Styles = {
   contact,
   brand,
   orderCta,
+  legal,
   copyright,
   socialLink,
 };

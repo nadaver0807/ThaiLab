@@ -14,7 +14,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: 'food',
     image: '/images/carousel-fish-tacos.jpeg',
-    title: 'אוכל תאילנדי אמיתי',
+    title: 'מטבח תאילנדי בבת שלמה',
     subtitle:
       'איזון בין חריף, חמוץ, מתוק, מלוח ומריר — וגם הרבה מעבר לזה. חומרי גלם טובים והרבה סקרנות.',
   },

@@ -20,7 +20,10 @@ import {
   type CreateReviewPayload,
 } from '@shared/validations/review.validation';
 import { SERVICE_TYPE_ORDER, ServiceType, ServiceTypeLabel } from '@shared/enums/service-type.enum';
+import { Route } from '@shared/enums/route.enum';
 import ThailabTextField from '@components/shared/text-field/ThailabTextField';
+import ThailabCheckbox from '@components/shared/checkbox/ThailabCheckbox';
+import PolicyLink from '@components/shared/checkbox/PolicyLink';
 import ControlledSelect from '@components/shared/select/ControlledSelect';
 import useCreateReview from '@/hooks/api/useCreateReview';
 import Styles from '@components/home/testimonials/ReviewFormDialog.style';
@@ -33,6 +36,7 @@ const buildDefaultValues = (orderUuid: string): CreateReviewPayload => ({
   title: '',
   content: '',
   orderUuid,
+  hasAcceptedPrivacy: false,
 });
 
 const SERVICE_OPTIONS = SERVICE_TYPE_ORDER.map((type) => ({
@@ -120,6 +124,15 @@ const ReviewFormDialog: FC<ReviewFormDialogProps> = ({ isOpen, orderUuid, onClos
                   multiline
                   minRows={4}
                   required
+                />
+                <ThailabCheckbox<CreateReviewPayload>
+                  name="hasAcceptedPrivacy"
+                  label={
+                    <>
+                      אני מסכים/ה לפרסום הביקורת באתר ומאשר/ת שקראתי את{' '}
+                      <PolicyLink href={Route.Privacy}>מדיניות הפרטיות</PolicyLink>
+                    </>
+                  }
                 />
                 {isError && <Alert severity="error">{(error as Error).message}</Alert>}
               </>

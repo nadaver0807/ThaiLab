@@ -8,6 +8,7 @@ import {
   israeliPhone,
   limitedString,
   optionalString,
+  requiredConsent,
 } from '@shared/validations/common.validation';
 
 export const orderItemSchema = z.object({
@@ -37,6 +38,10 @@ export const createOrderSchema = z
     /** ISO של תחילת חלון הזמן שנבחר. ריק = בהקדם האפשרי. */
     scheduledFor: z.string().datetime().nullable().optional(),
     items: z.array(orderItemSchema).min(1, 'העגלה ריקה'),
+    /** אישור תנאי השימוש, מדיניות הפרטיות ומדיניות הביטולים. */
+    hasAcceptedTerms: requiredConsent(),
+    /** הצהרה שהמזמין בן 18 ומעלה — האתר אינו מיועד לקטינים. */
+    isAdult: requiredConsent(),
   })
   .refine((order) => order.type !== OrderType.Delivery || Boolean(order.address?.trim()), {
     message: 'כתובת נדרשת עבור משלוח',
@@ -65,6 +70,8 @@ export const checkoutFormSchema = z
     couponCode: optionalString(30),
     /** ISO של תחילת חלון הזמן. ריק = בהקדם האפשרי. */
     scheduledFor: z.string().datetime().nullable().optional(),
+    hasAcceptedTerms: requiredConsent(),
+    isAdult: requiredConsent(),
   })
   .refine((form) => form.type !== OrderType.Delivery || Boolean(form.city?.trim()), {
     message: 'יש לבחור ישוב למשלוח',

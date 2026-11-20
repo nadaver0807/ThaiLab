@@ -11,7 +11,7 @@ const tagline: SxProps<Theme> = {
   fontWeight: 600,
   letterSpacing: '0.32em',
   textTransform: 'uppercase',
-  color: 'secondary.main',
+  color: 'secondary.dark',
 };
 
 const title: SxProps<Theme> = {
@@ -63,13 +63,14 @@ const cardDescription: SxProps<Theme> = {
   opacity: 0.85,
 };
 
-const cardAction: SxProps<Theme> = {
+/** צבע הקישור תלוי ברקע הכרטיס: זהב כהה על בהיר, זהב בהיר על כהה — שניהם מעל 4.5:1. */
+const cardAction = (tone: MenuLinkTone): SxProps<Theme> => ({
   flexDirection: 'row',
   alignItems: 'center',
   gap: 0.5,
   marginBlockStart: 2,
-  color: 'secondary.main',
-};
+  color: tone === 'dark' ? 'secondary.light' : 'secondary.dark',
+});
 
 const Styles = {
   section,

@@ -27,6 +27,8 @@ const DEFAULT_VALUES: CheckoutForm = {
   notes: '',
   couponCode: '',
   scheduledFor: null,
+  hasAcceptedTerms: false,
+  isAdult: false,
 };
 
 const LOOKUP_DEBOUNCE_MS = 500;
@@ -120,6 +122,8 @@ const useCheckout = ({ items, onSuccess, couponCode }: UseCheckoutParams): UseCh
       notes: values.notes,
       couponCode: couponCode ?? undefined,
       scheduledFor: values.scheduledFor ?? null,
+      hasAcceptedTerms: values.hasAcceptedTerms,
+      isAdult: values.isAdult,
       items: items.map((item) => ({
         dishUuid: item.dishUuid,
         priceKey: item.priceKey,

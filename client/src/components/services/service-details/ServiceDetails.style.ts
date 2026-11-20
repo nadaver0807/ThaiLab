@@ -59,9 +59,9 @@ const actions: SxProps<Theme> = {
 };
 
 const whatsappButton: SxProps<Theme> = {
-  backgroundColor: '#25D366',
+  backgroundColor: '#0B7A4B',
   color: 'common.white',
-  '&:hover': { backgroundColor: '#1DA851' },
+  '&:hover': { backgroundColor: '#075E54' },
 };
 
 const Styles = {

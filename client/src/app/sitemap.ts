@@ -10,6 +10,11 @@ const PUBLIC_ROUTES: { route: Route; priority: number }[] = [
   { route: Route.About, priority: 0.6 },
   { route: Route.Contact, priority: 0.6 },
   { route: Route.Accessibility, priority: 0.2 },
+  { route: Route.Privacy, priority: 0.2 },
+  { route: Route.Terms, priority: 0.2 },
+  { route: Route.RefundPolicy, priority: 0.2 },
+  { route: Route.CookiePolicy, priority: 0.2 },
+  { route: Route.DataRequest, priority: 0.2 },
 ];
 
 const sitemap = (): MetadataRoute.Sitemap =>

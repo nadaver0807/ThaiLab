@@ -18,11 +18,13 @@ const theme = createTheme(
     palette: {
       // ירוק־זית מרוכך מהלוגו — נוכחות אלגנטית ורגועה
       primary: { main: '#4A5138', light: '#6B7354', dark: '#333A26', contrastText: '#F7F3E9' },
-      // פליז/זהב עתיק מהלוגו — צבע הפעולה לכל ה-CTA
-      secondary: { main: '#B08D57', light: '#C9A978', dark: '#8C6E3F', contrastText: '#2E2A22' },
+      // פליז/זהב עתיק מהלוגו — צבע הפעולה לכל ה-CTA.
+      // light = טקסט על רקע זית כהה (ניגודיות 4.7:1 ומעלה), dark = טקסט על רקע בהיר (6.2:1).
+      secondary: { main: '#B08D57', light: '#ECDDB8', dark: '#725528', contrastText: '#2E2A22' },
       background: { default: '#F7F3E9', paper: '#FFFCF5' },
       text: { primary: '#2E2A22', secondary: '#6E6552' },
-      warning: { main: '#C9A978' },
+      // גוון בהיר — משמש כטקסט על רקע זית כהה, ולכן חייב להיות בהיר מספיק.
+      warning: { main: '#ECDDB8' },
       divider: 'rgba(74, 81, 56, 0.16)',
     },
     shape: { borderRadius: 6 },

@@ -10,6 +10,7 @@ import OrderSummary from '@components/checkout/order-summary/OrderSummary';
 import OrderTypeField from '@components/checkout/checkout-form/OrderTypeField';
 import PaymentMethodField from '@components/checkout/checkout-form/PaymentMethodField';
 import CustomerFields from '@components/checkout/checkout-form/CustomerFields';
+import CheckoutConsent from '@components/checkout/checkout-form/CheckoutConsent';
 import EmptyState from '@components/shared/empty-state/EmptyState';
 import useCart from '@/hooks/cart/useCart';
 import useCoupon from '@/hooks/checkout/useCoupon';
@@ -70,6 +71,8 @@ const CheckoutForm: FC = () => {
             isCreditCardEnabled={checkout.isCreditCardEnabled}
             onChange={(method) => checkout.form.setValue('paymentMethod', method)}
           />
+
+          <CheckoutConsent />
 
           {checkout.errorMessage && <Alert severity="error">{checkout.errorMessage}</Alert>}
 

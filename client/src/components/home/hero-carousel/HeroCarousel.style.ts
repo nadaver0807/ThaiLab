@@ -82,10 +82,28 @@ const dot = (isActive: boolean): SxProps<Theme> => ({
   minWidth: 0,
   padding: 0,
   borderRadius: 999,
-  backgroundColor: isActive ? 'secondary.main' : 'rgba(255,255,255,0.45)',
+  backgroundColor: isActive ? 'secondary.main' : 'rgba(255,255,255,0.75)',
   transition: 'width 0.4s ease, background-color 0.4s ease',
 });
 
-const Styles = { section, slide, content, brand, tagline, title, subtitle, actions, dots, dot };
+const pause: SxProps<Theme> = {
+  color: 'common.white',
+  alignSelf: 'center',
+  padding: 0.5,
+};
+
+const Styles = {
+  section,
+  slide,
+  content,
+  brand,
+  tagline,
+  title,
+  subtitle,
+  actions,
+  dots,
+  dot,
+  pause,
+};
 
 export default Styles;

@@ -3,6 +3,7 @@ import {
   email,
   israeliPhone,
   limitedString,
+  requiredConsent,
   requiredString,
 } from '@shared/validations/common.validation';
 
@@ -17,6 +18,7 @@ export const contactMessageSchema = z.object({
   fullName: limitedString(2, 60),
   email: email(),
   message: limitedString(5, 1000),
+  hasAcceptedPrivacy: requiredConsent(),
 });
 
 export const reservationSchema = z.object({

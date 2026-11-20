@@ -42,8 +42,12 @@ export const checkEligibility = async (orderUuid: string): Promise<ReviewEligibi
   };
 };
 
-export const create = async (payload: CreateReviewPayload): Promise<Review> =>
-  ReviewRepository.save(ReviewRepository.create({ ...payload, title: payload.title || null }));
+export const create = async (payload: CreateReviewPayload): Promise<Review> => {
+  // `hasAcceptedPrivacy` נבדק בוולידציה בלבד — אינו עמודה ואינו נשמר
+  const { hasAcceptedPrivacy: _hasAcceptedPrivacy, ...fields } = payload;
+
+  return ReviewRepository.save(ReviewRepository.create({ ...fields, title: fields.title || null }));
+};
 
 export const updateStatus = async (uuid: string, status: ReviewStatus): Promise<Review | null> => {
   const review = await ReviewRepository.findOne({ where: { uuid } });

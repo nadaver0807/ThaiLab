@@ -82,7 +82,7 @@ const CartDrawer: FC = () => {
           <Stack sx={Styles.footer}>
             <Stack sx={Styles.totalRow}>
               <Typography variant="body1" sx={Styles.totalLabel}>
-                סה״כ
+                סכום ביניים
               </Typography>
               <Typography variant="body1" sx={Styles.totalLabel}>
                 ₪{totals.subtotal}
@@ -90,8 +90,8 @@ const CartDrawer: FC = () => {
             </Stack>
 
             <Typography variant="body2" sx={Styles.itemOption}>
-              מינימום הזמנה למשלוח ₪{DELIVERY_MIN_SUBTOTAL}. דמי המשלוח נקבעים לפי הישוב ומתווספים
-              בעמוד התשלום.
+              הסכום אינו כולל דמי משלוח. מינימום הזמנה למשלוח ₪{DELIVERY_MIN_SUBTOTAL}. דמי המשלוח
+              נקבעים לפי הישוב ומוצגים בעמוד התשלום לפני שליחת ההזמנה. באיסוף עצמי אין דמי משלוח.
             </Typography>
 
             <Button

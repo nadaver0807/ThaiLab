@@ -4,6 +4,7 @@ import {
   enumValue,
   limitedString,
   optionalString,
+  requiredConsent,
 } from '@shared/validations/common.validation';
 import { ServiceType } from '@shared/enums/service-type.enum';
 
@@ -17,6 +18,7 @@ export const createReviewSchema = z.object({
   title: optionalString(80),
   /** מזהה ההזמנה מהקישור במייל — רק לקוח שהזמין יכול לכתוב ביקורת */
   orderUuid: z.string().uuid(),
+  hasAcceptedPrivacy: requiredConsent(),
 });
 
 export type CreateReviewPayload = z.infer<typeof createReviewSchema>;

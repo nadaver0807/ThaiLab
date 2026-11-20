@@ -10,4 +10,5 @@ export enum API_ROUTES {
   Payments = '/payments',
   Coupons = '/coupons',
   OpeningHours = '/opening-hours',
+  DataRequests = '/data-requests',
 }

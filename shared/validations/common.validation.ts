@@ -1,4 +1,12 @@
 import { z } from 'zod';
+import { CONSENT_REQUIRED_MESSAGE } from '@shared/consts/legal.const';
+
+/**
+ * תיבת הסכמה שחייבת להיות מסומנת. הטיפוס נשאר `boolean` כדי שאפשר יהיה
+ * להתחיל מ-`false` בטופס, והסימון נאכף בולידציה — גם בשרת.
+ */
+export const requiredConsent = () =>
+  z.boolean().refine((value) => value, { message: CONSENT_REQUIRED_MESSAGE });
 
 export const limitedString = (min: number, max: number) => z.string().trim().min(min).max(max);
 

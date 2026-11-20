@@ -78,18 +78,18 @@ npm run db:setup:prod
    - Start Command: `npm run start -w @thailab/server`
 3. **Variables** — הוסף:
 
-   | משתנה                  | ערך                                    |
-   | ---------------------- | -------------------------------------- |
-   | `NODE_ENV`             | `production`                           |
-   | `DATABASE_URL`         | המחרוזת מ-Neon                         |
-   | `DB_SSL`               | `true`                                 |
-   | `DB_SCHEMA`            | `thailab`                              |
-   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                            |
-   | `CLIENT_ORIGIN`        | `https://thailab.co.il` — ללא `/` בסוף |
-   | `SERVER_PUBLIC_URL`    | `https://api.thailab.co.il`            |
-   | `RESEND_API_KEY`       | מפתח Resend                            |
+   | משתנה                  | ערך                                                      |
+   | ---------------------- | -------------------------------------------------------- |
+   | `NODE_ENV`             | `production`                                             |
+   | `DATABASE_URL`         | המחרוזת מ-Neon                                           |
+   | `DB_SSL`               | `true`                                                   |
+   | `DB_SCHEMA`            | `thailab`                                                |
+   | `ADMIN_SESSION_SECRET` | הסוד משלב 0                                              |
+   | `CLIENT_ORIGIN`        | `https://thailab.co.il` — ללא `/` בסוף                   |
+   | `SERVER_PUBLIC_URL`    | `https://api.thailab.co.il`                              |
+   | `RESEND_API_KEY`       | מפתח Resend                                              |
    | `EMAIL_FROM`           | `ThaiLab <orders@thailab.co.il>` — דומיין מאומת ב-Resend |
-   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                      |
+   | `ADMIN_EMAIL`          | כתובת לקבלת פניות                                        |
 
    `SERVER_PUBLIC_URL` בונה את קישורי אישור ההזמנה במייל ואת כתובות החזרה
    מדף הסליקה. בלעדיו הקישורים יצביעו ל-`localhost`.
