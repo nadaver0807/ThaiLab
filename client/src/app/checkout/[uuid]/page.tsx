@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 import PageSection from '@components/shared/page-section/PageSection';
 import OrderConfirmation from '@components/checkout/order-confirmation/OrderConfirmation';
-import PaymentResult from '@components/checkout/order-confirmation/PaymentResult';
+import PaymentComplete from '@components/checkout/order-confirmation/PaymentComplete';
 import { PaymentMethod } from '@shared/enums/payment-method.enum';
 
 export const metadata: Metadata = {
@@ -18,13 +18,11 @@ const OrderConfirmationPage = async ({ params, searchParams }: OrderConfirmation
   const { uuid } = await params;
   const { method, payment } = await searchParams;
 
-  // חזרה מספק הסליקה — הסטטוס האמיתי נקבע ב-webhook, כאן רק מציגים הודעה
+  // חזרה מספק הסליקה — דף תודה סטטי; הסטטוס האמיתי נקבע ב-webhook
   if (payment) {
-    const isSuccess = payment === 'success';
-
     return (
-      <PageSection title={isSuccess ? 'תודה על התשלום' : 'התשלום לא הושלם'}>
-        <PaymentResult orderUuid={uuid} isSuccess={isSuccess} />
+      <PageSection title={payment === 'success' ? 'תודה!' : 'התשלום'}>
+        <PaymentComplete orderUuid={uuid} isSuccess={payment === 'success'} />
       </PageSection>
     );
   }
