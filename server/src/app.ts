@@ -16,6 +16,8 @@ export const createApp = async (app: Express) => {
   app.use(cors(CorsConfig));
 
   app.use(express.json({ limit: '5mb' }));
+  // ספקי סליקה (Grow) שולחים הודעות שרת-לשרת כ-form data
+  app.use(express.urlencoded({ extended: false, limit: '100kb' }));
   app.use(loggerMiddleware);
 
   app.get(HEALTH_ROUTE, (_request, response) => {

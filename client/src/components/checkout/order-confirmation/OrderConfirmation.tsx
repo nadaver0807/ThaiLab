@@ -9,9 +9,10 @@ import Styles from '@components/checkout/order-confirmation/OrderConfirmation.st
 
 type OrderConfirmationProps = {
   orderUuid: string;
+  isCreditCard?: boolean;
 };
 
-const OrderConfirmation: FC<OrderConfirmationProps> = ({ orderUuid }) => (
+const OrderConfirmation: FC<OrderConfirmationProps> = ({ orderUuid, isCreditCard = false }) => (
   <Stack sx={Styles.panel}>
     <CheckCircleRoundedIcon sx={Styles.icon} />
 
@@ -20,8 +21,9 @@ const OrderConfirmation: FC<OrderConfirmationProps> = ({ orderUuid }) => (
     </Typography>
 
     <Typography variant="body1" sx={Styles.note}>
-      ההזמנה נשלחה לאישור המסעדה. תוך זמן קצר יישלח אליכם מייל עם אישור ההזמנה. התשלום מתבצע במזומן
-      בלבד, במקום.
+      {isCreditCard
+        ? 'ההזמנה נשלחה לאישור המסעדה. לאחר האישור יישלח אליכם מייל עם קישור מאובטח לתשלום באשראי. ההזמנה תיכנס להכנה לאחר התשלום.'
+        : 'ההזמנה נשלחה לאישור המסעדה. תוך זמן קצר יישלח אליכם מייל עם אישור ההזמנה. התשלום מתבצע במזומן בלבד, במקום.'}
     </Typography>
 
     <Typography variant="body2" sx={Styles.reference}>

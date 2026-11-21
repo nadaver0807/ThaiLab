@@ -1,7 +1,6 @@
 'use client';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { type StartPaymentResponse } from '@shared/types/payment.type';
+import { useQuery } from '@tanstack/react-query';
 import Api from './api.util';
 import { API_ROUTES } from './api.const';
 
@@ -17,16 +16,3 @@ export const useGetPaymentConfig = () =>
     },
     staleTime: Infinity,
   });
-
-const useStartPayment = () =>
-  useMutation({
-    mutationFn: async (orderUuid: string): Promise<StartPaymentResponse> => {
-      const { data } = await Api.post<StartPaymentResponse>(
-        `${API_ROUTES.Payments}/${orderUuid}/start`,
-      );
-
-      return data;
-    },
-  });
-
-export default useStartPayment;

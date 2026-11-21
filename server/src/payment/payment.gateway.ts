@@ -1,3 +1,4 @@
+import { SERVER_PUBLIC_URL } from '@/server.const';
 import { type PaymentProvider } from '@shared/enums/payment-provider.enum';
 import { type PaymentSession } from '@shared/types/payment.type';
 import { type Order } from '@/order/Order.entity';
@@ -22,3 +23,7 @@ export type PaymentGateway = {
 };
 
 export class PaymentError extends Error {}
+
+/** הכתובת שאליה ספק הסליקה שולח הודעת שרת-לשרת כשהתשלום הסתיים. */
+export const buildCallbackUrl = (orderUuid: string): string =>
+  `${SERVER_PUBLIC_URL}/api/payments/${orderUuid}/callback`;

@@ -11,7 +11,7 @@ import { type CartItem } from '@shared/types/cart.type';
 import { israeliPhone } from '@shared/validations/common.validation';
 import { checkoutFormSchema, type CheckoutForm } from '@shared/validations/order.validation';
 import useCreateOrder from '@/hooks/api/useCreateOrder';
-import useStartPayment, { useGetPaymentConfig } from '@/hooks/api/useStartPayment';
+import { useGetPaymentConfig } from '@/hooks/api/useStartPayment';
 import useLookupCustomer from '@/hooks/api/useLookupCustomer';
 import useDebouncedValue from '@/hooks/shared/useDebouncedValue';
 
@@ -81,7 +81,6 @@ const useCheckout = ({ items, onSuccess, couponCode }: UseCheckoutParams): UseCh
   );
 
   const { mutateAsync: submitOrder, isPending, isError, error } = useCreateOrder();
-  const { mutateAsync: startPayment } = useStartPayment();
   const { data: paymentConfig } = useGetPaymentConfig();
 
   useEffect(() => {
@@ -135,16 +134,8 @@ const useCheckout = ({ items, onSuccess, couponCode }: UseCheckoutParams): UseCh
 
     onSuccess();
 
-    // בתשלום באשראי מפנים לדף המאובטח של ספק הסליקה
-    if (values.paymentMethod === PaymentMethod.CreditCard) {
-      const { paymentUrl } = await startPayment(order.uuid);
-
-      window.location.assign(paymentUrl);
-
-      return;
-    }
-
-    router.push(`${Route.Checkout}/${order.uuid}`);
+    // גם בתשלום באשראי — הקישור לתשלום יישלח במייל רק אחרי שההזמנה תאושר
+    router.push(`${Route.Checkout}/${order.uuid}?method=${values.paymentMethod}`);
   });
 
   return {

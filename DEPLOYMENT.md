@@ -133,31 +133,41 @@ CLIENT_ORIGIN=https://thailab.co.il
 
 ## 6. סליקת אשראי (אופציונלי)
 
-**דלג על השלב הזה עד שעופר ימסור את פרטי חברת הסליקה.** כל עוד
+**דלג על השלב הזה עד שתרחיש ה-Make של Grow מוכן.** כל עוד
 `PAYMENT_PROVIDER` אינו מוגדר, אפשרות התשלום באשראי מוסתרת בצ'קאאוט
 והאתר עובד עם תשלום בעת האיסוף בלבד.
 
-הוסף ב-Railway:
+הסליקה עוברת דרך Grow באמצעות תרחיש ב-Make.com. הוסף ב-Railway:
 
-| משתנה                 | ערך                                             |
-| --------------------- | ----------------------------------------------- |
-| `PAYMENT_PROVIDER`    | `CARDCOM` או `PAYPLUS`                          |
-| `PAYMENT_TERMINAL_ID` | CardCom: מספר טרמינל. PayPlus: Payment Page UID |
-| `PAYMENT_API_KEY`     | CardCom: ApiName. PayPlus: api_key              |
-| `PAYMENT_API_SECRET`  | CardCom: ApiPassword. PayPlus: secret_key       |
-| `PAYMENT_TEST_MODE`   | `true` עד לאימות מלא, אחר כך `false`            |
+| משתנה                             | ערך                              |
+| --------------------------------- | -------------------------------- |
+| `PAYMENT_PROVIDER`                | `MAKE`                           |
+| `MAKE_PAYMENT_WEBHOOK_URL`        | כתובת ה-webhook של התרחיש ב-Make |
+| `MAKE_WEBHOOK_SECRET`             | **חובה.** `openssl rand -hex 32` |
+| `MAKE_PAYMENT_WEBHOOK_TIMEOUT_MS` | אופציונלי, ברירת מחדל `10000`    |
 
-בממשק חברת הסליקה יש להגדיר את כתובת ה-webhook:
+**הזרימה:** עופר מאשר הזמנה במייל ← הלקוח מקבל מייל עם קישור תשלום ←
+השרת מבקש מ-Make קישור Grow ומפנה את הלקוח ← בסיום התשלום Make שולח
+עדכון לשרת ← עופר מקבל מייל "התקבל תשלום".
 
-```
-https://api.thailab.co.il/api/payments/:uuid/callback
-```
+**מה התרחיש ב-Make צריך לעשות:**
 
-ה-webhook הוא **המקור היחיד** שקובע שהזמנה שולמה — חזרת הדפדפן מדף
-הסליקה לעולם אינה מעדכנת סטטוס תשלום.
+1. לקבל `{ orderId, amount, customer, items, successUrl, cancelUrl, callbackUrl }`
+   ולהחזיר `{ "paymentUrl": "..." }`.
+2. כשהתשלום מסתיים, לשלוח `POST` אל `callbackUrl` (או אל
+   `https://api.thailab.co.il/api/checkout/payment-webhook` עם `orderId` בגוף) עם:
 
-לאחר ההגדרה בצע הזמנת בדיקה בסביבת ה-sandbox של הספק, ורק כשההזמנה
-מסומנת `PAID` בפאנל הניהול העבר את `PAYMENT_TEST_MODE` ל-`false`.
+   ```json
+   { "orderId": "...", "status": "PAID", "transactionId": "..." }
+   ```
+
+   ועם ה-header `x-make-webhook-secret` שערכו זהה ל-`MAKE_WEBHOOK_SECRET`.
+
+עדכון זה הוא **המקור היחיד** שקובע שהזמנה שולמה — חזרת הדפדפן מדף
+הסליקה לעולם אינה מעדכנת סטטוס תשלום. בלי הסוד המשותף השרת דוחה את העדכון.
+
+בצע הזמנת בדיקה בסביבת ה-sandbox של Grow, ורק כשההזמנה מסומנת `PAID`
+בפאנל הניהול העבר את התרחיש ב-Make לחשבון ה-Grow האמיתי.
 
 ---
 

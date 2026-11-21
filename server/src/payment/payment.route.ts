@@ -3,9 +3,11 @@ import { StatusCodes } from 'http-status-codes';
 
 import { confirmPayment, isCreditCardEnabled, startPayment } from '@/payment/payment.service';
 import { PaymentError } from '@/payment/payment.gateway';
+import { renderDecisionPage } from '@/order/decisionPage.template';
+import { verifyPaymentToken } from '@/util/decisionToken.util';
+import { verifyMakeWebhookSecret } from '@/checkout/verifyMakeWebhookSecret.middleware';
 import { logger, toSafeError } from '@/util/logger';
 import { type MessageResponse } from '@shared/types/api.type';
-import { type StartPaymentResponse } from '@shared/types/payment.type';
 
 const paymentRouter = Router();
 
@@ -14,25 +16,44 @@ paymentRouter.get('/config', (_request: Request, response: Response) => {
   response.status(StatusCodes.OK).json({ isCreditCardEnabled: isCreditCardEnabled() });
 });
 
-/** יוצר דף תשלום ומחזיר את הכתובת שאליה יש להפנות את הלקוח. */
-paymentRouter.post(
-  '/:uuid/start',
+/**
+ * קישור התשלום מהמייל ללקוח. הטוקן החתום מוכיח שהקישור נשלח על ידינו,
+ * ורק אז נוצר דף תשלום אצל הספק והלקוח מופנה אליו.
+ */
+paymentRouter.get(
+  '/:uuid/pay',
   async (
-    request: Request<{ uuid: string }>,
-    response: Response<StartPaymentResponse | MessageResponse>,
+    request: Request<{ uuid: string }, unknown, unknown, { token?: string }>,
+    response: Response,
   ) => {
+    const { uuid } = request.params;
+
+    if (!verifyPaymentToken(uuid, request.query.token ?? '')) {
+      response.status(StatusCodes.FORBIDDEN).send(
+        renderDecisionPage({
+          title: 'הקישור אינו תקף',
+          message: 'ייתכן שהקישור שונה. אפשר לפנות אלינו בטלפון ונשלח קישור חדש.',
+          color: '#c62828',
+        }),
+      );
+
+      return;
+    }
+
     try {
-      const paymentUrl = await startPayment(request.params.uuid);
-
-      response.status(StatusCodes.OK).json({ orderUuid: request.params.uuid, paymentUrl });
+      response.redirect(StatusCodes.SEE_OTHER, await startPayment(uuid));
     } catch (error) {
-      if (error instanceof PaymentError) {
-        response.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
-
-        return;
+      if (!(error instanceof PaymentError)) {
+        throw error;
       }
 
-      throw error;
+      response.status(StatusCodes.BAD_REQUEST).send(
+        renderDecisionPage({
+          title: 'לא ניתן לשלם כרגע',
+          message: error.message,
+          color: '#ef6c00',
+        }),
+      );
     }
   },
 );
@@ -43,11 +64,12 @@ paymentRouter.post(
  */
 paymentRouter.post(
   '/:uuid/callback',
+  verifyMakeWebhookSecret,
   async (request: Request<{ uuid: string }>, response: Response<MessageResponse>) => {
     try {
       const status = await confirmPayment(
         request.params.uuid,
-        request.body as Record<string, unknown>,
+        (request.body ?? {}) as Record<string, unknown>,
       );
 
       response.status(StatusCodes.OK).json({ message: status });

@@ -11,6 +11,7 @@ export enum API_ROUTES {
   Coupons = '/coupons',
   OpeningHours = '/opening-hours',
   DataRequests = '/data-requests',
+  Checkout = '/checkout',
 }
 
 export const HEALTH_ROUTE = '/health';

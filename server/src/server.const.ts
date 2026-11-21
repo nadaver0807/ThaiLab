@@ -44,20 +44,8 @@ export const ADMIN_SESSION_TTL_HOURS = Number(process.env.ADMIN_SESSION_TTL_HOUR
 
 /* ------------------------------ סליקת אשראי ------------------------------ */
 
-/** ספק הסליקה הפעיל: CARDCOM | PAYPLUS | TRANZILA | MESHULAM | NONE */
+/** ספק הסליקה הפעיל: MAKE (Grow דרך Make.com) או NONE לתשלום במקום בלבד. */
 export const PAYMENT_PROVIDER = (process.env.PAYMENT_PROVIDER ?? 'NONE').toUpperCase();
-
-/** מזהה הטרמינל/המסוף אצל הספק. */
-export const PAYMENT_TERMINAL_ID = process.env.PAYMENT_TERMINAL_ID ?? '';
-
-/** שם משתמש / API key לקריאות מול הספק. */
-export const PAYMENT_API_KEY = process.env.PAYMENT_API_KEY ?? '';
-
-/** סוד נוסף לחתימה או לאימות webhook, אם הספק דורש. */
-export const PAYMENT_API_SECRET = process.env.PAYMENT_API_SECRET ?? '';
-
-/** האם לעבוד מול סביבת הבדיקות של הספק. */
-export const PAYMENT_TEST_MODE = process.env.PAYMENT_TEST_MODE === 'true';
 
 /* ------------------------------ Make.com (Integromat) ------------------------------ */
 

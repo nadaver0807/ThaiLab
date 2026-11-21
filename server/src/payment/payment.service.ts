@@ -1,18 +1,18 @@
 import { CLIENT_ORIGIN, PAYMENT_PROVIDER } from '@/server.const';
 import { AppDataSource } from '@/config/db/db.config';
 import { Order } from '@/order/Order.entity';
-import { cardComGateway } from '@/payment/cardcom.gateway';
-import { payPlusGateway } from '@/payment/payplus.gateway';
+import { makeGateway } from '@/payment/make.gateway';
 import { PaymentError, type PaymentGateway } from '@/payment/payment.gateway';
 import { logger, toSafeError } from '@/util/logger';
+import { notifyAdminOfPayment } from '@/order/orderNotification.service';
+import { OrderStatus } from '@shared/enums/order-status.enum';
 import { PaymentProvider } from '@shared/enums/payment-provider.enum';
 import { PaymentMethod } from '@shared/enums/payment-method.enum';
 import { PaymentStatus } from '@shared/enums/payment-status.enum';
 import { Route } from '@shared/enums/route.enum';
 
 const GATEWAYS: Partial<Record<string, PaymentGateway>> = {
-  [PaymentProvider.CardCom]: cardComGateway,
-  [PaymentProvider.PayPlus]: payPlusGateway,
+  [PaymentProvider.Make]: makeGateway,
 };
 
 const OrderRepository = AppDataSource.getRepository(Order);
@@ -50,6 +50,11 @@ export const startPayment = async (orderUuid: string): Promise<string> => {
 
   if (order.paymentStatus === PaymentStatus.Paid) {
     throw new PaymentError('ההזמנה כבר שולמה');
+  }
+
+  // תשלום אפשרי רק אחרי שבעל העסק אישר את ההזמנה
+  if (order.status !== OrderStatus.Confirmed) {
+    throw new PaymentError('ההזמנה עדיין לא אושרה או שבוטלה');
   }
 
   const session = await gateway.createSession(
@@ -102,6 +107,10 @@ export const confirmPayment = async (
     order.paymentReference = transactionId ?? order.paymentReference;
 
     await OrderRepository.save(order);
+
+    if (isPaid) {
+      void notifyAdminOfPayment(order);
+    }
 
     return order.paymentStatus;
   } catch (error) {

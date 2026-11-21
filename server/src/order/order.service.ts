@@ -12,7 +12,13 @@ import { Order } from '@/order/Order.entity';
 import { OrderItem } from '@/order-item/OrderItem.entity';
 import { getOpeningHours } from '@/opening-hours/openingHours.service';
 import { upsertByPhone } from '@/costumer/costumer.service';
-import { notifyAdminOfNewOrder, notifyCustomerOfDecision } from '@/order/orderNotification.service';
+import {
+  buildPaymentUrl,
+  notifyAdminOfNewOrder,
+  notifyCustomerOfDecision,
+} from '@/order/orderNotification.service';
+import { isCreditCardEnabled } from '@/payment/payment.service';
+import { PaymentMethod } from '@shared/enums/payment-method.enum';
 import { DELIVERY_MIN_SUBTOTAL, getDeliveryFee } from '@shared/consts/delivery.const';
 import { resolveVariantLabel } from '@shared/util/variant.util';
 import { validateSlot } from '@shared/util/schedule.util';
@@ -249,7 +255,18 @@ export const applyDecision = async (
 
   const summary = toSummary(await OrderRepository.save(order));
 
-  await notifyCustomerOfDecision(summary, isConfirmed);
+  // הזמנה באשראי שאושרה — הלקוח מקבל קישור לתשלום במייל האישור
+  const needsPaymentLink =
+    isConfirmed &&
+    summary.paymentMethod === PaymentMethod.CreditCard &&
+    summary.paymentStatus !== PaymentStatus.Paid &&
+    isCreditCardEnabled();
+
+  await notifyCustomerOfDecision(
+    summary,
+    isConfirmed,
+    needsPaymentLink ? buildPaymentUrl(summary.uuid) : undefined,
+  );
 
   return { order: summary, wasAlreadyHandled: false };
 };

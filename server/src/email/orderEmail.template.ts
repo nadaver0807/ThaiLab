@@ -107,6 +107,44 @@ export const renderAdminOrderEmail = (
   <p style="color:#777;font-size:12px;">לחיצה על אחד הכפתורים תשלח ללקוח הודעה אוטומטית.</p>
 </div>`;
 
+/** השדות הנדרשים למייל "התקבל תשלום" — מתאים גם לישות Order וגם ל-OrderSummary. */
+export type PaidOrderDetails = Pick<
+  OrderSummary,
+  'uuid' | 'contactName' | 'contactPhone' | 'contactEmail' | 'totalPrice' | 'address'
+> & { paymentReference?: string | null };
+
+/** מייל למנהל — התשלום אומת מול ספק הסליקה, אפשר להתחיל להכין. */
+export const renderAdminPaymentEmail = (order: PaidOrderDetails): string => {
+  const rows: Array<[string, string]> = [
+    ['לקוח', order.contactName],
+    ['טלפון', order.contactPhone],
+    ['סכום ששולם', `₪${order.totalPrice}`],
+    ['מספר אסמכתא', order.uuid.slice(0, 8).toUpperCase()],
+  ];
+
+  if (order.address) {
+    rows.push(['כתובת', order.address]);
+  }
+
+  if (order.paymentReference) {
+    rows.push(['מזהה עסקה', order.paymentReference]);
+  }
+
+  return `<div dir="rtl" style="${FONT}font-size:14px;color:#222;">
+    <h2 style="color:#2e7d32;">התקבל תשלום — ${escapeHtml(order.contactName)}</h2>
+    <p>התשלום אומת מול חברת הסליקה. אפשר להתחיל להכין את ההזמנה.</p>
+    <table style="border-collapse:collapse;">${rows
+      .map(
+        ([label, value]) =>
+          `<tr>
+            <td style="padding:6px 10px;border:1px solid #ddd;font-weight:700;">${label}</td>
+            <td style="padding:6px 10px;border:1px solid #ddd;">${escapeHtml(value)}</td>
+          </tr>`,
+      )
+      .join('')}</table>
+  </div>`;
+};
+
 /** פרטי העסק, הסבר על סיבת המייל וקישור להסרה / מחיקת פרטים — מופיע בכל מייל ללקוח. */
 const renderCustomerFooter = (): string => {
   const origin = CLIENT_ORIGIN.replace(/\/$/, '');
@@ -126,21 +164,30 @@ const renderCustomerFooter = (): string => {
   </div>`;
 };
 
-/** מייל ללקוח לאחר החלטת המנהל. */
+/** מייל ללקוח לאחר החלטת המנהל. כשיש paymentUrl — ההזמנה ממתינה לתשלום באשראי. */
 export const renderCustomerDecisionEmail = (
   order: OrderSummary,
   isConfirmed: boolean,
   reviewUrl?: string,
+  paymentUrl?: string,
 ): string => {
   const headline = isConfirmed ? 'ההזמנה שלכם אושרה!' : 'ההזמנה שלכם לא אושרה';
 
-  const body = isConfirmed
-    ? `אנחנו מתחילים להכין. ${
-        order.address
-          ? `המשלוח יגיע לכתובת ${escapeHtml(order.address)}.`
-          : 'נעדכן אתכם כשההזמנה תהיה מוכנה לאיסוף.'
-      } התשלום מתבצע במזומן בלבד, במקום.`
-    : 'לצערנו לא נוכל להכין את ההזמנה הפעם. נשמח לעמוד לרשותכם בטלפון לפרטים נוספים.';
+  const deliveryText = order.address
+    ? `המשלוח יגיע לכתובת ${escapeHtml(order.address)}.`
+    : 'נעדכן אתכם כשההזמנה תהיה מוכנה לאיסוף.';
+
+  const body = !isConfirmed
+    ? 'לצערנו לא נוכל להכין את ההזמנה הפעם. נשמח לעמוד לרשותכם בטלפון לפרטים נוספים.'
+    : paymentUrl
+      ? `כדי להשלים את ההזמנה יש לשלם ₪${order.totalPrice} בקישור שלמטה. ${deliveryText}`
+      : `אנחנו מתחילים להכין. ${deliveryText} התשלום מתבצע במזומן בלבד, במקום.`;
+
+  const paymentSection =
+    isConfirmed && paymentUrl
+      ? `<p style="margin:20px 0;">${button(paymentUrl, `לתשלום ₪${order.totalPrice}`, '#2e7d32')}</p>
+         <p style="color:#777;font-size:12px;">התשלום מתבצע בדף מאובטח של חברת הסליקה. פרטי האשראי אינם נשמרים אצלנו.</p>`
+      : '';
 
   // הקישור נשלח רק אחרי הזמנה שאושרה — כך רק מי שבאמת הזמין יכול לכתוב ביקורת
   const reviewSection =
@@ -155,6 +202,7 @@ export const renderCustomerDecisionEmail = (
     <h2>${headline}</h2>
     <p>שלום ${escapeHtml(order.contactName)},</p>
     <p>${body}</p>
+    ${paymentSection}
 
     <h3>פירוט ההזמנה</h3>
     <table style="border-collapse:collapse;">${renderItems(order)}</table>

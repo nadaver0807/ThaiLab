@@ -5,6 +5,8 @@ export enum PaymentProvider {
   PayPlus = 'PAYPLUS',
   Tranzila = 'TRANZILA',
   Meshulam = 'MESHULAM',
+  /** Grow דרך תרחיש Make.com — Make בונה את קישור התשלום ומדווח על התשלום. */
+  Make = 'MAKE',
 }
 
 export const PaymentProviderLabel: Record<PaymentProvider, string> = {
@@ -13,4 +15,5 @@ export const PaymentProviderLabel: Record<PaymentProvider, string> = {
   [PaymentProvider.PayPlus]: 'PayPlus',
   [PaymentProvider.Tranzila]: 'Tranzila',
   [PaymentProvider.Meshulam]: 'משולם',
+  [PaymentProvider.Make]: 'Grow (דרך Make)',
 };

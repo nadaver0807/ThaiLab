@@ -9,6 +9,7 @@ import paymentRouter from '../payment/payment.route';
 import couponRouter from '../coupon/coupon.route';
 import openingHoursRouter from '../opening-hours/openingHours.route';
 import dataRequestRouter from '../data-request/dataRequest.route';
+import checkoutRouter from '../checkout/checkout.route';
 import { API_ROUTES } from './route.const';
 
 const apiRouter = Router();
@@ -23,5 +24,6 @@ apiRouter.use(API_ROUTES.Payments, paymentRouter);
 apiRouter.use(API_ROUTES.Coupons, couponRouter);
 apiRouter.use(API_ROUTES.OpeningHours, openingHoursRouter);
 apiRouter.use(API_ROUTES.DataRequests, dataRequestRouter);
+apiRouter.use(API_ROUTES.Checkout, checkoutRouter);
 
 export default apiRouter;
