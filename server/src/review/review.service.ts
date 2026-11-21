@@ -1,6 +1,7 @@
 import { AppDataSource } from '@/config/db/db.config';
 import { Review } from '@/review/Review.entity';
 import { Order } from '@/order/Order.entity';
+import { OrderStatus } from '@shared/enums/order-status.enum';
 import { ReviewStatus } from '@shared/enums/review-status.enum';
 import { type CreateReviewPayload } from '@shared/validations/review.validation';
 
@@ -25,7 +26,8 @@ export type ReviewEligibility =
 export const checkEligibility = async (orderUuid: string): Promise<ReviewEligibility> => {
   const order = await OrderRepository.findOne({ where: { uuid: orderUuid } });
 
-  if (!order) {
+  // הזמנה שנדחתה/בוטלה לא סופקה — אין על מה לכתוב ביקורת
+  if (!order || order.status === OrderStatus.Cancelled) {
     return { isEligible: false, reason: 'NOT_FOUND' };
   }
 

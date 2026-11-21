@@ -34,7 +34,7 @@ dishRouter.get(
 );
 
 dishRouter.get(
-  '/:id',
+  '/:uuid',
   async (request: Request<UuidParams>, response: Response<Dish | MessageResponse>) => {
     const dish = await findByUuid(request.params.uuid);
 
@@ -60,7 +60,7 @@ dishRouter.post(
 );
 
 dishRouter.patch(
-  '/:id',
+  '/:uuid',
   requireAdmin,
   validateZodSchema(updateDishSchema),
   async (
@@ -80,7 +80,7 @@ dishRouter.patch(
 );
 
 dishRouter.delete(
-  '/:id',
+  '/:uuid',
   requireAdmin,
   async (request: Request<UuidParams>, response: Response<MessageResponse>) => {
     const isDeleted = await remove(request.params.uuid);

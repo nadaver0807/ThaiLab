@@ -16,6 +16,19 @@ type MakeWebhookResponse = {
   paymentUrl?: unknown;
 };
 
+const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '0.0.0.0', '[::1]']);
+
+/** Grow מקבל רק כתובות https ציבוריות לחזרה ול-callback. */
+const isPublicUrl = (value: string): boolean => {
+  try {
+    const { protocol, hostname } = new URL(value);
+
+    return protocol === 'https:' && !LOCAL_HOSTS.has(hostname);
+  } catch {
+    return false;
+  }
+};
+
 /**
  * Make.com הוא תיווך בלבד — התרחיש שם בונה את קישור התשלום מול Grow
  * ומחזיר אותו ב-`paymentUrl`. אנחנו לא פונים ל-Grow ישירות.
@@ -34,6 +47,15 @@ export const makeGateway: PaymentGateway = {
   ): Promise<PaymentSession> {
     if (!MAKE_PAYMENT_WEBHOOK_URL) {
       throw new PaymentError('Make אינו מוגדר (MAKE_PAYMENT_WEBHOOK_URL חסר)');
+    }
+
+    const callbackUrl = buildCallbackUrl(order.uuid);
+
+    // Grow דוחה כתובות מקומיות (שגיאה 427) — עוצרים כאן במקום לייצר שגיאות בתרחיש ב-Make
+    if (![successUrl, cancelUrl, callbackUrl].every(isPublicUrl)) {
+      throw new PaymentError(
+        'תשלום באשראי דורש כתובות ציבוריות (https). בסביבה מקומית יש להגדיר CLIENT_ORIGIN ו-SERVER_PUBLIC_URL לכתובת מנהרה (למשל ngrok).',
+      );
     }
 
     try {
@@ -55,7 +77,7 @@ export const makeGateway: PaymentGateway = {
           redirectUrl: successUrl,
           successUrl,
           cancelUrl,
-          callbackUrl: buildCallbackUrl(order.uuid),
+          callbackUrl,
         },
         { timeout: MAKE_PAYMENT_WEBHOOK_TIMEOUT_MS },
       );
